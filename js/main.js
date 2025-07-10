@@ -172,6 +172,31 @@ function initializeAppLogic() {
     const referrerNoRadio = document.getElementById('referrer-no');
     const referrerInputContainer = document.getElementById('referrer-input-container');
     const referrerNameEmailInput = document.getElementById('referrer-name-email');
+    // Dodajte reference na elemente novog popup-a
+    const welcomePopup = document.getElementById('welcome-popup');
+    const welcomeContinueBtn = document.getElementById('welcome-popup-continue');
+
+    // --- Logika za Welcome Popup ---
+    // Provjerite je li korisnik već vidio ovaj popup. Koristimo localStorage za pamćenje.
+    const hasSeenWelcomePopup = localStorage.getItem('hasSeenWelcomePopup');
+
+    if (!hasSeenWelcomePopup) {
+        // Ako nije, prikaži popup s malim odmakom da se osigura učitavanje svih ostalih elemenata
+        setTimeout(() => {
+            if (welcomePopup) { // Dodatna provjera da element postoji
+                showPopup(welcomePopup);
+                // Postavite flag u localStorage da je korisnik vidio popup
+                localStorage.setItem('hasSeenWelcomePopup', 'true');
+            }
+        }, 500); // Popup će se pojaviti 500ms nakon učitavanja DOM-a
+    }
+
+    // Event listener za gumb "NASTAVI" unutar welcome popup-a
+    if (welcomeContinueBtn) {
+        welcomeContinueBtn.addEventListener('click', () => {
+            closeAllPopups(); // Poziva funkciju koja zatvara sve popupe (definirana je u main.js)
+        });
+    }
 
     let isDraggingCounter = false;
     let dragCounterOffsetX = 0;
