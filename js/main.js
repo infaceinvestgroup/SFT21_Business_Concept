@@ -22,7 +22,7 @@ async function i18n_init() {
         fallbackLng: 'hr',
         debug: false,
         backend: {
-            loadPath: 'SFT21_Business_Concept/locales/{{lng}}.json',
+        loadPath: 'locales/{{lng}}.json',
         },
     });
 
