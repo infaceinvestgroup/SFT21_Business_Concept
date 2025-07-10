@@ -10,12 +10,8 @@ async function i18n_init() {
     // Određujemo jezik, ali ga nećemo odmah koristiti.
     const savedLang = localStorage.getItem('sft21_lang') || 'hr';
 
-    // ===============================================================
-    // #### DIJAGNOSTIČKI BLOK - SVE VEZANO ZA PRIJEVODE JE ISKLJUČENO ####
-    // Sljedeći dio koda koji učitava prijevode je namjerno stavljen
-    // u komentar kako bismo testirali ostatak aplikacije.
-    // ===============================================================
-    /*
+
+    
     // Inicijaliziraj i18next instancu
     await i18next.use(i18nextHttpBackend).init({
         lng: savedLang,
@@ -28,7 +24,7 @@ async function i18n_init() {
 
     // Ažuriraj sadržaj na stranici s učitanim prijevodima
     updateContent(savedLang);
-    */
+    
    
     // ===============================================================
     // #### POKRETANJE APLIKACIJE - OVO MORA OSTATI AKTIVNO! ####
@@ -40,7 +36,7 @@ async function i18n_init() {
     // #### EVENT LISTENERI ZA JEZIK - TAKOĐER ISKLJUČENI ####
     // Gumbi za promjenu jezika se također isključuju jer ovise o i18next.
     // ===============================================================
-    /*
+   
     // Dodaj event listenere na gumbe za promjenu jezika
     document.querySelectorAll('[data-lang]').forEach(el => {
         el.addEventListener('click', (e) => {
@@ -53,7 +49,7 @@ async function i18n_init() {
             });
         });
     });
-    */
+  
 }
 
 
