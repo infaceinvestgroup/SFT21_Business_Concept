@@ -10,9 +10,6 @@
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <!-- I18next biblioteke za prevođenje -->
-<script src="https://unpkg.com/i18next/i18next.min.js"></script>
-<script src="https://unpkg.com/i18next-http-backend/i18nextHttpBackend.min.js"></script>
 </head>
 
 <body class="bg-gray-900">
@@ -194,10 +191,10 @@
                         </a>
                         <div class="dropdown-menu absolute hidden bg-gray-800 rounded shadow-lg py-1" id="desktop-platform-menu">
                             <a href="sfured.html" class="dropdown-item block px-4 py-2 text-sm text-gray-200 hover:bg-purple-700 hover:text-white">SFured</a>
+                            <a href="sfalgoritam.html" class="dropdown-item block px-4 py-2 text-sm text-gray-200 hover:bg-purple-700 hover:text-white">SFalgoritam</a>
                             <a href="#" class="dropdown-item block px-4 py-2 text-sm text-gray-200 hover:bg-purple-700 hover:text-white">SFnet</a>
                             <a href="#" class="dropdown-item block px-4 py-2 text-sm text-gray-200 hover:bg-purple-700 hover:text-white">SFshop</a>
                             <a href="#" class="dropdown-item block px-4 py-2 text-sm text-gray-200 hover:bg-purple-700 hover:text-white">SFpodrška</a>
-                            <a href="sfalgoritam.html" class="dropdown-item block px-4 py-2 text-sm text-gray-200 hover:bg-purple-700 hover:text-white">SFalgoritam</a>
                             <a href="video_player.html?from=index.html" class="dropdown-item block px-4 py-2 text-sm text-gray-200 hover:bg-purple-700 hover:text-white">Video player</a>
                         </div>
                     </div>
@@ -211,10 +208,10 @@
                         <button id="desktop-lang-trigger" class="language-trigger text-white hover:text-fluorescent-green transition-colors duration-300 text-xl">
                             <i class="fas fa-globe"></i>
                         </button>
-<div id="desktop-lang-dropdown" class="language-dropdown">
-    <a href="#" data-lang="en" class="language-item"> <img src="https://flagcdn.com/w20/gb.png" alt="Engleski" class="flag-image"> <span>ENG</span> </a>
-    <a href="#" data-lang="hr" class="language-item"> <img src="https://flagcdn.com/w20/hr.png" alt="Hrvatski" class="flag-image"> <span>HRV</span> </a>
-</div>
+                        <div id="desktop-lang-dropdown" class="language-dropdown">
+                            <a href="#" class="language-item"> <img src="https://flagcdn.com/w20/gb.png" alt="Engleski" class="flag-image"> <span>ENG</span> </a>
+                            <a href="#" class="language-item"> <img src="https://flagcdn.com/w20/hr.png" alt="Hrvatski" class="flag-image"> <span>HRV</span> </a>
+                        </div>
                     </div>
                     <a href="login.html" class="btn-outline text-xs">Prijava</a>
                     <a href="register.html" class="btn-primary text-xs">Registracija</a>
@@ -249,7 +246,6 @@
                     <a href="#" class="dropdown-item block py-2 text-center text-sm bg-gray-800 hover:bg-purple-700 text-gray-300 hover:text-white">SFnet</a>
                     <a href="#" class="dropdown-item block py-2 text-center text-sm bg-gray-800 hover:bg-purple-700 text-gray-300 hover:text-white">SFshop</a>
                     <a href="#" class="dropdown-item block py-2 text-center text-sm bg-gray-800 hover:bg-purple-700 text-gray-300 hover:text-white">SFpodrška</a>
-                    <a href="sfalgoritam.html" class="dropdown-item block py-2 text-center text-sm bg-gray-800 hover:bg-purple-700 text-gray-300 hover:text-white">SFalgoritam</a>
                     <a href="video_player.html?from=index.html" class="dropdown-item block py-2 text-center text-sm bg-gray-800 hover:bg-purple-700 text-gray-300 hover:text-white">Video player</a>
                 </div>
             </div>
@@ -258,10 +254,10 @@
                      <a href="#" id="mobile-lang-trigger" class="block text-center transition-colors duration-300 sft21-nav-link mobile-language-trigger text-gray-300 hover:text-fluorescent-green">
                          <i class="fas fa-globe mr-2"></i> Odaberi jezik <i class="fas fa-chevron-down ml-1 text-xs"></i>
                      </a>
-<div id="mobile-lang-dropdown" class="language-dropdown-mobile">
-    <a href="#" data-lang="en" class="language-item"> <img src="https://flagcdn.com/w20/gb.png" alt="Engleski" class="flag-image"> <span>ENG</span> </a>
-    <a href="#" data-lang="hr" class="language-item"> <img src="https://flagcdn.com/w20/hr.png" alt="Hrvatski" class="flag-image"> <span>HRV</span> </a>
-</div>
+                     <div id="mobile-lang-dropdown" class="language-dropdown-mobile">
+                        <a href="#" class="language-item"> <img src="https://flagcdn.com/w20/gb.png" alt="Engleski" class="flag-image"> <span>ENG</span> </a>
+                        <a href="#" class="language-item"> <img src="https://flagcdn.com/w20/hr.png" alt="Hrvatski" class="flag-image"> <span>HRV</span> </a>
+                    </div>
                 </div>
                 <a href="login.html" class="btn-outline text-center text-xs">Prijava</a>
                 <a href="register.html" class="btn-primary text-center text-xs">Registracija</a>
@@ -2617,4 +2613,65 @@ const setTheme = (isLight) => {
     });
 </script>
 </body>
+
+</script>
+
+<!-- NOVI SCRIPT BLOK ZA WELCOME POPUP -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Selektori za elemente
+        const welcomePopup = document.getElementById('welcome-popup');
+        const popupOverlay = document.getElementById('popup-overlay');
+        const continueBtn = document.getElementById('welcome-popup-continue');
+        const closeBtn = welcomePopup.querySelector('.popup-close');
+        const body = document.body;
+
+        // Funkcija za zatvaranje
+        const closeWelcomePopup = () => {
+            if (welcomePopup) welcomePopup.style.display = 'none';
+            if (popupOverlay) popupOverlay.style.display = 'none';
+            if (body) body.classList.remove('overflow-hidden');
+        };
+
+        // Funkcija za otvaranje
+        const showWelcomePopup = () => {
+            if (welcomePopup && popupOverlay && body) {
+                popupOverlay.style.display = 'flex';
+                welcomePopup.style.display = 'block';
+                body.classList.add('overflow-hidden');
+            }
+        };
+
+        // Glavna logika
+        // Provjeri sessionStorage da li je popup već prikazan
+        if (!sessionStorage.getItem('sft21_welcome_shown')) {
+            showWelcomePopup();
+            // Postavi oznaku da je prikazan
+            sessionStorage.setItem('sft21_welcome_shown', 'true');
+        }
+
+        // Dodaj listenere za zatvaranje
+        if (continueBtn) {
+            continueBtn.addEventListener('click', closeWelcomePopup);
+        }
+        if (closeBtn) {
+            closeBtn.addEventListener('click', closeWelcomePopup);
+        }
+        // Zatvaranje klikom na pozadinu
+        if (popupOverlay) {
+            popupOverlay.addEventListener('click', (e) => {
+                if (e.target === popupOverlay) {
+                    // Pozovi globalnu funkciju za zatvaranje svih popupa
+                    // da bi se resetirale i druge forme ako su bile otvorene
+                    if (typeof window.closeAllPopups === 'function') {
+                        window.closeAllPopups();
+                    } else {
+                        // Fallback ako globalna funkcija ne postoji
+                        closeWelcomePopup();
+                    }
+                }
+            });
+        }
+    });
+</script>
 </html>
