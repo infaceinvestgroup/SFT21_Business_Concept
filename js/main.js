@@ -10,7 +10,11 @@ async function i18n_init() {
     // Određujemo jezik, ali ga nećemo odmah koristiti.
     const savedLang = localStorage.getItem('sft21_lang') || 'hr';
 
-
+    // ===============================================================
+    // #### DIJAGNOSTIČKI BLOK - SVE VEZANO ZA PRIJEVODE JE ISKLJUČENO ####
+    // Sljedeći dio koda koji učitava prijevode je namjerno stavljen
+    // u komentar kako bismo testirali ostatak aplikacije.
+    // ===============================================================
     
     // Inicijaliziraj i18next instancu
     await i18next.use(i18nextHttpBackend).init({
@@ -686,8 +690,86 @@ function initializeAppLogic() {
 
     // User Counter Widget
     if (userCounterWidget && userCounterHeader) {
-        // ... (cijela logika za user counter widget ide ovdje)
-    }
+        if (userCounterWidget && userCounterHeader && userCounterList && userCounterNumberEl && userCounterHideBtn && userCounterCloseBtn && userCounterShowBtn && body) {
+            userCounterHeader.addEventListener('mousedown', (e) => { 
+                if (e.target === userCounterHeader || (userCounterHeader.contains(e.target) && !e.target.closest('button'))) { 
+                    isDraggingCounter = true; 
+                    userCounterWidget.classList.add('dragging'); 
+                    dragCounterOffsetX = e.clientX - userCounterWidget.offsetLeft; 
+                    dragCounterOffsetY = e.clientY - userCounterWidget.offsetTop; 
+                    e.preventDefault(); 
+                } 
+            });
+            document.addEventListener('mousemove', (e) => { 
+                if (!isDraggingCounter) return; 
+                let newLeft = e.clientX - dragCounterOffsetX; 
+                let newTop = e.clientY - dragCounterOffsetY; 
+                const widgetRect = userCounterWidget.getBoundingClientRect(); 
+                const maxX = window.innerWidth - widgetRect.width; 
+                const maxY = window.innerHeight - widgetRect.height; 
+                newLeft = Math.max(0, Math.min(newLeft, maxX)); 
+                newTop = Math.max(0, Math.min(newTop, maxY)); 
+                userCounterWidget.style.left = `${newLeft}px`; 
+                userCounterWidget.style.top = `${newTop}px`; 
+            });
+            document.addEventListener('mouseup', () => { 
+                if (isDraggingCounter) { 
+                    isDraggingCounter = false; 
+                    userCounterWidget.classList.remove('dragging'); 
+                } 
+            });
+            userCounterCloseBtn.addEventListener('click', hideWidget); 
+            userCounterHideBtn.addEventListener('click', hideWidget);
+            userCounterShowBtn.addEventListener('click', () => { 
+                userCounterWidget.classList.remove('hidden'); 
+                userCounterShowBtn.classList.remove('visible'); 
+                counterWidgetVisible = true; 
+                userCounterWidget.style.top = '100px'; 
+                userCounterWidget.style.left = ''; 
+                userCounterWidget.style.right = '30px'; 
+            });
+            let currentUsers = parseInt(userCounterNumberEl?.textContent?.replace(/,/g, '') || '12345'); 
+            function simulateNewUser() { 
+                if (!counterWidgetVisible || !userCounterList || !userCounterNumberEl) { 
+                    setTimeout(simulateNewUser, 20000 + Math.random() * 15000); 
+                    return; 
+                } 
+                const countries = [ { code: 'hr', name: 'Croatia' }, { code: 'rs', name: 'Serbia' }, { code: 'ba', name: 'Bosnia' }, { code: 'si', name: 'Slovenia' }, { code: 'de', name: 'Germany' }, { code: 'at', name: 'Austria' }, { code: 'it', name: 'Italy' }, { code: 'hu', name: 'Hungary' }, { code: 'cz', name: 'Czech Republic' }, { code: 'sk', name: 'Slovakia' } ]; 
+                const firstNames = ['Ivan', 'Marko', 'Ana', 'Petra', 'Nikola', 'Luka', 'Maja', 'Sara', 'Josip', 'Tomislav', 'Milan', 'Stefan', 'Amina', 'Jan', 'Matej', 'Zoran', 'Goran']; 
+                const lastNames = ['Horvat', 'Novak', 'Kovačević', 'Petrović', 'Jurić', 'Marić', 'Pavlović', 'Knežević', 'Babić', 'Vuković', 'Marković', 'Popović']; 
+                const randomCountry = countries[Math.floor(Math.random() * countries.length)]; 
+                const randomFirstName = firstNames[Math.floor(Math.random() * firstNames.length)]; 
+                const randomLastName = lastNames[Math.floor(Math.random() * lastNames.length)]; 
+                const username = `${randomFirstName}_${randomLastName.substring(0,3)}`.toLowerCase(); 
+                const placeholder = userCounterList.querySelector('.user-counter-placeholder'); 
+                if (placeholder) placeholder.remove(); 
+                const newUserItem = document.createElement('div'); 
+                newUserItem.className = 'user-counter-item'; 
+                newUserItem.innerHTML = `<img src="https://flagcdn.com/w40/${randomCountry.code}.png" alt="${randomCountry.name}" class="user-counter-flag"><div class="user-counter-name">${username}</div><div class="user-counter-time">${i18next.t('translation.userCounter.justNow')}</div>`; 
+                userCounterList.insertBefore(newUserItem, userCounterList.firstChild); 
+                const times = userCounterList.querySelectorAll('.user-counter-time'); 
+                times.forEach((time, index) => { 
+                    if (index > 0) { 
+                        if (time.textContent === i18next.t('translation.userCounter.justNow')) { 
+                            time.textContent = i18next.t('translation.userCounter.minutesAgo', { count: 1 }); 
+                        } else if (time.textContent.includes('min')) { 
+                            const minutes = parseInt(time.textContent.match(/\d+/)?.[0] || '0'); 
+                            if (minutes < 59) { 
+                                time.textContent = i18next.t('translation.userCounter.minutesAgo', { count: minutes + 1 }); 
+                            } 
+                        } 
+                    } 
+                }); 
+                while (userCounterList.children.length > 6) { 
+                    userCounterList.removeChild(userCounterList.lastChild); 
+                } 
+                currentUsers++; 
+                userCounterNumberEl.textContent = currentUsers.toLocaleString(); 
+                setTimeout(simulateNewUser, 10000 + Math.random() * 25000); 
+            } 
+            setTimeout(simulateNewUser, 5000);
+        }
+        }
 
     // Canvas Animacija
     const canvas = document.getElementById('network-canvas');
