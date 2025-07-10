@@ -10,15 +10,34 @@
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <!-- I18next biblioteke za prevođenje -->
-<script src="https://unpkg.com/i18next/i18next.min.js"></script>
-<script src="https://unpkg.com/i18next-http-backend/i18nextHttpBackend.min.js"></script>
 </head>
 
 <body class="bg-gray-900">
     <canvas id="network-canvas"></canvas>
     <div class="custom-cursor"></div>
     <div id="popup-overlay" class="popup-overlay">
+                <div id="welcome-popup" class="popup-content" style="display: none;">
+            <button class="popup-close" aria-label="Zatvori popup">×</button>
+            <h4>Poštovani korisnici…</h4>
+            <p>S obzirom na činjenicu da nastavljamo poslovanje nakon prekida koji je trajao tri godine, svjesni da će se u toj situaciji pratiti svaki naš korak i sve što činimo te kako bi održali transparentnost uz iznošenje istine, pravih i relevantnih informacija, želimo da napomenemo slijedeće;</p>
+            <ul style="list-style-type: disc; text-align: left; padding-left: 20px; margin-bottom: 1rem;">
+                <li>ova web stranica se servira preko HTTPS (statički HTML/CSS/JS), nema backend-a niti baze podataka.</li>
+                <li>Stranica je linearna, bez sticky navigacije ili interaktivnih elemenata, nema metatagova za pretraživače, nije optimizirana, nema ALT oznaka, meta opisa, struktuiranih naslova, nedostaje joj napredna optimizacija mobilnosti i performansi...</li>
+            </ul>
+            <p>Ovo je statička DEMO stranica, čija je svrha u ovoj fazi razvoja, prvenstveno informirati članove iz starog sistema o pravilima novog sistema poslovanja i trenutnoj fazi razvoja.</p>
+            <p>Na ovoj stranici, imate mogućnost pogledati i proučiti “SFT21 Business Concept” prezentaciju novog, odnosno nadograđenog sistema poslovanja, kao i mnoge druge informacije vezano za startne i investicijske paketa te nastavak poslovanja.</p>
+            <p>S obzirom da nam je primarni cilj u ovoj fazi razvoja prikupiti sredstva potrebna za izradu odnosno nadopunu stranica backofficea odnosno kontrolne ploče u ovoj fazi razvoja nije moguće uplatiti startne pakete već je moguće uplatiti ulaganje u investicijske pakete.</p>
+            <p>Osim toga na stranici Odluka o nastavku poslovanja imate mogućnost vidjeti i proučiti opcije prema kojim ćete se izjasniti da li odustajete ili nastavljate poslovanje uz ulaganje u Investicijski paket ili nastavljate bez ulaganja u Investicijski paket. Odluka o nastavku poslovanja koju donesete na ovim stranicama informativne je prirode dok ćete pravo odluku imati mogućnost donijeti neposredno prije početka poslovanja sukladno novom poslovnom modelu.</p>
+            <p>Važno je napomenuti, da vašom trenutnom odlukom na ovim stranicama, ukoliko se odlučite imate mogućnost odabrati jedan ili više Investicijskih paketa ali nemate mogućnost uplatiti iste.</p>
+            <p>Vaša odluka o nastavku poslovanja i ulaganju u Investicijske pakete na ovim stranicama, trebala bi nam biti pokazatelj sa kojim brojem korisnika iz starog sistema možemo računati da nastavljaju dalje sa nama kao i sa iznosom sredstava na koji bi mogli računati na osnovu iskazanog interesa za investicijske pakete.</p>
+            <p>Ova stranica treba poslužiti kako starim članovima da se izjasne o nastavku i ulaganju u investicijske pakete tako i novim potencijalnim investitorima ili novim članovima da iskažu svoj interes ukoliko žele ulagati u investicijske pakete i/ili započeti poslovanje.</p>
+            <p>Ovo je stranica, koja treba poslužiti za gore navedeno i kao takva je pokazatelj u kojem smjeru idemo i kako bi u konačnici moglo sve izgledati.</p>
+            <p>Da li ćemo nastaviti sa dizajnom iz staroga sistema pa se prilagođavati istome, što nam je trenutno najjeftinija varijanta s obzirom na situaciju u kojom se nalazimo ili ćemo nastaviti sa novim predloženim dizajnom ili možda sa još boljim i naprednijim dizajnom i tehnologijama, pitanje je naših financijskih mogućnosti u datom trenutku.</p>
+            <p>Međutim, složiti ćete se s nama, bez obzira na dizajn i “kozmetičke” promjene, najvažnije je da osiguramo sredstva neophodna za završetak i nadogradnju potrebnih softvera i aplikacija, kako bi nastavili poslovanje.</p>
+            <div class="text-center mt-6">
+              <button id="welcome-popup-continue" class="btn-primary">NASTAVI</button>
+            </div>
+        </div>
         <div id="validation-popup" class="popup-content" style="display: none;">
         </div>
         <div id="contact-form-popup" class="popup-content" style="display: none;">
@@ -175,7 +194,6 @@
                             <a href="#" class="dropdown-item block px-4 py-2 text-sm text-gray-200 hover:bg-purple-700 hover:text-white">SFnet</a>
                             <a href="#" class="dropdown-item block px-4 py-2 text-sm text-gray-200 hover:bg-purple-700 hover:text-white">SFshop</a>
                             <a href="#" class="dropdown-item block px-4 py-2 text-sm text-gray-200 hover:bg-purple-700 hover:text-white">SFpodrška</a>
-                            <a href="sfalgoritam.html" class="dropdown-item block px-4 py-2 text-sm text-gray-200 hover:bg-purple-700 hover:text-white">SFalgoritam</a>
                             <a href="video_player.html?from=index.html" class="dropdown-item block px-4 py-2 text-sm text-gray-200 hover:bg-purple-700 hover:text-white">Video player</a>
                         </div>
                     </div>
@@ -189,10 +207,10 @@
                         <button id="desktop-lang-trigger" class="language-trigger text-white hover:text-fluorescent-green transition-colors duration-300 text-xl">
                             <i class="fas fa-globe"></i>
                         </button>
-<div id="desktop-lang-dropdown" class="language-dropdown">
-    <a href="#" data-lang="en" class="language-item"> <img src="https://flagcdn.com/w20/gb.png" alt="Engleski" class="flag-image"> <span>ENG</span> </a>
-    <a href="#" data-lang="hr" class="language-item"> <img src="https://flagcdn.com/w20/hr.png" alt="Hrvatski" class="flag-image"> <span>HRV</span> </a>
-</div>
+                        <div id="desktop-lang-dropdown" class="language-dropdown">
+                            <a href="#" class="language-item"> <img src="https://flagcdn.com/w20/gb.png" alt="Engleski" class="flag-image"> <span>ENG</span> </a>
+                            <a href="#" class="language-item"> <img src="https://flagcdn.com/w20/hr.png" alt="Hrvatski" class="flag-image"> <span>HRV</span> </a>
+                        </div>
                     </div>
                     <a href="login.html" class="btn-outline text-xs">Prijava</a>
                     <a href="register.html" class="btn-primary text-xs">Registracija</a>
@@ -227,7 +245,6 @@
                     <a href="#" class="dropdown-item block py-2 text-center text-sm bg-gray-800 hover:bg-purple-700 text-gray-300 hover:text-white">SFnet</a>
                     <a href="#" class="dropdown-item block py-2 text-center text-sm bg-gray-800 hover:bg-purple-700 text-gray-300 hover:text-white">SFshop</a>
                     <a href="#" class="dropdown-item block py-2 text-center text-sm bg-gray-800 hover:bg-purple-700 text-gray-300 hover:text-white">SFpodrška</a>
-                    <a href="sfalgoritam.html" class="dropdown-item block py-2 text-center text-sm bg-gray-800 hover:bg-purple-700 text-gray-300 hover:text-white">SFalgoritam</a>
                     <a href="video_player.html?from=index.html" class="dropdown-item block py-2 text-center text-sm bg-gray-800 hover:bg-purple-700 text-gray-300 hover:text-white">Video player</a>
                 </div>
             </div>
@@ -236,10 +253,10 @@
                      <a href="#" id="mobile-lang-trigger" class="block text-center transition-colors duration-300 sft21-nav-link mobile-language-trigger text-gray-300 hover:text-fluorescent-green">
                          <i class="fas fa-globe mr-2"></i> Odaberi jezik <i class="fas fa-chevron-down ml-1 text-xs"></i>
                      </a>
-<div id="mobile-lang-dropdown" class="language-dropdown-mobile">
-    <a href="#" data-lang="en" class="language-item"> <img src="https://flagcdn.com/w20/gb.png" alt="Engleski" class="flag-image"> <span>ENG</span> </a>
-    <a href="#" data-lang="hr" class="language-item"> <img src="https://flagcdn.com/w20/hr.png" alt="Hrvatski" class="flag-image"> <span>HRV</span> </a>
-</div>
+                     <div id="mobile-lang-dropdown" class="language-dropdown-mobile">
+                        <a href="#" class="language-item"> <img src="https://flagcdn.com/w20/gb.png" alt="Engleski" class="flag-image"> <span>ENG</span> </a>
+                        <a href="#" class="language-item"> <img src="https://flagcdn.com/w20/hr.png" alt="Hrvatski" class="flag-image"> <span>HRV</span> </a>
+                    </div>
                 </div>
                 <a href="login.html" class="btn-outline text-center text-xs">Prijava</a>
                 <a href="register.html" class="btn-primary text-center text-xs">Registracija</a>
@@ -2595,4 +2612,65 @@ const setTheme = (isLight) => {
     });
 </script>
 </body>
+
+</script>
+
+<!-- NOVI SCRIPT BLOK ZA WELCOME POPUP -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Selektori za elemente
+        const welcomePopup = document.getElementById('welcome-popup');
+        const popupOverlay = document.getElementById('popup-overlay');
+        const continueBtn = document.getElementById('welcome-popup-continue');
+        const closeBtn = welcomePopup.querySelector('.popup-close');
+        const body = document.body;
+
+        // Funkcija za zatvaranje
+        const closeWelcomePopup = () => {
+            if (welcomePopup) welcomePopup.style.display = 'none';
+            if (popupOverlay) popupOverlay.style.display = 'none';
+            if (body) body.classList.remove('overflow-hidden');
+        };
+
+        // Funkcija za otvaranje
+        const showWelcomePopup = () => {
+            if (welcomePopup && popupOverlay && body) {
+                popupOverlay.style.display = 'flex';
+                welcomePopup.style.display = 'block';
+                body.classList.add('overflow-hidden');
+            }
+        };
+
+        // Glavna logika
+        // Provjeri sessionStorage da li je popup već prikazan
+        if (!sessionStorage.getItem('sft21_welcome_shown')) {
+            showWelcomePopup();
+            // Postavi oznaku da je prikazan
+            sessionStorage.setItem('sft21_welcome_shown', 'true');
+        }
+
+        // Dodaj listenere za zatvaranje
+        if (continueBtn) {
+            continueBtn.addEventListener('click', closeWelcomePopup);
+        }
+        if (closeBtn) {
+            closeBtn.addEventListener('click', closeWelcomePopup);
+        }
+        // Zatvaranje klikom na pozadinu
+        if (popupOverlay) {
+            popupOverlay.addEventListener('click', (e) => {
+                if (e.target === popupOverlay) {
+                    // Pozovi globalnu funkciju za zatvaranje svih popupa
+                    // da bi se resetirale i druge forme ako su bile otvorene
+                    if (typeof window.closeAllPopups === 'function') {
+                        window.closeAllPopups();
+                    } else {
+                        // Fallback ako globalna funkcija ne postoji
+                        closeWelcomePopup();
+                    }
+                }
+            });
+        }
+    });
+</script>
 </html>
