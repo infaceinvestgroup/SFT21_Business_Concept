@@ -115,9 +115,6 @@ nav.fixed {
      display: none; /* Sakriven po defaultu */
 }
 
-/* ======================================= */
-/* === SVI ISPRAVLJENI MOBILNI STILOVI === */
-/* ======================================= */
 @media (max-width: 768px) {
   
     .hidden.md\:flex {
@@ -151,37 +148,44 @@ nav.fixed {
       transform: translateY(-8px) rotate(-45deg);
     }
   
+    /* KONSOLIDIRANI I ISPRAVLJENI STILOVI ZA GLAVNI MOBILNI MENI */
     .nav-menu {
       position: fixed;
-      top: 80px;
-      left: -100%;
+      top: 80px; /* Ispod fiksirane navigacije */
+      left: -100%; /* Sakriven izvan ekrana */
       width: 100%;
-      height: (100vh);
-      background-color: #0d0118;
+      height: calc(100vh - 80px); /* ISPRAVNA KALKULACIJA VISINE */
+      background-color: #0d0118; /* Tamna pozadina */
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: center; /* Centriraj linkove unutar menija */
       padding: 20px;
       transition: left 0.5s ease-in-out;
       z-index: 100;
-      border-right: 1px solid var(--fluorescent-green);
-      overflow-y: hidden; /* Sakrij skrolanje dok nije aktivan */
-      padding-bottom: 100px; /* Dodaj padding na dno da se zadnje stavke vide */
-      box-sizing: border-box;
+      border-right: 1px solid var(--fluorescent-green); /* Dodatni obrub */
+      overflow-y: hidden; /* Sakrij skrolanje dok meni nije aktivan */
+      padding-bottom: 100px; /* Dodatni padding na dnu za gumbove */
+      box-sizing: border-box; /* Važno za padding */
     }
   
     .nav-menu.active {
-      left: 0;
+      left: 0; /* Prikaži meni */
       overflow-y: auto; /* Omogući skrolanje kada je aktivan */
-
+      -webkit-overflow-scrolling: touch; /* Za glatkije skrolanje na iOS */
     }
   
+    /* Stilovi za pojedinačne linkove unutar glavnog mobilnog menija */
     .nav-menu a {
         color: white;
         display: block;
         padding: 0.75rem 1.5rem;
-        text-align: center;
+        text-align: center; /* Centriranje teksta */
+        width: 100%; /* Da zauzme punu širinu */
         transition: background-color 0.3s ease;
+        border-bottom: 1px solid rgba(128, 255, 0, 0.1); /* Lagani zeleni separator */
+    }
+    .nav-menu a:last-child {
+        border-bottom: none; /* Makni granicu na zadnjem elementu */
     }
   
     .nav-menu a:hover {
@@ -191,8 +195,84 @@ nav.fixed {
     .nav-menu a.active {
          color: var(--fluorescent-green);
     }
-}
 
+    /* KONSOLIDIRANI I ISPRAVLJENI STILOVI ZA PADUĆI IZBORNIK "PLATFORME" UNUTAR MOBILNOG MENIJA */
+    .nav-menu .sft21-nav-item.dropdown .dropdown-menu {
+        display: none; /* Skriven po defaultu (JS ga kontrolira) */
+        position: static; /* KLJUČNO: Mora biti static da se prikaže unutar scrollable flowa roditelja */
+        max-height: 40vh; /* Maksimalna visina padajućeg menija (npr. 40% visine ekrana) */
+        overflow-y: auto;   /* KLJUČNO: Omogući vertikalno skrolanje unutar padajućeg menija */
+        -webkit-overflow-scrolling: touch; /* Poboljšava skrolanje na iOS uređajima */
+        background-color: #1f2937; /* Tamnija pozadina za razliku od glavnog menija */
+        border-radius: 0.375rem; /* Zaobljeni rubovi */
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Mala sjena */
+        margin-top: 0.5rem; /* Razmak od gumba "Platforme" */
+        width: 90%; /* Širina padajućeg menija */
+        margin-left: auto; /* Centriranje padajućeg menija */
+        margin-right: auto; /* Centriranje padajućeg menija */
+        padding: 0.5rem 0; /* Padding unutar dropdowna */
+    }
+
+    /* Kada je dropdown otvoren na mobilnom (ovo kontrolira JS dodavanjem klase .open) */
+    .nav-menu .sft21-nav-item.dropdown.open .dropdown-menu {
+        display: block; /* Pokaži ga */
+    }
+
+    /* Stilovi za stavke unutar padajućeg izbornika "Platforme" */
+    .nav-menu .sft21-nav-item.dropdown .dropdown-menu .dropdown-item {
+        padding: 0.5rem 1rem; /* Vertikalni i horizontalni padding */
+        text-align: center; /* Centriranje teksta */
+        display: block; /* Osigurava da zauzimaju punu širinu za klik */
+        color: #e0e0e0; /* Boja teksta unutar dropdown stavki */
+        font-size: 0.875rem; /* Veličina fonta */
+    }
+    .nav-menu .sft21-nav-item.dropdown .dropdown-menu .dropdown-item:hover {
+        background-color: var(--primary-color); /* Hover efekt */
+        color: white;
+    }
+
+    /* Stil za sam okidač (link s ikonom) u mobilnom izborniku */
+    .nav-menu .mobile-dropdown-toggle {
+        display: flex; /* Osiguraj da se sve poravna */
+        justify-content: space-between; /* Da ikona bude desno */
+        align-items: center; /* Poravnaj okomito */
+        width: 100%; /* Da zauzme cijelu širinu */
+        padding: 0.75rem 1.5rem;
+        color: white;
+        text-align: center; /* Centriranje teksta za okidač Platforme */
+        border-bottom: 1px solid rgba(128, 255, 0, 0.1); /* Lagani zeleni separator */
+    }
+
+    .nav-menu .mobile-dropdown-toggle:hover {
+        background-color: rgba(255, 95, 0, 0.1); /* Blagi narančasti hover */
+    }
+
+    .nav-menu .mobile-dropdown-toggle i.fas {
+        margin-left: 0.5rem; /* Malo razmaka između teksta i ikone */
+        transition: transform 0.3s ease;
+    }
+    /* Rotacija za ikonu kada je dropdown otvoren (kontrolira JS dodavanjem klase .open) */
+    .nav-menu .sft21-nav-item.dropdown.open .mobile-dropdown-toggle i.fas {
+        transform: rotate(180deg);
+    }
+
+    /* Jezik selector unutar mobilnog menija */
+    .nav-menu .mobile-language-selector .language-dropdown-mobile {
+        display: none; /* Skriven po defaultu (JS ga kontrolira) */
+        max-height: 20vh; /* Ograničite visinu ako je lista jezika dugačka */
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .nav-menu .mobile-language-selector.open .language-dropdown-mobile {
+        display: block; /* Prikaži kad je selector otvoren */
+    }
+
+    /* Dodatni padding na dno mobilnog menija kako bi se gumbovi "Prijava" i "Registracija" uvijek vidjeli */
+    .nav-menu > .flex.flex-col.space-y-3.mt-5.px-6 {
+        margin-bottom: 20px; /* Prilagodite ako je potrebno više prostora */
+    }
+
+} /* KRAJ @media (max-width: 768px) */
 
 /* --- Buttons --- */
 .btn-primary {
