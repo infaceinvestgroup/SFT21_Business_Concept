@@ -1727,6 +1727,7 @@ if (ip7Do10kBtn && ip7AmountInputContainer && ip7AmountInput && ip7AmountConfirm
 } else { console.warn("Neki elementi za IP7 paket (stari) nisu pronađeni u DOM-u."); }
 
 
+
 // Obrađuje slanje Kontakt forme
 if (contactForm && contactNameInput && contactEmailInput && contactPhoneInput && validationPopup) {
     contactForm.addEventListener('submit', function(event) {
@@ -1762,7 +1763,7 @@ if (contactForm && contactNameInput && contactEmailInput && contactPhoneInput &&
                     showPopup(validationPopup);
                     contactForm.reset();
                 } else {
-                    throw new Error(data.message);
+                    throw new Error(data.message || 'Nepoznata greška sa servera.');
                 }
             })
             .catch(error => {
@@ -1772,7 +1773,6 @@ if (contactForm && contactNameInput && contactEmailInput && contactPhoneInput &&
             });
     });
 }
-
  if (starterPackageSelectBtns.length > 0 && starterPackageInfoPopup) {
      starterPackageSelectBtns.forEach(btn => {
          btn.addEventListener('click', (e) => {
