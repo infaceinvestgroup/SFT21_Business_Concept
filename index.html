@@ -2628,74 +2628,15 @@ const setTheme = (isLight) => {
 <!-- NOVI SCRIPT BLOK ZA WELCOME POPUP -->
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Selektori za elemente
-        const welcomePopup = document.getElementById('welcome-popup');
-        const popupOverlay = document.getElementById('popup-overlay');
-        const continueBtn = document.getElementById('welcome-popup-continue');
-        const closeBtn = welcomePopup.querySelector('.popup-close');
-        const body = document.body;
 
-        // Funkcija za zatvaranje
-        const closeWelcomePopup = () => {
-            if (welcomePopup) welcomePopup.style.display = 'none';
-            if (popupOverlay) popupOverlay.style.display = 'none';
-            if (body) body.classList.remove('overflow-hidden');
-        };
+        // OBAVEZNO ZALIJEPITE NOVI URL OVDJE
+        const WEBAPP_URL = 'ZALIJEPITE_NOVI_URL_IZ_KORAKA_1_OVDJE';
 
-        // Funkcija za otvaranje
-        const showWelcomePopup = () => {
-            if (welcomePopup && popupOverlay && body) {
-                popupOverlay.style.display = 'flex';
-                welcomePopup.style.display = 'block';
-                body.classList.add('overflow-hidden');
-            }
-        };
-
-        // Glavna logika
-        // Provjeri sessionStorage da li je popup već prikazan
-        if (!sessionStorage.getItem('sft21_welcome_shown')) {
-            showWelcomePopup();
-            // Postavi oznaku da je prikazan
-            sessionStorage.setItem('sft21_welcome_shown', 'true');
-        }
-
-        // Dodaj listenere za zatvaranje
-        if (continueBtn) {
-            continueBtn.addEventListener('click', closeWelcomePopup);
-        }
-        if (closeBtn) {
-            closeBtn.addEventListener('click', closeWelcomePopup);
-        }
-        // Zatvaranje klikom na pozadinu
-        if (popupOverlay) {
-            popupOverlay.addEventListener('click', (e) => {
-                if (e.target === popupOverlay) {
-                    // Pozovi globalnu funkciju za zatvaranje svih popupa
-                    // da bi se resetirale i druge forme ako su bile otvorene
-                    if (typeof window.closeAllPopups === 'function') {
-                        window.closeAllPopups();
-                    } else {
-                        // Fallback ako globalna funkcija ne postoji
-                        closeWelcomePopup();
-                    }
-                }
-            });
-        }
-    });
-</script>
-
-<!-- KONAČNI KOD ZA SLANJE KONTAKT FORME -->
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-
-        // Adresa vaše Google skripte.
-        const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbwiMvjzpamkGiqM0qTATkTrQbx70MpeaUjZXNvFpW8HaKqsAjWASGcvH4GzniIv3X0/exec';
-
+        // --- FUNKCIONALNOST ZA GLAVNU KONTAKT FORMU ---
         const mainContactForm = document.querySelector('#kontakt form');
         if (mainContactForm) {
             mainContactForm.addEventListener('submit', function(event) {
                 event.preventDefault();
-                
                 const formData = new FormData(mainContactForm);
                 formData.append('requestType', 'contact');
                 
@@ -2704,7 +2645,7 @@ const setTheme = (isLight) => {
                 if(validationPopup && popupOverlay) {
                     popupOverlay.style.display = 'flex';
                     validationPopup.style.display = 'block';
-                    validationPopup.innerHTML = `<h4>Slanje...</h4><p>Molimo pričekajte.</p>`;
+                    validationPopup.innerHTML = `<h4>Slanje...</h4>`;
                 }
                 
                 fetch(WEBAPP_URL, { method: 'POST', body: formData })
@@ -2713,13 +2654,43 @@ const setTheme = (isLight) => {
                         if (data.success) {
                             validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori popup" onclick="document.getElementById('popup-overlay').style.display='none'">×</button><h4>Poslano!</h4><p>Hvala Vam na poruci.</p>`;
                             mainContactForm.reset();
-                        } else {
-                            throw new Error(data.message || 'Nepoznata greška.');
-                        }
+                        } else { throw new Error(data.message || 'Greška.'); }
                     })
                     .catch(error => {
                         console.error('Greška:', error);
-                        validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori popup" onclick="document.getElementById('popup-overlay').style.display='none'">×</button><h4>Greška</h4><p>Došlo je do pogreške prilikom slanja.</p>`;
+                        validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori popup" onclick="document.getElementById('popup-overlay').style.display='none'">×</button><h4>Greška</h4><p>Pokušajte ponovo.</p>`;
+                    });
+            });
+        }
+
+        // --- FUNKCIONALNOST ZA FORMU "STARTER PAKETI" ---
+        const starterPackageForm = document.getElementById('starter-package-email-form');
+        if (starterPackageForm) {
+            starterPackageForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                const formData = new FormData(starterPackageForm);
+                formData.append('requestType', 'starterInterest');
+
+                const validationPopup = document.getElementById('validation-popup');
+                const popupOverlay = document.getElementById('popup-overlay');
+                if (validationPopup && popupOverlay) {
+                    popupOverlay.style.display = 'flex';
+                    validationPopup.style.display = 'block';
+                    validationPopup.innerHTML = `<h4>Slanje...</h4>`;
+                }
+
+                fetch(WEBAPP_URL, { method: 'POST', body: formData })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori popup" onclick="document.getElementById('popup-overlay').style.display='none'">×</button><h4>Hvala!</h4><p>Vaša email adresa je zabilježena.</p>`;
+                            starterPackageForm.reset();
+                        } else { throw new Error(data.message || 'Greška.'); }
+                    })
+                    .catch(error => {
+                        console.error('Greška:', error);
+                        validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori popup" onclick="document.getElementById('popup-overlay').style.display='none'">×</button><h4>Greška</h4><p>Pokušajte ponovo.</p>`;
                     });
             });
         }
