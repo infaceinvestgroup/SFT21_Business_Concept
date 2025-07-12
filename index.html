@@ -2671,12 +2671,11 @@ const setTheme = (isLight) => {
 </script>
 
 <!-- NOVI BLOK KODA SAMO ZA GOOGLE SHEETS INTEGRACIJU -->
-<!-- KONAČNI ISPRAVAK KODA ZA GOOGLE SHEETS -->
 <script>
     document.addEventListener('DOMContentLoaded', () => {
 
-        // Adresa vaše NOVE Google skripte. Ne mijenjajte je.
-        const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbxgyvWLOJfnk8c1JGXJNlYAJJDeP8o9f4AGIm0UB11akvgmdPN5s3HAWMBJV_Edmr1z/exec';
+        // Adresa vaše Google skripte.
+        const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbwiMvjzpamkGiqM0qTATkTrQbx70MpeaUjZXNvFpW8HaKqsAjWASGcvH4GzniIv3X0/exec';
 
         // --- FUNKCIONALNOST ZA GLAVNU KONTAKT FORMU ---
         const mainContactForm = document.querySelector('#kontakt form');
@@ -2684,6 +2683,7 @@ const setTheme = (isLight) => {
             mainContactForm.addEventListener('submit', function(event) {
                 event.preventDefault();
                 
+                // Prikazujemo popup za slanje...
                 const validationPopup = document.getElementById('validation-popup');
                 const popupOverlay = document.getElementById('popup-overlay');
                 if(validationPopup && popupOverlay) {
@@ -2692,10 +2692,13 @@ const setTheme = (isLight) => {
                     validationPopup.innerHTML = `<h4>Slanje...</h4><p>Molimo pričekajte.</p>`;
                 }
                 
-                // Ispravan način slanja POST podataka
+                // Ispravan način slanja podataka
+                const formData = new FormData(mainContactForm);
+                const searchParams = new URLSearchParams(formData);
+
                 fetch(WEBAPP_URL, {
                     method: 'POST',
-                    body: new FormData(mainContactForm) // Ovdje koristimo FormData
+                    body: searchParams // Šaljemo podatke u formatu koji Apps Script razumije
                 })
                 .then(res => res.json())
                 .then(data => {
@@ -2703,7 +2706,7 @@ const setTheme = (isLight) => {
                         validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori popup" onclick="document.getElementById('popup-overlay').style.display='none'">×</button><h4>Poslano!</h4><p>Hvala Vam na poruci.</p>`;
                         mainContactForm.reset();
                     } else {
-                        throw new Error(data.message || 'Nepoznata greška.');
+                        throw new Error(data.message || 'Nepoznata greška sa servera.');
                     }
                 })
                 .catch(error => {
@@ -2712,6 +2715,7 @@ const setTheme = (isLight) => {
                 });
             });
         }
+        
     });
 </script>
 </body>
