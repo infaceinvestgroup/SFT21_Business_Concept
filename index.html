@@ -2671,49 +2671,57 @@ const setTheme = (isLight) => {
 </script>
 
 <!-- NOVI BLOK KODA SAMO ZA GOOGLE SHEETS INTEGRACIJU -->
-tDefault();
-        const formData = new FormData(mainContactForm);
-       <script>
+<script>
     document.addEventListener('DOMContentLoaded', () => {
-        const WEBAPP_URL = 'ZALIJEPITE_NOVI_URL_IZ_KORAKA_1_OVDJE';
-        const mainContactForm = document.querySelector('#kontakt form');
 
+        // Adresa vaše Google skripte. NE MIJENJAJTE JE.
+        const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbwiMvjzpamkGiqM0qTATkTrQbx70MpeaUjZXNvFpW8HaKqsAjWASGcvH4GzniIv3X0/exec';
+
+        // --- FUNKCIONALNOST ZA GLAVNU KONTAKT FORMU ---
+        const mainContactForm = document.querySelector('#kontakt form');
         if (mainContactForm) {
             mainContactForm.addEventListener('submit', function(event) {
                 event.preventDefault();
                 
-                // Ručno dohvaćamo vrijednosti
-                const name = document.getElementById('name').value;
-                const email = document.getElementById('email').value;
-                const subject = document.getElementById('subject').value;
-                const message = document.getElementById('message').value;
-
-                // Gradimo URL s parametrima
-                const urlWithParams = `${WEBAPP_URL}?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&subject=${encodeURIComponent(subject)}&message=${encodeURIComponent(message)}`;
+                // Ručno dohvaćamo vrijednosti iz polja pomoću njihovog ID-a
+                const nameValue = document.getElementById('name').value;
+                const emailValue = document.getElementById('email').value;
+                const subjectValue = document.getElementById('subject').value;
+                const messageValue = document.getElementById('message').value;
                 
+                // Pripremamo podatke za slanje u ispravnom formatu za tijelo (body) zahtjeva
+                const formData = new URLSearchParams();
+                formData.append('name', nameValue);
+                formData.append('email', emailValue);
+                formData.append('subject', subjectValue);
+                formData.append('message', messageValue);
+
                 const validationPopup = document.getElementById('validation-popup');
                 const popupOverlay = document.getElementById('popup-overlay');
                 if(validationPopup && popupOverlay) {
                     popupOverlay.style.display = 'flex';
                     validationPopup.style.display = 'block';
-                    validationPopup.innerHTML = `<h4>Slanje...</h4>`;
+                    validationPopup.innerHTML = `<h4>Slanje...</h4><p>Molimo pričekajte.</p>`;
                 }
 
-                // Šaljemo podatke na najjednostavniji mogući način
-                fetch(urlWithParams, { method: 'POST' })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.success) {
-                            validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori popup" onclick="document.getElementById('popup-overlay').style.display='none'">×</button><h4>Poslano!</h4><p>Hvala Vam.</p>`;
-                            mainContactForm.reset();
-                        } else {
-                            throw new Error(data.message || 'Greška.');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Greška:', error);
-                        validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori popup" onclick="document.getElementById('popup-overlay').style.display='none'">×</button><h4>Greška</h4><p>Pokušajte ponovo.</p>`;
-                    });
+                // Šaljemo podatke s ispravno popunjenim tijelom (body)
+                fetch(WEBAPP_URL, {
+                    method: 'POST',
+                    body: formData 
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori popup" onclick="document.getElementById('popup-overlay').style.display='none'">×</button><h4>Poslano!</h4><p>Hvala Vam na poruci.</p>`;
+                        mainContactForm.reset();
+                    } else {
+                        throw new Error(data.message || 'Nepoznata greška sa servera.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Greška:', error);
+                    validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori popup" onclick="document.getElementById('popup-overlay').style.display='none'">×</button><h4>Greška</h4><p>Došlo je do pogreške prilikom slanja. Molimo pokušajte ponovo.</p>`;
+                });
             });
         }
     });
