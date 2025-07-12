@@ -2685,37 +2685,44 @@ const setTheme = (isLight) => {
 </script>
 
 <!-- NOVI BLOK KODA SAMO ZA GOOGLE SHEETS INTEGRACIJU -->
-<!-- DIJAGNOSTIČKI BLOK KODA -->
+<!-- KONAČNI KOD ZA SLANJE KONTAKT FORME -->
 <script>
     document.addEventListener('DOMContentLoaded', () => {
 
-        const mainContactForm = document.querySelector('#kontakt form');
+        // Adresa vaše Google skripte.
+        const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbwiMvjzpamkGiqM0qTATkTrQbx70MpeaUjZXNvFpW8HaKqsAjWASGcvH4GzniIv3X0/exec';
 
+        const mainContactForm = document.querySelector('#kontakt form');
         if (mainContactForm) {
             mainContactForm.addEventListener('submit', function(event) {
-                event.preventDefault(); // Sprječavamo da se stranica ponovno učita
-
-                console.log("--- TESTIRANJE FORME ---");
+                event.preventDefault();
                 
-                // Kreiramo FormData objekt iz forme
                 const formData = new FormData(mainContactForm);
-
-                // Sada ćemo ispisati SVE što se nalazi unutar tog objekta
-                let dataFound = false;
-                console.log("Sadržaj FormData objekta:");
-                for (var pair of formData.entries()) {
-                    console.log(pair[0] + ': ' + pair[1]);
-                    dataFound = true;
+                formData.append('requestType', 'contact');
+                
+                const validationPopup = document.getElementById('validation-popup');
+                const popupOverlay = document.getElementById('popup-overlay');
+                if(validationPopup && popupOverlay) {
+                    popupOverlay.style.display = 'flex';
+                    validationPopup.style.display = 'block';
+                    validationPopup.innerHTML = `<h4>Slanje...</h4><p>Molimo pričekajte.</p>`;
                 }
-
-                if (dataFound) {
-                    alert("Podaci su uspješno pročitani iz forme! Pogledajte konzolu (F12).");
-                } else {
-                    alert("GREŠKA: JavaScript ne može pročitati podatke. Najvjerojatnije nedostaju 'name' atributi u HTML-u forme.");
-                }
+                
+                fetch(WEBAPP_URL, { method: 'POST', body: formData })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori popup" onclick="document.getElementById('popup-overlay').style.display='none'">×</button><h4>Poslano!</h4><p>Hvala Vam na poruci.</p>`;
+                            mainContactForm.reset();
+                        } else {
+                            throw new Error(data.message || 'Nepoznata greška.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Greška:', error);
+                        validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori popup" onclick="document.getElementById('popup-overlay').style.display='none'">×</button><h4>Greška</h4><p>Došlo je do pogreške prilikom slanja.</p>`;
+                    });
             });
-        } else {
-            alert("GREŠKA: JavaScript ne može pronaći glavnu kontakt formu (#kontakt form).");
         }
     });
 </script>
