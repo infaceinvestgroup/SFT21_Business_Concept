@@ -2673,7 +2673,7 @@ const setTheme = (isLight) => {
 <script>
     document.addEventListener('DOMContentLoaded', () => {
 
-        // 1. Adresa vaše Google skripte (ispravna, nova adresa)
+        // 1. Adresa vaše Google skripte
         const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbwiMvjzpamkGiqM0qTATkTrQbx70MpeaUjZXNvFpW8HaKqsAjWASGcvH4GzniIv3X0/exec';
 
         // --- BLOK KODA ZA GLAVNU KONTAKT FORMU ---
@@ -2682,9 +2682,8 @@ const setTheme = (isLight) => {
             mainContactForm.addEventListener('submit', function(event) {
                 event.preventDefault();
                 const formData = new FormData(mainContactForm);
-                // Dodajemo requestType koji je potreban našoj skripti
                 formData.append('requestType', 'contact');
-
+                
                 const nameValue = formData.get('name').trim();
                 const emailValue = formData.get('email').trim();
                 const subjectValue = formData.get('subject').trim();
@@ -2697,7 +2696,7 @@ const setTheme = (isLight) => {
                 
                 const validationPopup = document.getElementById('validation-popup');
                 const popupOverlay = document.getElementById('popup-overlay');
-                if(validationPopup && popupOverlay) {
+                if (validationPopup && popupOverlay) {
                     popupOverlay.style.display = 'flex';
                     validationPopup.style.display = 'block';
                     validationPopup.innerHTML = `<h4>Slanje...</h4><p>Molimo pričekajte.</p>`;
@@ -2728,8 +2727,9 @@ const setTheme = (isLight) => {
                 const emailInput = document.getElementById('starter-package-email-input');
                 const emailValue = emailInput.value.trim();
 
-                if (!emailValue || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
-                    alert('Molimo unesite ispravnu email adresu.');
+                // ISPRAVLJENA VALIDACIJA
+                if (!emailValue) {
+                    alert('Molimo unesite Vašu email adresu.');
                     return;
                 }
 
