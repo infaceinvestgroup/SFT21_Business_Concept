@@ -2671,58 +2671,37 @@ const setTheme = (isLight) => {
 </script>
 
 <!-- NOVI BLOK KODA SAMO ZA GOOGLE SHEETS INTEGRACIJU -->
+<!-- DIJAGNOSTIČKI BLOK KODA -->
 <script>
     document.addEventListener('DOMContentLoaded', () => {
 
-        // OBAVEZNO KORISTITE ZADNJI ISPRAVAN URL KOJI STE DOBILI
-        const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbwiMvjzpamkGiqM0qTATkTrQbx70MpeaUjZXNvFpW8HaKqsAjWASGcvH4GzniIv3X0/exec';
-
-        // --- FUNKCIONALNOST ZA GLAVNU KONTAKT FORMU ---
         const mainContactForm = document.querySelector('#kontakt form');
+
         if (mainContactForm) {
             mainContactForm.addEventListener('submit', function(event) {
-                event.preventDefault();
-                
-                // Ručno dohvaćanje vrijednosti iz polja pomoću njihovog ID-a
-                const nameValue = document.getElementById('name').value;
-                const emailValue = document.getElementById('email').value;
-                const subjectValue = document.getElementById('subject').value;
-                const messageValue = document.getElementById('message').value;
-                
-                // Priprema podataka za slanje u ispravnom formatu
-                const dataToSend = new URLSearchParams();
-                dataToSend.append('name', nameValue);
-                dataToSend.append('email', emailValue);
-                dataToSend.append('subject', subjectValue);
-                dataToSend.append('message', messageValue);
+                event.preventDefault(); // Sprječavamo da se stranica ponovno učita
 
-                const validationPopup = document.getElementById('validation-popup');
-                const popupOverlay = document.getElementById('popup-overlay');
-                if(validationPopup && popupOverlay) {
-                    popupOverlay.style.display = 'flex';
-                    validationPopup.style.display = 'block';
-                    validationPopup.innerHTML = `<h4>Slanje...</h4><p>Molimo pričekajte.</p>`;
+                console.log("--- TESTIRANJE FORME ---");
+                
+                // Kreiramo FormData objekt iz forme
+                const formData = new FormData(mainContactForm);
+
+                // Sada ćemo ispisati SVE što se nalazi unutar tog objekta
+                let dataFound = false;
+                console.log("Sadržaj FormData objekta:");
+                for (var pair of formData.entries()) {
+                    console.log(pair[0] + ': ' + pair[1]);
+                    dataFound = true;
                 }
 
-                // Slanje podataka s ispravno popunjenim tijelom (body)
-                fetch(WEBAPP_URL, {
-                    method: 'POST',
-                    body: dataToSend
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori popup" onclick="document.getElementById('popup-overlay').style.display='none'">×</button><h4>Poslano!</h4><p>Hvala Vam na poruci.</p>`;
-                        mainContactForm.reset();
-                    } else {
-                        throw new Error(data.message || 'Nepoznata greška.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Greška:', error);
-                    validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori popup" onclick="document.getElementById('popup-overlay').style.display='none'">×</button><h4>Greška</h4><p>Došlo je do pogreške prilikom slanja.</p>`;
-                });
+                if (dataFound) {
+                    alert("Podaci su uspješno pročitani iz forme! Pogledajte konzolu (F12).");
+                } else {
+                    alert("GREŠKA: JavaScript ne može pročitati podatke. Najvjerojatnije nedostaju 'name' atributi u HTML-u forme.");
+                }
             });
+        } else {
+            alert("GREŠKA: JavaScript ne može pronaći glavnu kontakt formu (#kontakt form).");
         }
     });
 </script>
