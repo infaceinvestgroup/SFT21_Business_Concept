@@ -2686,44 +2686,89 @@ const setTheme = (isLight) => {
 
 <!-- KONAČNI KOD ZA SLANJE KONTAKT FORME -->
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', function() {
+    const starterPackageForm = document.getElementById('starterPackageForm'); // Pretpostavljam da forma ima ID 'starterPackageForm'
+    if (starterPackageForm) {
+        starterPackageForm.addEventListener('submit', function(e) {
+            e.preventDefault();
 
-        // Adresa vaše Google skripte.
-        const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbwiMvjzpamkGiqM0qTATkTrQbx70MpeaUjZXNvFpW8HaKqsAjWASGcvH4GzniIv3X0/exec';
+            const emailInput = starterPackageForm.querySelector('input[type="email"]');
+            const email = emailInput ? emailInput.value : '';
 
-        const mainContactForm = document.querySelector('#kontakt form');
-        if (mainContactForm) {
-            mainContactForm.addEventListener('submit', function(event) {
-                event.preventDefault();
-                
-                const formData = new FormData(mainContactForm);
-                formData.append('requestType', 'contact');
-                
-                const validationPopup = document.getElementById('validation-popup');
-                const popupOverlay = document.getElementById('popup-overlay');
-                if(validationPopup && popupOverlay) {
-                    popupOverlay.style.display = 'flex';
-                    validationPopup.style.display = 'block';
-                    validationPopup.innerHTML = `<h4>Slanje...</h4><p>Molimo pričekajte.</p>`;
+            if (!email) {
+                alert('Molimo unesite vašu email adresu.');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('requestType', 'starterInterest');
+            formData.append('email', email);
+
+            // Zamijenite s URL-om vašeg objavljenog Apps Scripta
+            const appsScriptURL = 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE'; 
+
+            fetch(appsScriptURL, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Vaša email adresa je uspješno poslana!');
+                    starterPackageForm.reset();
+                    // Ovdje možete dodati kod za zatvaranje popup-a
+                } else {
+                    alert('Došlo je do greške: ' + data.message);
                 }
-                
-                fetch(WEBAPP_URL, { method: 'POST', body: formData })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.success) {
-                            validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori popup" onclick="document.getElementById('popup-overlay').style.display='none'">×</button><h4>Poslano!</h4><p>Hvala Vam na poruci.</p>`;
-                            mainContactForm.reset();
-                        } else {
-                            throw new Error(data.message || 'Nepoznata greška.');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Greška:', error);
-                        validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori popup" onclick="document.getElementById('popup-overlay').style.display='none'">×</button><h4>Greška</h4><p>Došlo je do pogreške prilikom slanja.</p>`;
-                    });
+            })
+            .catch(error => {
+                console.error('Greška:', error);
+                alert('Došlo je do greške prilikom slanja.');
             });
-        }
-    });
+        });
+    }
+
+    // Postojeći kod za kontakt formu (ako postoji i ako ga želite zadržati odvojeno)
+    const contactForm = document.getElementById('contactForm'); // Pretpostavljam da kontakt forma ima ID 'contactForm'
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = contactForm.querySelector('input[name="name"]').value;
+            const email = contactForm.querySelector('input[name="email"]').value;
+            const subject = contactForm.querySelector('input[name="subject"]').value;
+            const message = contactForm.querySelector('textarea[name="message"]').value;
+
+            const formData = new FormData();
+            formData.append('requestType', 'contact');
+            formData.append('name', name);
+            formData.append('email', email);
+            formData.append('subject', subject);
+            formData.append('message', message);
+
+            // Zamijenite s URL-om vašeg objavljenog Apps Scripta
+            const appsScriptURL = 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE'; 
+
+            fetch(appsScriptURL, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Vaša poruka je uspješno poslana!');
+                    contactForm.reset();
+                } else {
+                    alert('Došlo je do greške: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Greška:', error);
+                alert('Došlo je do greške prilikom slanja.');
+            });
+        });
+    }
+});
 </script>
 </body>
 </html>
