@@ -2685,6 +2685,7 @@ const setTheme = (isLight) => {
 </script>
 
 <!-- KONAČNI KOD ZA SLANJE KONTAKT FORME -->
+<!-- KONAČNI KOD ZA SLANJE KONTAKT FORME -->
 <script>
     document.addEventListener('DOMContentLoaded', () => {
 
@@ -2697,7 +2698,7 @@ const setTheme = (isLight) => {
                 event.preventDefault();
                 
                 const formData = new FormData(mainContactForm);
-                formData.append('requestType', 'contact');
+                formData.append('requestType', 'contact'); // Dodajemo tip zahtjeva
                 
                 const validationPopup = document.getElementById('validation-popup');
                 const popupOverlay = document.getElementById('popup-overlay');
@@ -2720,6 +2721,69 @@ const setTheme = (isLight) => {
                     .catch(error => {
                         console.error('Greška:', error);
                         validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori popup" onclick="document.getElementById('popup-overlay').style.display='none'">×</button><h4>Greška</h4><p>Došlo je do pogreške prilikom slanja.</p>`;
+                    });
+            });
+        }
+
+        // NOVI KOD: Forma za prikupljanje email adrese iz Startnih paketa popupa
+        const starterPackageEmailForm = document.getElementById('starter-package-email-form');
+        const starterPackageEmailInput = document.getElementById('starter-package-email-input');
+        const validationPopup = document.getElementById('validation-popup'); // Ponovno deklariran ako nije globalan
+
+        if (starterPackageEmailForm && starterPackageEmailInput && validationPopup) {
+            starterPackageEmailForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = starterPackageEmailInput.value.trim().toLowerCase();
+                
+                // Ova provjera je ta koja vam vraća "Greška: Molimo unesite ispravnu email adresu."
+                // Provjerite da li unosite stvarno ispravnu adresu kada se ovo događa.
+                if (email === '' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    validationPopup.innerHTML = `<button class="popup-close" data-action="return-to-starter-info">×</button><h4>Greška</h4><p>Molimo unesite ispravnu email adresu.</p>`;
+                    if (typeof window.showPopup === 'function') {
+                        window.showPopup(validationPopup, true, 'starter-package-info-popup');
+                    }
+                    return; // Zaustavlja izvršavanje ako validacija ne prođe
+                }
+
+                // Prikazivanje poruke "Slanje..."
+                const popupOverlay = document.getElementById('popup-overlay');
+                if(popupOverlay) {
+                    popupOverlay.style.display = 'flex';
+                    validationPopup.style.display = 'block';
+                    validationPopup.innerHTML = `<h4>Slanje...</h4><p>Molimo pričekajte.</p>`;
+                }
+
+                const formData = new FormData();
+                formData.append('requestType', 'starterPackageEmail'); // Ovdje definiramo poseban tip zahtjeva
+                formData.append('name', 'N/A - Starter Pkg Interest'); // Placeholder za ime
+                formData.append('email', email);
+                formData.append('subject', 'Interes za Startne Pakete'); // Specifični predmet
+                formData.append('message', `Korisnik je ostavio email za obavijesti o startnim paketima: ${email}`);
+                
+                fetch(WEBAPP_URL, { method: 'POST', body: formData })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori popup" onclick="document.getElementById('popup-overlay').style.display='none'">×</button><h4>Hvala!</h4><p>Vaša email adresa (${email}) je uspješno poslana. Obavijestit ćemo Vas.</p>`;
+                            if (typeof window.showPopup === 'function') {
+                                window.showPopup(validationPopup);
+                            }
+                            starterPackageEmailInput.value = '';
+                            if (typeof window.closeAllPopups === 'function') {
+                                setTimeout(window.closeAllPopups, 4000);
+                            }
+                        } else {
+                            // Ako Google Apps Script vrati success: false
+                            throw new Error(data.message || 'Nepoznata greška.');
+                        }
+                    })
+                    .catch(error => {
+                        // Greška pri fetch pozivu (npr. mreža, CORS)
+                        console.error('Greška pri slanju emaila za startni paket:', error);
+                        validationPopup.innerHTML = `<button class="popup-close" data-action="return-to-starter-info">×</button><h4>Greška</h4><p>Došlo je do pogreške prilikom slanja emaila. Pokušajte ponovno.</p> ${error.message ? '<br>Detalji: ' + error.message : ''}</p>`;
+                        if (typeof window.showPopup === 'function') {
+                            window.showPopup(validationPopup, true, 'starter-package-info-popup');
+                        }
                     });
             });
         }
