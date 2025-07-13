@@ -2687,15 +2687,10 @@ const setTheme = (isLight) => {
 <!-- FINALNI RADNI SKRIPT BLOK ZA SVE FORME -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // === OVDJE ZALIJEPITE NOVI URL KOJI STE DOBILI U KORAKU 2 ===
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx70AUCe4saM1coZxqJIB0y5cV7O81LmC1J9K2h1inO-EIBFoSeAZocERDHjsMCnTbv/exec';
+    // === OBAVEZNO OVDJE ZALIJEPITE NOVI URL KOJI STE DOBILI U KORAKU 2 ===
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxZR9t3c4aAOLgY1nC9PpRmKqRwxIR3OnZ2ugySz1t9bgLTo2POGifKZfAqov_tXlre/exec';
 
-    // Funkcije koje već postoje na stranici (pretpostavka)
-    // Ako ne postoje, morate ih ostaviti definirane negdje iznad ovog bloka.
-    // function showPopup(...) {}
-    // function closeAllPopups(...) {}
-
-    // === ZAJEDNIČKI ELEMENTI ===
+    // Pretpostavljamo da funkcije showPopup i closeAllPopups postoje iznad
     const validationPopup = document.getElementById('validation-popup');
 
     // === LOGIKA ZA GLAVNU KONTAKT FORMU ===
@@ -2713,14 +2708,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(data => {
                     if (!data.success) throw new Error(data.message || 'Nepoznata greška sa servera.');
                     
-                    validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori">×</button><h4>Poslano!</h4><p>Vaša poruka je uspješno poslana. Hvala Vam.</p>`;
-                    showPopup(validationPopup);
+                    if (typeof showPopup === 'function') {
+                        validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori">×</button><h4>Poslano!</h4><p>Vaša poruka je uspješno poslana. Hvala Vam.</p>`;
+                        showPopup(validationPopup);
+                    }
                     contactForm.reset();
                 })
                 .catch(error => {
                     console.error('Greška kod slanja kontakt forme:', error);
-                    validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori">×</button><h4>Greška</h4><p>Dogodila se greška: ${error.message}</p>`;
-                    showPopup(validationPopup, true);
+                    if (typeof showPopup === 'function') {
+                         validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori">×</button><h4>Greška</h4><p>Dogodila se greška prilikom slanja: ${error.message}</p>`;
+                         showPopup(validationPopup, true);
+                    }
                 })
                 .finally(() => {
                     submitButton.textContent = originalButtonText;
@@ -2739,8 +2738,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const email = emailInput.value.trim().toLowerCase();
             
             if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                validationPopup.innerHTML = `<button class="popup-close" data-action="return-to-starter-info">×</button><h4>Greška</h4><p>Molimo unesite ispravnu email adresu.</p>`;
-                showPopup(validationPopup, true, 'starter-package-info-popup');
+                 if (typeof showPopup === 'function') {
+                    validationPopup.innerHTML = `<button class="popup-close" data-action="return-to-starter-info">×</button><h4>Greška</h4><p>Molimo unesite ispravnu email adresu.</p>`;
+                    showPopup(validationPopup, true, 'starter-package-info-popup');
+                }
                 return;
             }
 
@@ -2756,16 +2757,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(response => response.json())
                 .then(data => {
                     if (!data.success) throw new Error(data.message || 'Nepoznata greška sa servera.');
-
-                    closeAllPopups();
-                    validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori">×</button><h4>Hvala!</h4><p>Vaša email adresa (${email}) je uspješno poslana. Obavijestit ćemo Vas.</p>`;
-                    showPopup(validationPopup);
+                    
+                    if (typeof closeAllPopups === 'function') closeAllPopups();
+                    if (typeof showPopup === 'function') {
+                        validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori">×</button><h4>Hvala!</h4><p>Vaša email adresa (${email}) je uspješno poslana. Obavijestit ćemo Vas.</p>`;
+                        showPopup(validationPopup);
+                    }
                     starterPackageEmailForm.reset();
                 })
                 .catch(error => {
                     console.error('Greška kod slanja emaila za startni paket:', error);
-                    validationPopup.innerHTML = `<button class="popup-close" data-action="return-to-starter-info">×</button><h4>Greška</h4><p>Dogodila se greška: ${error.message}</p>`;
-                    showPopup(validationPopup, true, 'starter-package-info-popup');
+                     if (typeof showPopup === 'function') {
+                        validationPopup.innerHTML = `<button class="popup-close" data-action="return-to-starter-info">×</button><h4>Greška</h4><p>Dogodila se greška: ${error.message}</p>`;
+                        showPopup(validationPopup, true, 'starter-package-info-popup');
+                    }
                 })
                 .finally(() => {
                     submitButton.textContent = originalButtonText;
