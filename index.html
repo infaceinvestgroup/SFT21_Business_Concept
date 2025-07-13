@@ -2684,46 +2684,26 @@ const setTheme = (isLight) => {
     });
 </script>
 
-<!-- ISPRAVLJENI KOD ZA UPRAVLJANJE SVIM FORMAMA -->
+<!-- DIJAGNOSTIČKI SKRIPT BLOK ZA FORME -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // === URL VAŠE WEB APLIKACIJE (provjerite je li ispravan) ===
+    // === URL VAŠE WEB APLIKACIJE ===
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwwEMxgSiYuSBABPbZAXpx44jDtO0wOlTW7wwWyyVLbnVN7WcddpAFBOOOXZPKNTrro/exec';
 
-    // === ZAJEDNIČKI ELEMENTI ===
-    const validationPopup = document.getElementById('validation-popup');
-
-    // === LOGIKA ZA GLAVNU KONTAKT FORMU (u podnožju stranice) ===
+    // === LOGIKA ZA GLAVNU KONTAKT FORMU ===
     const contactForm = document.querySelector('#kontakt form');
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            const submitButton = contactForm.querySelector('button[type="submit"]');
-            const originalButtonText = submitButton.textContent;
-            submitButton.textContent = 'Slanje...';
-            submitButton.disabled = true;
-
+            alert("Šaljem podatke iz kontakt forme...");
             fetch(SCRIPT_URL, { method: 'POST', body: new FormData(contactForm) })
                 .then(response => response.json())
                 .then(data => {
-                    if (!data.success) throw new Error(data.message || 'Nepoznata greška sa servera.');
-                    
-                    if(typeof showPopup === 'function') {
-                        validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori">×</button><h4>Poslano!</h4><p>Vaša poruka je uspješno poslana. Hvala Vam.</p>`;
-                        showPopup(validationPopup);
-                    }
-                    contactForm.reset();
+                    const prettyResponse = JSON.stringify(data, null, 2);
+                    alert("Odgovor servera za KONTAKT FORMU:\n\n" + prettyResponse);
                 })
                 .catch(error => {
-                    console.error('Greška kod slanja kontakt forme:', error);
-                    if(typeof showPopup === 'function') {
-                         validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori">×</button><h4>Greška</h4><p>Dogodila se greška prilikom slanja: ${error.message}</p>`;
-                         showPopup(validationPopup, true);
-                    }
-                })
-                .finally(() => {
-                    submitButton.textContent = originalButtonText;
-                    submitButton.disabled = false;
+                    alert("GREŠKA u komunikaciji s serverom (Kontakt Forma):\n\n" + error.toString());
                 });
         });
     }
@@ -2733,49 +2713,20 @@ document.addEventListener('DOMContentLoaded', function() {
     if (starterPackageEmailForm) {
         starterPackageEmailForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            const starterPackageEmailInput = document.getElementById('starter-package-email-input');
-            const starterSubmitButton = document.getElementById('starter-package-submit-email');
-            const email = starterPackageEmailInput.value.trim().toLowerCase();
-            
-            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                if(typeof showPopup === 'function') {
-                    validationPopup.innerHTML = `<button class="popup-close" data-action="return-to-starter-info">×</button><h4>Greška</h4><p>Molimo unesite ispravnu email adresu.</p>`;
-                    showPopup(validationPopup, true, 'starter-package-info-popup');
-                }
-                return;
-            }
-
-            const originalButtonText = starterSubmitButton.textContent;
-            starterSubmitButton.textContent = 'Šalje se...';
-            starterSubmitButton.disabled = true;
-
+            const emailInput = document.getElementById('starter-package-email-input');
             const formData = new FormData();
-            formData.append('requestType', 'starterInterest'); // Ključno za backend
-            formData.append('email', email);
-
+            formData.append('requestType', 'starterInterest');
+            formData.append('email', emailInput.value);
+            
+            alert("Šaljem podatke iz popupa za startne pakete...");
             fetch(SCRIPT_URL, { method: 'POST', body: formData })
                 .then(response => response.json())
                 .then(data => {
-                    if (!data.success) throw new Error(data.message || 'Nepoznata greška sa servera.');
-
-                    if(typeof closeAllPopups === 'function') closeAllPopups();
-                    if(typeof showPopup === 'function') {
-                        validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori">×</button><h4>Hvala!</h4><p>Vaša email adresa (${email}) je uspješno poslana. Obavijestit ćemo Vas.</p>`;
-                        showPopup(validationPopup);
-                    }
-                    starterPackageEmailForm.reset();
+                    const prettyResponse = JSON.stringify(data, null, 2);
+                    alert("Odgovor servera za STARTNI PAKET:\n\n" + prettyResponse);
                 })
                 .catch(error => {
-                    console.error('Greška kod slanja emaila za startni paket:', error);
-                    if(typeof showPopup === 'function') {
-                        validationPopup.innerHTML = `<button class="popup-close" data-action="return-to-starter-info">×</button><h4>Greška</h4><p>Dogodila se greška: ${error.message}</p>`;
-                        showPopup(validationPopup, true, 'starter-package-info-popup');
-                    }
-                })
-                .finally(() => {
-                    starterSubmitButton.textContent = originalButtonText;
-                    starterSubmitButton.disabled = false;
+                    alert("GREŠKA u komunikaciji s serverom (Startni Paket):\n\n" + error.toString());
                 });
         });
     }
