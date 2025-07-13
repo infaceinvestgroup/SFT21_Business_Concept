@@ -2684,14 +2684,22 @@ const setTheme = (isLight) => {
     });
 </script>
 
-<!-- FINALNI RADNI SKRIPT BLOK ZA SVE FORME -->
+<!-- ======================================================================= -->
+<!-- FINALNI I JEDINI SKRIPT BLOK ZA UPRAVLJANJE SVIM FORMAMA -->
+<!-- ======================================================================= -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // === OBAVEZNO OVDJE ZALIJEPITE NOVI URL KOJI STE DOBILI U KORAKU 2 ===
+    
+    // === OBAVEZNO OVDJE ZALIJEPITE NOVI URL KOJI STE DOBILI NAKON "NEW DEPLOYMENT" ===
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxZR9t3c4aAOLgY1nC9PpRmKqRwxIR3OnZ2ugySz1t9bgLTo2POGifKZfAqov_tXlre/exec';
 
-    // Pretpostavljamo da funkcije showPopup i closeAllPopups postoje iznad
+    // === ZAJEDNIČKI ELEMENTI ===
     const validationPopup = document.getElementById('validation-popup');
+    
+    // Pretpostavljamo da ove funkcije postoje u nekoj od skripti koje se učitavaju prije ove
+    // Ako ne, morali bismo ih definirati ovdje
+    // const showPopup = window.showPopup; 
+    // const closeAllPopups = window.closeAllPopups;
 
     // === LOGIKA ZA GLAVNU KONTAKT FORMU ===
     const contactForm = document.querySelector('#kontakt form');
@@ -2709,7 +2717,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (!data.success) throw new Error(data.message || 'Nepoznata greška sa servera.');
                     
                     if (typeof showPopup === 'function') {
-                        validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori">×</button><h4>Poslano!</h4><p>Vaša poruka je uspješno poslana. Hvala Vam.</p>`;
+                        validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori" onclick="this.parentElement.style.display='none'; document.getElementById('popup-overlay').style.display='none';">×</button><h4>Poslano!</h4><p>Vaša poruka je uspješno poslana. Hvala Vam.</p>`;
                         showPopup(validationPopup);
                     }
                     contactForm.reset();
@@ -2717,7 +2725,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 .catch(error => {
                     console.error('Greška kod slanja kontakt forme:', error);
                     if (typeof showPopup === 'function') {
-                         validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori">×</button><h4>Greška</h4><p>Dogodila se greška prilikom slanja: ${error.message}</p>`;
+                         validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori" onclick="this.parentElement.style.display='none'; document.getElementById('popup-overlay').style.display='none';">×</button><h4>Greška</h4><p>Dogodila se greška prilikom slanja: ${error.message}</p>`;
                          showPopup(validationPopup, true);
                     }
                 })
@@ -2738,9 +2746,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const email = emailInput.value.trim().toLowerCase();
             
             if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                 if (typeof showPopup === 'function') {
-                    validationPopup.innerHTML = `<button class="popup-close" data-action="return-to-starter-info">×</button><h4>Greška</h4><p>Molimo unesite ispravnu email adresu.</p>`;
+                if (typeof showPopup === 'function') {
+                    validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori">×</button><h4>Greška</h4><p>Molimo unesite ispravnu email adresu.</p>`;
                     showPopup(validationPopup, true, 'starter-package-info-popup');
+                    // Dodajemo logiku za zatvaranje gumbom
+                    validationPopup.querySelector('.popup-close').onclick = function() {
+                        const starterPopup = document.getElementById('starter-package-info-popup');
+                        if (typeof closeAllPopups === 'function') closeAllPopups();
+                        if (starterPopup) showPopup(starterPopup);
+                    };
                 }
                 return;
             }
@@ -2760,16 +2774,21 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                     if (typeof closeAllPopups === 'function') closeAllPopups();
                     if (typeof showPopup === 'function') {
-                        validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori">×</button><h4>Hvala!</h4><p>Vaša email adresa (${email}) je uspješno poslana. Obavijestit ćemo Vas.</p>`;
+                        validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori" onclick="this.parentElement.style.display='none'; document.getElementById('popup-overlay').style.display='none';">×</button><h4>Hvala!</h4><p>Vaša email adresa (${email}) je uspješno poslana. Obavijestit ćemo Vas.</p>`;
                         showPopup(validationPopup);
                     }
                     starterPackageEmailForm.reset();
                 })
                 .catch(error => {
                     console.error('Greška kod slanja emaila za startni paket:', error);
-                     if (typeof showPopup === 'function') {
-                        validationPopup.innerHTML = `<button class="popup-close" data-action="return-to-starter-info">×</button><h4>Greška</h4><p>Dogodila se greška: ${error.message}</p>`;
+                    if (typeof showPopup === 'function') {
+                        validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori">×</button><h4>Greška</h4><p>Dogodila se greška: ${error.message}</p>`;
                         showPopup(validationPopup, true, 'starter-package-info-popup');
+                        validationPopup.querySelector('.popup-close').onclick = function() {
+                            const starterPopup = document.getElementById('starter-package-info-popup');
+                            if (typeof closeAllPopups === 'function') closeAllPopups();
+                            if(starterPopup) showPopup(starterPopup);
+                        };
                     }
                 })
                 .finally(() => {
