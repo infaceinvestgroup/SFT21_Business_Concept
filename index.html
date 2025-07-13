@@ -2686,44 +2686,125 @@ const setTheme = (isLight) => {
 
 <!-- KONAČNI KOD ZA SLANJE KONTAKT FORME -->
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
+   document.addEventListener('DOMContentLoaded', function() {
+    // Pronađi gumb "POŠALJI EMAIL ADRESU" u popup-u
+    const starterEmailButton = document.querySelector('button[onclick*="sendStarterEmail"]') || 
+                               document.querySelector('button:contains("POŠALJI EMAIL ADRESU")') ||
+                               document.querySelector('.starter-email-btn') ||
+                               document.querySelector('#starter-email-btn');
+    
+    // Ako gumb nije pronađen, pokušaj pronaći bilo koji gumb koji sadrži tekst "POŠALJI"
+    if (!starterEmailButton) {
+        const allButtons = document.querySelectorAll('button');
+        for (let button of allButtons) {
+            if (button.textContent.includes('POŠALJI') && button.textContent.includes('EMAIL')) {
+                starterEmailButton = button;
+                break;
+            }
+        }
+    }
+    
+    if (starterEmailButton) {
+        starterEmailButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Pronađi email input polje u popup-u
+            const emailInput = document.querySelector('input[placeholder*="email"]') ||
+                              document.querySelector('input[type="email"]') ||
+                              document.querySelector('.starter-email-input') ||
+                              document.querySelector('#starter-email-input');
+            
+            if (!emailInput) {
+                alert('Email polje nije pronađeno.');
+                return;
+            }
+            
+            const email = emailInput.value.trim();
+            
+            if (!email) {
+                alert('Molimo unesite email adresu.');
+                return;
+            }
+            
+            if (!isValidEmail(email)) {
+                alert('Molimo unesite valjanu email adresu.');
+                return;
+            }
+            
+            // Pošalji podatke na Google Apps Script
+            sendStarterPackageEmail(email);
+        });
+    } else {
+        console.log('Gumb za slanje starter package email-a nije pronađen.');
+    }
+});
 
-        // Adresa vaše Google skripte.
-        const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbwiMvjzpamkGiqM0qTATkTrQbx70MpeaUjZXNvFpW8HaKqsAjWASGcvH4GzniIv3X0/exec';
-
-        const mainContactForm = document.querySelector('#kontakt form');
-        if (mainContactForm) {
-            mainContactForm.addEventListener('submit', function(event) {
-                event.preventDefault();
-                
-                const formData = new FormData(mainContactForm);
-                formData.append('requestType', 'contact');
-                
-                const validationPopup = document.getElementById('validation-popup');
-                const popupOverlay = document.getElementById('popup-overlay');
-                if(validationPopup && popupOverlay) {
-                    popupOverlay.style.display = 'flex';
-                    validationPopup.style.display = 'block';
-                    validationPopup.innerHTML = `<h4>Slanje...</h4><p>Molimo pričekajte.</p>`;
-                }
-                
-                fetch(WEBAPP_URL, { method: 'POST', body: formData })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.success) {
-                            validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori popup" onclick="document.getElementById('popup-overlay').style.display='none'">×</button><h4>Poslano!</h4><p>Hvala Vam na poruci.</p>`;
-                            mainContactForm.reset();
-                        } else {
-                            throw new Error(data.message || 'Nepoznata greška.');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Greška:', error);
-                        validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori popup" onclick="document.getElementById('popup-overlay').style.display='none'">×</button><h4>Greška</h4><p>Došlo je do pogreške prilikom slanja.</p>`;
-                    });
-            });
+function sendStarterPackageEmail(email) {
+    // ZAMIJENITE 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE' s vašim stvarnim URL-om iz koraka 3
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwwEMxgSiYuSBABPbZAXpx44jDtO0wOlTW7wwWyyVLbnVN7WcddpAFBOOOXZPKNTrro/exec';
+    
+    const formData = new FormData();
+    formData.append('requestType', 'starterInterest');
+    formData.append('email', email);
+    
+    // Prikaži loading poruku
+    const button = document.querySelector('button[onclick*="sendStarterEmail"]') ||
+                   document.querySelector('button:contains("POŠALJI EMAIL ADRESU")') ||
+                   document.querySelector('.starter-email-btn') ||
+                   document.querySelector('#starter-email-btn');
+    
+    const originalButtonText = button ? button.textContent : 'POŠALJI EMAIL ADRESU';
+    
+    if (button) {
+        button.textContent = 'Šalje se...';
+        button.disabled = true;
+    }
+    
+    fetch(scriptURL, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Hvala! Vaša email adresa je uspješno poslana.');
+            
+            // Očisti email polje
+            const emailInput = document.querySelector('input[placeholder*="email"]') ||
+                              document.querySelector('input[type="email"]') ||
+                              document.querySelector('.starter-email-input') ||
+                              document.querySelector('#starter-email-input');
+            if (emailInput) {
+                emailInput.value = '';
+            }
+            
+            // Zatvori popup (ako postoji funkcija za zatvaranje)
+            if (typeof closeStarterPopup === 'function') {
+                closeStarterPopup();
+            } else if (typeof closePopup === 'function') {
+                closePopup();
+            }
+        } else {
+            alert('Dogodila se greška: ' + (data.message || 'Nepoznata greška'));
+        }
+    })
+    .catch(error => {
+        console.error('Greška:', error);
+        alert('Dogodila se greška prilikom slanja. Molimo pokušajte ponovno.');
+    })
+    .finally(() => {
+        // Vrati originalni tekst gumba
+        if (button) {
+            button.textContent = originalButtonText;
+            button.disabled = false;
         }
     });
+}
+
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
 </script>
 </body>
 </html>
