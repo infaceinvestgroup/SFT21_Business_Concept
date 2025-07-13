@@ -2684,91 +2684,51 @@ const setTheme = (isLight) => {
     });
 </script>
 
-<!-- =================================================== -->
-<!-- KONAČNI, JEDNOSTAVNI I ISPRAVNI KOD ZA SVE FORME -->
-<!-- =================================================== -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    
-    // OVDJE ZALIJEPITE NOVI URL KOJI STE DOBILI U KORAKU 1
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyx3T5pV_AOYI2LXoaWohg6NRrKvw5pFVRfFHtppCnS2ySmctfToYCz-ljolR-h1TX-/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw9BeEZuGGEW0bKy9uAcDpX_WfX8GTaRp50nqxeGnDnNHO4836wUY3BznKMi0gQBEB-/exec'; // Ovdje ide novi URL
 
-    // === Logika za GLAVNU KONTAKT FORMU ===
+    // Kontakt forma
     const contactForm = document.querySelector('#kontakt form');
     if(contactForm) { 
-        contactForm.addEventListener('submit', function(e) {
+        contactForm.addEventListener('submit', e => {
             e.preventDefault();
-            const submitButton = contactForm.querySelector('button[type="submit"]');
-            const originalButtonText = submitButton.textContent;
-            submitButton.textContent = 'Slanje...';
-            submitButton.disabled = true;
-
-            fetch(SCRIPT_URL, { method: 'POST', body: new FormData(contactForm) })
-            .then(res => res.json()).then(data => {
-                if(!data.success) throw new Error(data.message || "Nepoznata greška");
-                if(typeof showPopup === 'function') {
-                    document.getElementById('validation-popup').innerHTML = `<button class="popup-close" aria-label="Zatvori"></button><h4>Poslano!</h4><p>Vaša poruka je uspješno poslana.</p>`;
-                    showPopup(document.getElementById('validation-popup'));
-                }
-                contactForm.reset();
-            }).catch(err => {
-                 if(typeof showPopup === 'function') {
-                    document.getElementById('validation-popup').innerHTML = `<button class="popup-close" aria-label="Zatvori"></button><h4>Greška</h4><p>${err.message}</p>`;
-                    showPopup(document.getElementById('validation-popup'), true);
-                }
-            }).finally(() => {
-                submitButton.textContent = originalButtonText;
-                submitButton.disabled = false;
-            });
+            const btn = contactForm.querySelector('button[type="submit"]');
+            btn.disabled = true;
+            fetch(SCRIPT_URL, { method: 'POST', body: new FormData(contactForm)})
+                .then(res => res.json())
+                .then(data => {
+                    if(!data.success) throw new Error(data.message);
+                    alert('Poruka poslana!');
+                    contactForm.reset();
+                })
+                .catch(error => alert('Greška: ' + error.message))
+                .finally(() => btn.disabled = false);
         });
     }
 
-    // === Logika za POPUP FORMU ===
+    // Popup forma
     const starterForm = document.getElementById('starter-package-email-form');
-    if (starterForm) {
-        starterForm.addEventListener('submit', function(event) {
-            event.preventDefault();
+    if(starterForm) {
+        starterForm.addEventListener('submit', e => {
+            e.preventDefault();
+            const btn = starterForm.querySelector('button[type="submit"]');
             const emailInput = document.getElementById('starter-package-email-input');
-            const submitButton = document.getElementById('starter-package-submit-email');
-            const email = emailInput.value.trim();
-
-            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                if(typeof showPopup === 'function') {
-                    document.getElementById('validation-popup').innerHTML = `<button class="popup-close" aria-label="Zatvori"></button><h4>Greška</h4><p>Molimo unesite ispravnu email adresu.</p>`;
-                    showPopup(document.getElementById('validation-popup'), true);
-                }
-                return;
-            }
-            
-            const originalButtonText = submitButton.textContent;
-            submitButton.textContent = 'Šalje se...';
-            submitButton.disabled = true;
-
             const formData = new FormData();
             formData.append('requestType', 'starterInterest');
-            formData.append('email', email);
-
-            fetch(SCRIPT_URL, { method: 'POST', body: formData })
-                .then(response => response.json())
+            formData.append('email', emailInput.value);
+            
+            btn.disabled = true;
+            fetch(SCRIPT_URL, { method: 'POST', body: formData})
+                .then(res => res.json())
                 .then(data => {
-                    if (!data.success) throw new Error(data.message || "Nepoznata greška");
-                    if (typeof closeAllPopups === 'function') closeAllPopups();
-                    if(typeof showPopup === 'function') {
-                        document.getElementById('validation-popup').innerHTML = `<button class="popup-close" aria-label="Zatvori"></button><h4>Hvala!</h4><p>Vaša email adresa (${email}) je uspješno poslana.</p>`;
-                        showPopup(document.getElementById('validation-popup'));
-                    }
+                    if(!data.success) throw new Error(data.message);
+                    alert('Hvala! Vaš email je poslan.');
+                    if(typeof closeAllPopups === 'function') closeAllPopups();
                     starterForm.reset();
                 })
-                .catch(error => {
-                    if(typeof showPopup === 'function') {
-                        document.getElementById('validation-popup').innerHTML = `<button class="popup-close" aria-label="Zatvori"></button><h4>Greška</h4><p>${error.message}</p>`;
-                        showPopup(document.getElementById('validation-popup'), true);
-                    }
-                })
-                .finally(() => {
-                    submitButton.textContent = originalButtonText;
-                    submitButton.disabled = false;
-                });
+                .catch(error => alert('Greška: ' + error.message))
+                .finally(() => btn.disabled = false);
         });
     }
 });
