@@ -1791,6 +1791,7 @@ if (starterPackageEmailForm && starterPackageEmailInput && validationPopup) {
                     // Poruka o uspjehu NAKON što je Google potvrdio primitak
                     validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori popup" onclick="document.getElementById('popup-overlay').style.display='none'">×</button><h4>Hvala!</h4><p>Vaš interes za startne pakete je uspješno zabilježen.</p>`;
                     starterPackageEmailInput.value = ''; // Očisti polje
+                    setTimeout(closeAllPopups, 4000); 
                 } else {
                     // Ako Google javi grešku
                     throw new Error(data.message || 'Nepoznata greška sa servera.');
@@ -2047,6 +2048,7 @@ if (starterPackageEmailForm && starterPackageEmailInput && validationPopup) {
                         if (data.success) {
                             validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori popup" onclick="document.getElementById('popup-overlay').style.display='none'">×</button><h4>Poslano!</h4><p>Hvala Vam na poruci.</p>`;
                             mainContactForm.reset();
+                            setTimeout(closeAllPopups, 4000);
                         } else {
                             throw new Error(data.message || 'Nepoznata greška.');
                         }
