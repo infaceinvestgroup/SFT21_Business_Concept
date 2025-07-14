@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="hr">
 <head>
@@ -161,7 +160,7 @@
                         <p>Sa prvim popunjavanjem SFalgoritma započeti će nastavak poslovanja o čemu ćete biti pravovremeno obaviješteni putem email adrese.</p>
                     </div>
     
-                    <button type="submit" class="btn-primary mt-6 w-full">POTVRDI</button>
+                    <button type="button" id="submit-investment-btn" class="btn-primary mt-6 w-full">POTVRDI</button>
                 </form>
             </div>
     </div>
@@ -2062,73 +2061,80 @@ if (starterPackageEmailForm && starterPackageEmailInput && validationPopup) {
         }
 
         // ======================================================================
-        // KONAČNA LOGIKA - NAJDIREKTNIJA VERZIJA
+        // KONAČNA LOGIKA - SLUŠANJE KLIKA NA GUMB (SA ISPRAVNIM SKRIVANJEM FORME)
         // ======================================================================
-        const investmentForm = document.getElementById('investment-details-form');
-        if (investmentForm) {
-            investmentForm.addEventListener('submit', function(event) {
-                event.preventDefault();
+        const submitBtn = document.getElementById('submit-investment-btn');
+        if (submitBtn) {
+            submitBtn.addEventListener('click', function() {
+                console.log("Gumb 'POTVRDI' je kliknut.");
 
-                // Prikaz "Slanje..." poruke
+                const fullName = document.getElementById('investor-name-details').value;
+                const email = document.getElementById('investor-email-details').value;
+                
+                if (!fullName || !email) {
+                    alert("Molimo unesite Ime i Prezime te Email adresu.");
+                    return;
+                }
+                
                 if(validationPopup && popupOverlay) {
-                    popupOverlay.style.display = 'flex';
-                    validationPopup.style.display = 'block';
+                    // Prikaz "Slanje..." i skrivanje forme se događa unutar showPopup
+                    showPopup(validationPopup); 
                     validationPopup.innerHTML = `<h4>Slanje...</h4><p>Molimo pričekajte.</p>`;
                 }
-
-                // Kreiramo FormData objekt direktno iz forme. Ovo je najpouzdaniji način.
-                const formData = new FormData(investmentForm);
                 
-                // Ključna izmjena: Dodajemo polja koja Google Script očekuje (fullName, email, itd.)
-                // direktno u FormData objekt, čitajući vrijednosti iz polja s odgovarajućim 'name' atributom.
-                formData.append('requestType', 'investmentDecision');
-                formData.append('fullName', formData.get('investor-name-details'));
-                formData.append('email', formData.get('investor-email-details'));
-
                 let referrerInfo = "Nemam preporučitelja";
-                if (formData.get('referrer-choice') === 'yes') {
-                    referrerInfo = formData.get('referrer-name-email').trim() || 'Preporučitelj nije upisan';
+                if (document.getElementById('referrer-yes').checked) {
+                    referrerInfo = document.getElementById('referrer-name-email').value.trim() || 'Preporučitelj nije upisan';
                 }
-                formData.append('referrerInfo', referrerInfo);
 
                 let selectedPackages = [];
-                // FormData ne može direktno pročitati 'checkbox' grupe na ovaj način, pa to radimo ručno.
                 document.querySelectorAll('input[name="ip_package_details"]:checked').forEach(cb => {
                     selectedPackages.push(cb.dataset.packageName);
                 });
                 if (document.getElementById('ip7-checkbox-details').checked) {
-                    const customAmount = document.getElementById('ip7-custom-amount-details').value;
-                    selectedPackages.push(`IP7 (${customAmount} €)`);
+                    selectedPackages.push(`IP7 (${document.getElementById('ip7-custom-amount-details').value} €)`);
                 }
-                formData.append('selectedPackages', selectedPackages.length > 0 ? selectedPackages.join(', ') : "Nije odabran paket");
+                const packagesString = selectedPackages.length > 0 ? selectedPackages.join(', ') : "Nije odabran paket";
                 
-                formData.append('totalAmount', document.getElementById('total-investment-amount-details').textContent);
+                const totalAmount = document.getElementById('total-investment-amount-details').textContent;
 
-                // Sada šaljemo kompletan FormData objekt.
+                const dataToSend = new FormData();
+                dataToSend.append('requestType', 'investmentDecision');
+                dataToSend.append('fullName', fullName);
+                dataToSend.append('email', email);
+                dataToSend.append('referrerInfo', referrerInfo);
+                dataToSend.append('selectedPackages', packagesString);
+                dataToSend.append('totalAmount', totalAmount);
+
                 fetch(WEBAPP_URL, {
                     method: 'POST', 
-                    body: formData
+                    body: dataToSend
                 })
                 .then(res => res.json())
                 .then(data => {
                     if (data.success) {
+                        // OVO JE KLJUČNA IZMJENA
+                        // Prvo pripremimo sadržaj...
                         validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori popup" onclick="document.getElementById('popup-overlay').style.display='none'">×</button><h4>Hvala!</h4><p>Vaša odluka o investiranju je uspješno zabilježena.</p>`;
-                        investmentForm.reset();
-                        if (typeof updateTotalInvestmentDetails === 'function') {
-                           updateTotalInvestmentDetails();
-                        }
+                        // ...a onda ponovno pozovemo showPopup. On će automatski zatvoriti sve ostale prozore (uključujući formu)
+                        // i prikazati samo ovaj s porukom "Hvala!".
+                        showPopup(validationPopup);
+
+                        document.getElementById('investment-details-form').reset(); 
+                        if(typeof updateTotalInvestmentDetails === 'function') updateTotalInvestmentDetails();
                         setTimeout(closeAllPopups, 5000);
                     } else {
-                        throw new Error(data.message || 'Google skripta je javila grešku.');
+                        throw new Error(data.message || 'Greška na serveru.');
                     }
                 })
                 .catch(error => {
                     console.error('Fetch greška:', error);
                     validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori popup" onclick="document.getElementById('popup-overlay').style.display='none'">×</button><h4>Greška</h4><p>Došlo je do pogreške prilikom slanja.</p>`;
+                    showPopup(validationPopup, true); // Pokaži popup s greškom
                 });
             });
         }
-                        
+                             
         if (aiChatIcon && aiChatPopup && aiChatCloseBtn && body) {
             aiChatIcon.addEventListener('click', (event) => { event.stopPropagation(); aiChatPopup.classList.add('active'); aiChatIcon.style.display = 'none'; body.classList.add('overflow-hidden'); });
             aiChatCloseBtn.addEventListener('click', (event) => { event.stopPropagation(); aiChatPopup.classList.remove('active'); aiChatIcon.style.display = 'flex'; body.classList.remove('overflow-hidden'); });
@@ -2802,4 +2808,3 @@ const setTheme = (isLight) => {
 
 </body>
 </html>
---- END OF FILE index.html ---
