@@ -2061,28 +2061,23 @@ if (starterPackageEmailForm && starterPackageEmailInput && validationPopup) {
             });
         }
 
-                // ======================================================================
-        // LOGIKA ZA FORMU "ODLUKA O INVESTIRANJU"
+        // ======================================================================
+        // KONAČNA LOGIKA ZA FORMU "ODLUKA O INVESTIRANJU" SA DIJAGNOSTIKOM
         // ======================================================================
         const investmentForm = document.getElementById('investment-details-form');
         if (investmentForm) {
             investmentForm.addEventListener('submit', function(event) {
-                event.preventDefault();
+                event.preventDefault(); // Uvijek spriječi defaultno slanje
 
-                // Prikaz "Slanje..." poruke
-                if(validationPopup && popupOverlay) {
-                    popupOverlay.style.display = 'flex';
-                    validationPopup.style.display = 'block';
-                    validationPopup.innerHTML = `<h4>Slanje...</h4><p>Molimo pričekajte.</p>`;
-                }
+                console.log("Forma za investiciju je poslana. Počinjem prikupljanje podataka...");
 
-                // --- Prikupljanje podataka iz forme ---
+                // --- Prikupljanje podataka iz forme (Eksplicitna metoda) ---
                 const fullName = document.getElementById('investor-name-details').value.trim();
                 const email = document.getElementById('investor-email-details').value.trim();
                 
                 // Preporučitelj
                 let referrerInfo = "Nemam preporučitelja";
-                if(document.getElementById('referrer-yes').checked) {
+                if (document.getElementById('referrer-yes').checked) {
                     referrerInfo = document.getElementById('referrer-name-email').value.trim();
                     if (referrerInfo === '') {
                         referrerInfo = 'Preporučitelj nije upisan';
@@ -2103,37 +2098,65 @@ if (starterPackageEmailForm && starterPackageEmailInput && validationPopup) {
                 // Ukupan iznos
                 const totalAmount = document.getElementById('total-investment-amount-details').textContent;
 
+                // --- Logiranje prikupljenih podataka u konzolu preglednika ---
+                console.log("------ DIJAGNOSTIKA PODATAKA PRIJE SLANJA ------");
+                console.log("Ime i Prezime:", fullName);
+                console.log("Email:", email);
+                console.log("Preporučitelj:", referrerInfo);
+                console.log("Paketi:", packagesString);
+                console.log("Ukupan Iznos:", totalAmount);
+                console.log("----------------------------------------------");
+                
+                // Provjera da li su osnovni podaci prazni
+                if (!fullName || !email) {
+                    console.error("Greška: Ime ili email su prazni. Prekidam slanje.");
+                    alert("Molimo unesite Ime, Prezime i Email adresu.");
+                    return;
+                }
+
+                // Prikaz "Slanje..." poruke
+                if(validationPopup && popupOverlay) {
+                    popupOverlay.style.display = 'flex';
+                    validationPopup.style.display = 'block';
+                    validationPopup.innerHTML = `<h4>Slanje...</h4><p>Molimo pričekajte.</p>`;
+                }
+
                 // --- Slanje podataka ---
-                const formData = new FormData();
-                formData.append('requestType', 'investmentDecision');
-                formData.append('fullName', fullName);
-                formData.append('email', email);
-                formData.append('referrerInfo', referrerInfo);
-                formData.append('selectedPackages', packagesString);
-                formData.append('totalAmount', totalAmount);
+                const dataToSend = new FormData();
+                dataToSend.append('requestType', 'investmentDecision');
+                dataToSend.append('fullName', fullName);
+                dataToSend.append('email', email);
+                dataToSend.append('referrerInfo', referrerInfo);
+                dataToSend.append('selectedPackages', packagesString);
+                dataToSend.append('totalAmount', totalAmount);
+
+                console.log("Šaljem podatke na Google Apps Script...");
 
                 fetch(WEBAPP_URL, {
                     method: 'POST', 
-                    body: formData 
+                    body: dataToSend 
                 })
                 .then(res => res.json())
                 .then(data => {
+                    console.log("Odgovor od Google-a:", data);
                     if (data.success) {
                         validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori popup" onclick="document.getElementById('popup-overlay').style.display='none'">×</button><h4>Hvala!</h4><p>Vaša odluka o investiranju je uspješno zabilježena.</p>`;
                         investmentForm.reset(); 
-                        updateTotalInvestmentDetails();
+                        if (typeof updateTotalInvestmentDetails === 'function') {
+                           updateTotalInvestmentDetails();
+                        }
                         setTimeout(closeAllPopups, 5000);
                     } else {
-                        throw new Error(data.message || 'Nepoznata greška.');
+                        throw new Error(data.message || 'Google skripta je javila grešku.');
                     }
                 })
                 .catch(error => {
-                    console.error('Greška:', error);
+                    console.error('Došlo je do greške prilikom slanja (fetch catch):', error);
                     validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori popup" onclick="document.getElementById('popup-overlay').style.display='none'">×</button><h4>Greška</h4><p>Došlo je do pogreške prilikom slanja.</p>`;
                 });
             });
         }
-
+        
         if (aiChatIcon && aiChatPopup && aiChatCloseBtn && body) {
             aiChatIcon.addEventListener('click', (event) => { event.stopPropagation(); aiChatPopup.classList.add('active'); aiChatIcon.style.display = 'none'; body.classList.add('overflow-hidden'); });
             aiChatCloseBtn.addEventListener('click', (event) => { event.stopPropagation(); aiChatPopup.classList.remove('active'); aiChatIcon.style.display = 'flex'; body.classList.remove('overflow-hidden'); });
