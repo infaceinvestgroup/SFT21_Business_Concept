@@ -2726,12 +2726,13 @@ document.addEventListener('DOMContentLoaded', function() {
             btn.disabled = true;
             fetch(SCRIPT_URL, { method: 'POST', body: formData })
                 .then(res => res.json())
-                .then(data => {
-                    if (!data.success) throw new Error(data.message);
-                    alert('Hvala! Vaš email je poslan.');
-                    if (typeof closeAllPopups === 'function') closeAllPopups();
-                    starterForm.reset();
-                })
+.then(data => {
+    console.log("Odgovor od servera:", data);
+    if (!data.success) throw new Error(data.message);
+    alert('Hvala! Vaš email je poslan.');
+    if (typeof closeAllPopups === 'function') closeAllPopups();
+    starterForm.reset();
+})
 .catch(error => alert('Greška prilikom slanja emaila: ' + error.message + '\nMolimo provjerite konzolu za detalje.'))                .finally(() => btn.disabled = false);
         });
     }
