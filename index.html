@@ -2732,8 +2732,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (typeof closeAllPopups === 'function') closeAllPopups();
                     starterForm.reset();
                 })
-                .catch(error => alert('Greška: ' + error.message))
-                .finally(() => btn.disabled = false);
+.catch(error => alert('Greška prilikom slanja emaila: ' + error.message + '\nMolimo provjerite konzolu za detalje.'))                .finally(() => btn.disabled = false);
         });
     }
 });
