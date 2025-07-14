@@ -2062,7 +2062,7 @@ if (starterPackageEmailForm && starterPackageEmailInput && validationPopup) {
         }
 
         // ======================================================================
-        // KONAČNA I POJEDNOSTAVLJENA LOGIKA ZA FORMU "ODLUKA O INVESTIRANJU"
+        // KONAČNA LOGIKA - NAJDIREKTNIJA VERZIJA
         // ======================================================================
         const investmentForm = document.getElementById('investment-details-form');
         if (investmentForm) {
@@ -2079,13 +2079,12 @@ if (starterPackageEmailForm && starterPackageEmailInput && validationPopup) {
                 // Kreiramo FormData objekt direktno iz forme. Ovo je najpouzdaniji način.
                 const formData = new FormData(investmentForm);
                 
-                // Dodajemo tip zahtjeva
+                // Ključna izmjena: Dodajemo polja koja Google Script očekuje (fullName, email, itd.)
+                // direktno u FormData objekt, čitajući vrijednosti iz polja s odgovarajućim 'name' atributom.
                 formData.append('requestType', 'investmentDecision');
-                
-                // Preimenujemo polja da odgovaraju onome što Google Script očekuje
                 formData.append('fullName', formData.get('investor-name-details'));
                 formData.append('email', formData.get('investor-email-details'));
-                
+
                 let referrerInfo = "Nemam preporučitelja";
                 if (formData.get('referrer-choice') === 'yes') {
                     referrerInfo = formData.get('referrer-name-email').trim() || 'Preporučitelj nije upisan';
@@ -2093,6 +2092,7 @@ if (starterPackageEmailForm && starterPackageEmailInput && validationPopup) {
                 formData.append('referrerInfo', referrerInfo);
 
                 let selectedPackages = [];
+                // FormData ne može direktno pročitati 'checkbox' grupe na ovaj način, pa to radimo ručno.
                 document.querySelectorAll('input[name="ip_package_details"]:checked').forEach(cb => {
                     selectedPackages.push(cb.dataset.packageName);
                 });
@@ -2100,11 +2100,11 @@ if (starterPackageEmailForm && starterPackageEmailInput && validationPopup) {
                     const customAmount = document.getElementById('ip7-custom-amount-details').value;
                     selectedPackages.push(`IP7 (${customAmount} €)`);
                 }
-                formData.append('selectedPackages', selectedPackages.join(', '));
+                formData.append('selectedPackages', selectedPackages.length > 0 ? selectedPackages.join(', ') : "Nije odabran paket");
                 
                 formData.append('totalAmount', document.getElementById('total-investment-amount-details').textContent);
 
-                // Šaljemo prikupljene podatke
+                // Sada šaljemo kompletan FormData objekt.
                 fetch(WEBAPP_URL, {
                     method: 'POST', 
                     body: formData
@@ -2128,7 +2128,7 @@ if (starterPackageEmailForm && starterPackageEmailInput && validationPopup) {
                 });
             });
         }
-                
+                        
         if (aiChatIcon && aiChatPopup && aiChatCloseBtn && body) {
             aiChatIcon.addEventListener('click', (event) => { event.stopPropagation(); aiChatPopup.classList.add('active'); aiChatIcon.style.display = 'none'; body.classList.add('overflow-hidden'); });
             aiChatCloseBtn.addEventListener('click', (event) => { event.stopPropagation(); aiChatPopup.classList.remove('active'); aiChatIcon.style.display = 'flex'; body.classList.remove('overflow-hidden'); });
