@@ -215,6 +215,82 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // !!! OBAVEZNO OVDJE UNESITE ISPRAVAN LINK VAŠE GOOGLE SKRIPTE !!!
+            const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbyzfPo6izsSPhmoYKmIrOJ2B78HD_Puz2U8pIr8j0hkOlRo5wNoU0DPbQ1spXp2QNyK/exec';
+
+            // --- SELEKTORI ELEMENATA ---
+            const mainPopup = document.getElementById('confirmationUserDetailsPopup');
+            const openMainPopupButton = document.getElementById('openPopupForConfirmation');
+            const closeMainPopupButton = document.getElementById('closeUserDetailsPopupButton');
+            const finalPopup = document.getElementById('finalConfirmationPopup');
+            const closeFinalPopupButton = document.getElementById('closeFinalConfirmationPopup');
+            const finalMessageP = document.getElementById('final-confirmation-message');
+            const usernameInput = document.getElementById('usernameInputPopup');
+            const oldEmailInput = document.getElementById('oldEmailInputPopup');
+            const newEmailInput = document.getElementById('newEmailInputPopup');
+            const confirmButton = document.getElementById('confirmUserDetailsButton');
+
+            // --- POMOĆNE FUNKCIJE ---
+            const isEmailValid = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email).toLowerCase());
+            const closeMainPopup = () => { if (mainPopup) mainPopup.style.display = 'none'; document.body.style.overflow = 'auto'; };
+            const closeFinalPopup = () => { if (finalPopup) finalPopup.style.display = 'none'; document.body.style.overflow = 'auto'; };
+
+            const validateForm = () => {
+                let isFormValid = true;
+                if (usernameInput.value.trim() === '') isFormValid = false;
+                if (!isEmailValid(oldEmailInput.value.trim())) isFormValid = false;
+                const newEmailValue = newEmailInput.value.trim();
+                if (newEmailValue !== '' && !isEmailValid(newEmailValue)) isFormValid = false;
+                confirmButton.disabled = !(isFormValid);
+            };
+
+            // --- EVENT LISTENERI ---
+            document.getElementById('closePageButton')?.addEventListener('click', () => { window.history.back(); });
+            openMainPopupButton.addEventListener('click', () => { mainPopup.style.display = 'flex'; document.body.style.overflow = 'hidden'; validateForm(); });
+            closeMainPopupButton.addEventListener('click', closeMainPopup);
+            mainPopup.addEventListener('click', (event) => { if (event.target === mainPopup) closeMainPopup(); });
+            closeFinalPopupButton.addEventListener('click', closeFinalPopup);
+            finalPopup.addEventListener('click', (event) => { if (event.target === finalPopup) closeFinalPopup(); });
+            [usernameInput, oldEmailInput, newEmailInput].forEach(input => input.addEventListener('input', validateForm));
+
+            // --- GLAVNA LOGIKA ZA SLANJE PODATAKA ---
+            confirmButton.addEventListener('click', () => {
+                if(confirmButton.disabled) return;
+                
+                closeMainPopup();
+                finalMessageP.innerHTML = `<h4>Slanje...</h4><p>Molimo pričekajte.</p>`;
+                finalPopup.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+
+                const dataToSend = new FormData();
+                dataToSend.append('requestType', 'freeMemberRefund');
+                dataToSend.append('username', usernameInput.value.trim());
+                dataToSend.append('oldEmail', oldEmailInput.value.trim());
+                dataToSend.append('newEmail', newEmailInput.value.trim());
+                
+                fetch(WEBAPP_URL, {
+                    method: 'POST',
+                    body: dataToSend
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        const finalEmail = newEmailInput.value.trim() || oldEmailInput.value.trim();
+                        finalMessageP.innerHTML = `Vaši podaci i email adresa (<b>${finalEmail}</b>) su zabilježeni uz zahtjev za povrat novca. Kontaktirati ćemo Vas uskoro. Hvala.`;
+                    } else {
+                        finalMessageP.innerHTML = 'Došlo je do greške. Molimo pokušajte ponovno.';
+                    }
+                })
+                .catch(error => {
+                    console.error('Greška:', error);
+                    finalMessageP.innerHTML = 'Došlo je do mrežne greške. Molimo provjerite vezu i pokušajte ponovno.';
+                })
+                .finally(() => {
+                    setTimeout(closeFinalPopup, 5000);
+                });
+            });
+
+            // --- ANIMACIJE ---
             if (typeof gsap !== 'undefined') {
                 gsap.from('.decision-content-box', { duration: 1, y: 50, opacity: 0, ease: 'power3.out', delay: 0.3 });
                 gsap.utils.toArray(".glow").forEach((glow) => {
@@ -225,79 +301,6 @@
                     });
                 });
             }
-            
-            const closePageButton = document.getElementById('closePageButton');
-            if (closePageButton) {
-                closePageButton.addEventListener('click', () => { window.history.back(); });
-            }
-
-            const mainPopup = document.getElementById('confirmationUserDetailsPopup');
-            const openMainPopupButton = document.getElementById('openPopupForConfirmation');
-            const closeMainPopupButton = document.getElementById('closeUserDetailsPopupButton');
-            
-            const finalPopup = document.getElementById('finalConfirmationPopup');
-            const closeFinalPopupButton = document.getElementById('closeFinalConfirmationPopup');
-            const finalMessageP = document.getElementById('final-confirmation-message');
-            
-            const usernameInput = document.getElementById('usernameInputPopup');
-            const oldEmailInput = document.getElementById('oldEmailInputPopup');
-            const newEmailInput = document.getElementById('newEmailInputPopup');
-            const oldEmailError = document.getElementById('oldEmailErrorPopup');
-            const newEmailError = document.getElementById('newEmailErrorPopup');
-            const confirmButton = document.getElementById('confirmUserDetailsButton');
-
-            const isEmailValid = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email).toLowerCase());
-            
-            const validateForm = () => {
-                let isFormValid = true;
-                if (usernameInput.value.trim() === '') isFormValid = false;
-
-                const oldEmailValue = oldEmailInput.value.trim();
-                if (oldEmailValue === '' || !isEmailValid(oldEmailValue)) {
-                    isFormValid = false;
-                    oldEmailError.textContent = (oldEmailValue !== '' && !isEmailValid(oldEmailValue)) ? 'Unesite ispravnu email adresu.' : '';
-                    oldEmailInput.classList.toggle('input-error', oldEmailValue !== '' && !isEmailValid(oldEmailValue));
-                } else {
-                    oldEmailError.textContent = '';
-                    oldEmailInput.classList.remove('input-error');
-                }
-
-                const newEmailValue = newEmailInput.value.trim();
-                if (newEmailValue !== '' && !isEmailValid(newEmailValue)) {
-                    isFormValid = false;
-                    newEmailError.textContent = 'Unesite ispravnu email adresu.';
-                    newEmailInput.classList.add('input-error');
-                } else {
-                    newEmailError.textContent = '';
-                    newEmailInput.classList.remove('input-error');
-                }
-                
-                confirmButton.disabled = !isFormValid;
-            };
-
-            const closeMainPopup = () => { if (mainPopup) mainPopup.style.display = 'none'; document.body.style.overflow = 'auto'; };
-            const closeFinalPopup = () => { if (finalPopup) finalPopup.style.display = 'none'; document.body.style.overflow = 'auto'; };
-
-            openMainPopupButton.addEventListener('click', () => { mainPopup.style.display = 'flex'; document.body.style.overflow = 'hidden'; validateForm(); });
-            closeMainPopupButton.addEventListener('click', closeMainPopup);
-            mainPopup.addEventListener('click', (event) => { if (event.target === mainPopup) closeMainPopup(); });
-            closeFinalPopupButton.addEventListener('click', closeFinalPopup);
-            finalPopup.addEventListener('click', (event) => { if (event.target === finalPopup) closeFinalPopup(); });
-            
-            [usernameInput, oldEmailInput, newEmailInput].forEach(input => input.addEventListener('input', validateForm));
-
-            confirmButton.addEventListener('click', () => {
-                if(confirmButton.disabled) return;
-                const finalEmail = newEmailInput.value.trim() || oldEmailInput.value.trim();
-
-                console.log("Podaci za slanje (BPR povrat):", { username: usernameInput.value.trim(), email: finalEmail });
-
-                closeMainPopup();
-                finalMessageP.innerHTML = `Vaši podaci i email adresa (<b>${finalEmail}</b>) su zabilježeni uz zahtjev za povrat novca. Kontaktirati ćemo Vas uskoro. Hvala.`;
-                finalPopup.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-                setTimeout(closeFinalPopup, 5000);
-            });
         });
     </script>
 </body>
