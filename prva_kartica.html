@@ -197,66 +197,43 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const closePageButton = document.getElementById('closePageButton');
-            if (closePageButton) {
-                closePageButton.onclick = function() {
-                    const currentSearchParams = window.location.search;
-                    window.location.href = 'prikaz_opcije.html' + currentSearchParams; 
-                };
-            }
+                    const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbwwJGfFiWO64EbE9ocPX0NKhKidq3Pb-aUKdvNKnMCbaWylaKWNkQeKT_nUpvtdsTqn/exec';
 
-            // --- Elementi za POPUP-e i VALIDACIJU ---
+            // --- SELEKTORI ELEMENATA ---
+            const closePageButton = document.getElementById('closePageButton');
             const mainPopup = document.getElementById('confirmationUserDetailsPopup');
             const openMainPopupButton = document.getElementById('openPopupForConfirmation');
             const closeMainPopupButton = document.getElementById('closeUserDetailsPopupButton');
-            
             const finalPopup = document.getElementById('finalConfirmationPopup');
             const finalMessageP = document.getElementById('final-confirmation-message');
-
             const usernameInput = document.getElementById('usernameInputPopup');
             const oldEmailInput = document.getElementById('oldEmailInputPopup');
             const newEmailInput = document.getElementById('newEmailInputPopup');
-            const oldEmailError = document.getElementById('oldEmailErrorPopup');
-            const newEmailError = document.getElementById('newEmailErrorPopup');
             const confirmButton = document.getElementById('confirmUserDetailsButton');
 
-            // Funkcije
+            // --- POMOĆNE FUNKCIJE ---
             const isEmailValid = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email).toLowerCase());
-
-            const validateForm = () => {
-                let isFormValid = true;
-                if (usernameInput.value.trim() === '') isFormValid = false;
-
-                const oldEmailValue = oldEmailInput.value.trim();
-                if (oldEmailValue === '' || !isEmailValid(oldEmailValue)) {
-                    isFormValid = false;
-                    oldEmailError.textContent = (oldEmailValue !== '' && !isEmailValid(oldEmailValue)) ? 'Unesite ispravnu email adresu.' : '';
-                    oldEmailInput.classList.toggle('input-error', oldEmailValue !== '' && !isEmailValid(oldEmailValue));
-                } else {
-                    oldEmailError.textContent = '';
-                    oldEmailInput.classList.remove('input-error');
-                }
-
-                const newEmailValue = newEmailInput.value.trim();
-                if (newEmailValue !== '' && !isEmailValid(newEmailValue)) {
-                    isFormValid = false;
-                    newEmailError.textContent = 'Unesite ispravnu email adresu.';
-                    newEmailInput.classList.add('input-error');
-                } else {
-                    newEmailError.textContent = '';
-                    newEmailInput.classList.remove('input-error');
-                }
-                
-                confirmButton.disabled = !isFormValid;
-            };
-
             const closeMainPopup = () => { if(mainPopup) mainPopup.style.display = 'none'; document.body.style.overflow = 'auto'; };
             const closeFinalPopup = () => { if(finalPopup) finalPopup.style.display = 'none'; document.body.style.overflow = 'auto'; };
 
-            // Event listeneri
+            const validateForm = () => {
+                const isUsernameValid = usernameInput.value.trim() !== '';
+                const isOldEmailValid = isEmailValid(oldEmailInput.value.trim());
+                const newEmailValue = newEmailInput.value.trim();
+                const isNewEmailValidOrEmpty = newEmailValue === '' || isEmailValid(newEmailValue);
+                confirmButton.disabled = !(isUsernameValid && isOldEmailValid && isNewEmailValidOrEmpty);
+            };
+            
+            // --- EVENT LISTENERI ---
+            if (closePageButton) {
+                closePageButton.onclick = function() {
+                    window.location.href = 'prikaz_opcije.html' + window.location.search; 
+                };
+            }
+
             openMainPopupButton.addEventListener('click', () => {
                 mainPopup.style.display = 'flex';
                 document.body.style.overflow = 'hidden';
@@ -266,29 +243,50 @@
             closeMainPopupButton.addEventListener('click', closeMainPopup);
             mainPopup.addEventListener('click', (event) => { if (event.target === mainPopup) closeMainPopup(); });
             finalPopup.addEventListener('click', (event) => { if (event.target === finalPopup) closeFinalPopup(); });
-
             [usernameInput, oldEmailInput, newEmailInput].forEach(input => input.addEventListener('input', validateForm));
 
+            // --- GLAVNA LOGIKA ZA SLANJE PODATAKA ---
             confirmButton.addEventListener('click', () => {
                 if(confirmButton.disabled) return;
                 
-                // Prikaz finalnog popupa
                 closeMainPopup();
-                finalMessageP.innerHTML = `Vaša je odluka zabilježena. Kontaktirati ćemo Vas pravovremeno. Hvala.`;
+                finalMessageP.innerHTML = `<h4>Slanje...</h4><p>Molimo pričekajte.</p>`;
                 finalPopup.style.display = 'flex';
                 document.body.style.overflow = 'hidden';
 
-                // Automatsko zatvaranje nakon 5 sekundi
-                setTimeout(closeFinalPopup, 5000);
+                const dataToSend = new FormData();
+                dataToSend.append('requestType', 'activeNoInvest');
+                dataToSend.append('username', usernameInput.value.trim());
+                dataToSend.append('oldEmail', oldEmailInput.value.trim());
+                dataToSend.append('newEmail', newEmailInput.value.trim());
+
+                fetch(WEBAPP_URL, {
+                    method: 'POST',
+                    body: dataToSend
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        finalMessageP.innerHTML = 'Vaša je odluka zabilježena. Kontaktirati ćemo Vas pravovremeno. Hvala.';
+                    } else {
+                        finalMessageP.innerHTML = 'Došlo je do greške. Molimo pokušajte ponovno.';
+                    }
+                })
+                .catch(error => {
+                    console.error('Greška:', error);
+                    finalMessageP.innerHTML = 'Došlo je do mrežne greške. Molimo provjerite vezu i pokušajte ponovno.';
+                })
+                .finally(() => {
+                    setTimeout(closeFinalPopup, 5000);
+                });
             });
 
-            // Dinamičko popunjavanje teksta
+            // --- DINAMIČKI TEKST I ANIMACIJE (nepromijenjeno) ---
             const urlParams = new URLSearchParams(window.location.search);
             const paramIznos = urlParams.get('iznos');
             const paramValuta = urlParams.get('valuta');
             const initialInvestmentInfo = document.getElementById('initialInvestmentInfo');
             const startAmountDisplay = document.getElementById('startAmountDisplay');
-
             let displayText = "30 $"; 
             if (paramIznos && paramValuta) {
                 if (paramIznos === 'veci' && paramValuta === 'iznos') {
@@ -298,22 +296,17 @@
                     displayText = `${paramIznos} ${currencySymbol}`;
                 }
             }
-            
             if (initialInvestmentInfo) {
                 initialInvestmentInfo.innerHTML = `S obzirom da ste u starom sistemu započeli poslovanje sa <strong>${displayText}</strong> te kako ste odlučili da;`;
             }
             if (startAmountDisplay) {
                 if (paramIznos === 'veci' && paramValuta === 'iznos') {
                     const parentParagraph = startAmountDisplay.closest('p');
-                    if (parentParagraph) {
-                        parentParagraph.innerHTML = "Na osnovi ukupno uloženog iznosa iz starog sistema određuje se broj SFbodova koji vam se prenose u novi sistem.";
-                    }
+                    if (parentParagraph) parentParagraph.innerHTML = "Na osnovi ukupno uloženog iznosa iz starog sistema određuje se broj SFbodova koji vam se prenose u novi sistem.";
                 } else {
                      startAmountDisplay.textContent = displayText;
                 }
             }
-            
-            // GSAP animacije
             if (typeof gsap !== 'undefined') {
                 gsap.from('.decision-content-box', { duration: 1, y: 50, opacity: 0, ease: 'power3.out', delay: 0.3 });
                 gsap.from(['.main-congrats-title', '.intro-section > *', '.highlighted-choice-title', '.detailed-text > *', '.confirm-button-container'], 
