@@ -71,34 +71,30 @@
            <button type="submit" id="starter-package-submit-email" class="btn-primary">Pošalji email adresu</button>
        </form>
        <script>
-    document.getElementById('starter-package-email-form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const form = event.target;
-        const email = document.getElementById('starter-package-email-input').value;
-        const data = {
-            requestType: "starterInterest",
-            email: email
-        };
-        fetch(form.action, {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: { 'Content-Type': 'application/json' }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Email adresa uspješno poslana!');
-                form.reset();
-            } else {
-                alert('Greška prilikom slanja: ' + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Došlo je do greške. Pokušajte ponovno.');
-        });
-    });
-</script>
+           document.getElementById('starter-package-email-form').addEventListener('submit', function(event) {
+               event.preventDefault();
+               const form = event.target;
+               const formData = new FormData(form);
+               fetch(form.action, {
+                   method: 'POST',
+                   body: formData
+               })
+               .then(response => response.json())
+               .then(data => {
+                   if (data.success) {
+                       alert('Email adresa uspješno poslana!');
+                       form.reset();
+                   } else {
+                       alert('Greška prilikom slanja: ' + data.message);
+                   }
+               })
+               .catch(error => {
+                   console.error('Error:', error);
+                   alert('Došlo je do greške. Pokušajte ponovno.');
+               });
+           });
+       </script>
+   </div>
    </div>
 <a href="#" 
    id="starter-info-close-link"
