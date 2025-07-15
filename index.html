@@ -15,26 +15,32 @@
 <body class="bg-gray-900">
     <canvas id="network-canvas"></canvas>
     <div class="custom-cursor"></div>
-    <div id="popup-overlay" class="popup-overlay">
-                <div id="welcome-popup" class="popup-content" style="display: none;">
-            <button class="popup-close" aria-label="Zatvori popup">×</button>
-            <h4>Poštovani korisnici…</h4>
-            <p>S obzirom na činjenicu da nastavljamo poslovanje nakon prekida koji je trajao tri godine, svjesni da će se u toj situaciji pratiti svaki naš korak i sve što činimo te kako bi održali transparentnost uz iznošenje istine, pravih i relevantnih informacija, želimo da napomenemo slijedeće;</p>
-            <ul style="list-style-type: disc; text-align: left; padding-left: 20px; margin-bottom: 1rem;">
-                <li>ova web stranica se servira preko HTTPS (statički HTML/CSS/JS), nema backend-a niti baze podataka.</li>
-                <li>Stranica je linearna, bez sticky navigacije ili interaktivnih elemenata, nema metatagova za pretraživače, nije optimizirana, nema ALT oznaka, meta opisa, struktuiranih naslova, nedostaje joj napredna optimizacija mobilnosti i performansi...</li>
-            </ul>
-            <p><span style="color: #39FF14;">Ovo je statička DEMO stranica, čija je svrha u ovoj fazi razvoja, prvenstveno informirati članove iz starog sistema o pravilima novog sistema poslovanja i trenutnoj fazi razvoja.</span></p>            <p>S obzirom da nam je primarni cilj u ovoj fazi razvoja prikupiti sredstva potrebna za izradu odnosno nadopunu stranica backofficea odnosno kontrolne ploče u ovoj fazi razvoja nije moguće uplatiti startne pakete već je moguće uplatiti ulaganje u investicijske pakete.</p>
-            <p>Osim toga na stranici Odluka o nastavku poslovanja imate mogućnost vidjeti i proučiti opcije prema kojim ćete se izjasniti da li odustajete ili nastavljate poslovanje uz ulaganje u Investicijski paket ili nastavljate bez ulaganja u Investicijski paket. Odluka o nastavku poslovanja koju donesete na ovim stranicama informativne je prirode dok ćete pravo odluku imati mogućnost donijeti neposredno prije početka poslovanja sukladno novom poslovnom modelu.</p>
-            <p>Važno je napomenuti, da vašom trenutnom odlukom na ovim stranicama, ukoliko se odlučite imate mogućnost odabrati jedan ili više Investicijskih paketa ali nemate mogućnost uplatiti iste.</p>
-            <p>Vaša odluka o nastavku poslovanja i ulaganju u Investicijske pakete na ovim stranicama, trebala bi nam biti pokazatelj sa kojim brojem korisnika iz starog sistema možemo računati da nastavljaju dalje sa nama kao i sa iznosom sredstava na koji bi mogli računati na osnovu iskazanog interesa za investicijske pakete.</p>
-            <p>Ova stranica treba poslužiti kako starim članovima da se izjasne o nastavku i ulaganju u investicijske pakete tako i novim potencijalnim investitorima ili novim članovima da iskažu svoj interes ukoliko žele ulagati u investicijske pakete i/ili započeti poslovanje.</p>
-            <p>Ovo je stranica, koja treba poslužiti za gore navedeno i kao takva je pokazatelj u kojem smjeru idemo i kako bi u konačnici moglo sve izgledati.</p>
-            <p>Da li ćemo nastaviti sa dizajnom iz staroga sistema pa se prilagođavati istome, što nam je trenutno najjeftinija varijanta s obzirom na situaciju u kojom se nalazimo ili ćemo nastaviti sa novim predloženim dizajnom ili možda sa još boljim i naprednijim dizajnom i tehnologijama, pitanje je naših financijskih mogućnosti u datom trenutku.</p>
-            <p>Međutim, složiti ćete se s nama, bez obzira na dizajn i “kozmetičke” promjene, najvažnije je da osiguramo sredstva neophodna za završetak i nadogradnju potrebnih softvera i aplikacija, kako bi nastavili poslovanje.</p>
-            <div class="text-center mt-6">
-              <button id="welcome-popup-continue" class="btn-primary">NASTAVI</button>
-            </div>
+   <div id="popup-overlay" class="popup-overlay">
+    <div id="welcome-popup" class="popup-content" style="display: none; text-align: justify;">
+        <button class="popup-close" aria-label="Zatvori popup">×</button>
+        <h4><strong>Poštovani korisnici…</strong></h4>
+        <p>S obzirom na činjenicu da nastavljamo poslovanje nakon prekida koji je trajao tri godine, svjesni da će se u toj situaciji pratiti svaki naš korak i sve što činimo te kako bi održali transparentnost uz iznošenje istine, pravih i relevantnih informacija, želimo da napomenemo slijedeće;</p>
+        
+        <!-- Izmijenjen stil liste da bude poravnata obostrano -->
+        <ul style="list-style-type: disc; text-align: justify; padding-left: 20px; margin-bottom: 1rem;">
+            <li><span style="color: #39FF14;">Ovaj projekt je STATIČKA LINEARNA DEMO WEB STRANICA, bez sticky navigacije ili interaktivnih elemenata, nema metatagova za pretraživače, nije optimizirana, nema ALT oznaka, meta opisa, struktuiranih naslova, nedostaje joj napredna optimizacija mobilnosti i performansi.</span></li>
+            <li><span style="color: #39FF14;">Dizajnirana je kao vizualni i informativni temelj za SFT21 poslovni koncept tvrtke InFace Invest Group. Svrha stranice je na jasan i vizualno privlačan način informirati postojeće i nove članove o trenutnoj fazi razvoja, o pravilima novog poslovnog modela i prikupiti podatke o interesu za nastavak poslovanja i ulaganje.</span></li>
+            <li><span style="color: #39FF14;">Stranica je razvijena koristeći moderne front-end tehnologije, s naglaskom na responzivnost i korisničko iskustvo. Izgrađena je na modernim tehnologijama kako bi se osiguralo da radi brzo i pouzdano na svim uređajima – od mobilnih telefona do stolnih računala. Iako nema tradicionalni backend i bazu podataka, funkcionalnost za obradu formi implementirana je putem Google Apps Scripta, koji služi kao jednostavan serverless backend za sigurno prikupljanje podataka.</span></li>
+            <li><span style="color: #39FF14;">Sve kontakt forme i forme za prijavu interesa sigurno su povezane sa sustavom za prikupljanje podataka, osiguravajući da se svaka prijava uredno zabilježi. Međutim, sustav za prikupljanje podataka putem KYC forme aktivan je, što znači da možete koristiti istoga kako bi vidjeli kako funkcionira ali unos podataka (slika dokumenta i vlastia fotografija) u ovoj fazi, na ovim stranicama se ne spremaju niti se bilježe u bazu podataka.</span></li>
+        </ul>
+        
+        <p>S obzirom da nam je primarni cilj prikupiti sredstva potrebna za izradu odnosno nadopunu stranica backofficea odnosno kontrolne ploče u ovoj fazi razvoja nije moguće uplatiti startne pakete već je moguće uplatiti ulaganje u investicijske pakete.</p>
+        <p>Osim toga na stranici Odluka o nastavku poslovanja imate mogućnost vidjeti i proučiti opcije prema kojim ćete se izjasniti da li odustajete ili nastavljate poslovanje uz ulaganje u Investicijski paket ili nastavljate bez ulaganja u Investicijski paket. Odluka o nastavku poslovanja koju donesete na ovim stranicama informativne je prirode dok ćete pravo odluku imati mogućnost donijeti neposredno prije početka poslovanja sukladno novom poslovnom modelu.</p>
+        <p>Važno je napomenuti, da vašom trenutnom odlukom na ovim stranicama, ukoliko se odlučite imate mogućnost odabrati jedan ili više Investicijskih paketa ali nemate mogućnost uplatiti iste. Po završetku stranica koje će biti povezane s platnim procesorima o mogućnosti uplate biti ćete pravovremeno obaviješteni.</p>
+        <p>Vaša odluka o nastavku poslovanja i ulaganju u Investicijske pakete na ovim stranicama, trebala bi nam biti pokazatelj sa kojim brojem korisnika iz starog sistema možemo računati da nastavljaju dalje sa nama kao i sa iznosom sredstava na koji bi mogli računati na osnovu iskazanog interesa za investicijske pakete.</p>
+        <p>Ova stranica treba poslužiti kako starim članovima da se izjasne o nastavku i ulaganju u investicijske pakete tako i novim potencijalnim investitorima ili novim članovima da iskažu svoj interes ukoliko žele ulagati u investicijske pakete i/ili započeti poslovanje. Osim toga ista je pokazatelj u kojem smjeru idemo i kako bi u konačnici moglo sve izgledati.</p>
+        <p>Da li ćemo nastaviti sa dizajnom iz staroga sistema pa se prilagođavati istome, što nam je trenutno najjeftinija varijanta s obzirom na situaciju u kojom se nalazimo ili ćemo nastaviti sa novim predloženim dizajnom ili možda sa još boljim i naprednijim dizajnom i tehnologijama, pitanje je naših financijskih mogućnosti u datom trenutku.</p>
+        <p>Ukratko, ova demo stranica uspješno spaja atraktivan dizajn s funkcionalnošću, služeći kao snažan temelj za budući razvoj pune SFT21 digitalne platforme.</p>
+        <p>Međutim, složiti ćete se s nama, bez obzira na dizajn i “kozmetičke” promjene, najvažnije je da osiguramo sredstva neophodna za završetak i nadogradnju potrebnih softvera i aplikacija, kako bi nastavili poslovanje.</p>
+        <p>Sukladno navedenom, vjerujemo da će mnogi među Vama prepoznati vrijednost, kvalitetu i moć poslovnog koncepta kojega smo započeli stvarati te da ćete nam se pridružiti u nastavku razvoja.</p>
+        <div class="text-center mt-6">
+          <button id="welcome-popup-continue" class="btn-primary">N A S T A V I</button>
+        </div>
         </div>
         <div id="validation-popup" class="popup-content" style="display: none;">
         </div>
@@ -299,22 +305,22 @@
                      <p class="text-xl text-gray-300 max-w-3xl mx-auto font-semibold"> InFace Invest Group – kompanija posvećena vašem uspjehu! </p>
                  </div>
                  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-                     <div class="glass-card p-8 fade-in feature-card" style="animation-delay: 0.1s;">
+                     <div class="glass-card p-8 fade-in feature-card interactive-card" style="animation-delay: 0.1s;">
                          <h3 class="text-2xl font-bold mb-4">InFace Invest Group d.o.o.</h3>
                          <p class="text-gray-300 text-justify"> Inovativna tehnološka kompanija registrirana u Rovinju (Hrvatska), koja donosi revoluciju u svijet online poslovanja kroz jedinstveni franšizni model – SFT21 Business Concept. <br><br> Naš projekt postavlja nove standarde stvaranjem jedinstvene online zajednice koja ima za cilj povezati moć društvene mreže i umrežavanje njezinih korisnika sa online trgovinom, direktnom prodajom, mrežnim marketingom i franšiznim poslovanjem, u jedan integrirani i međusobno povezani sistem poslovanja. <br><br> Našim korisnicima, investitorima, članovima i franšizerima te svim drugim zainteresiranim poslovnim subjektima, fizičkim i pravnim osobama, nudimo jedinstvenu poslovnu priliku i ponudu u vidu suradnje na više načina. </p>
                      </div>
-                     <div class="glass-card p-8 fade-in feature-card" style="animation-delay: 0.2s;">
-                         <div class="text-purple-400 text-4xl mb-6"><i class="fas fa-chart-line"></i></div>
+                     <div class="glass-card p-8 fade-in feature-card interactive-card" style="animation-delay: 0.2s;">
+                         <div class="text-purple-400 text-4xl mb-6"><i class="fas fa-lightbulb"></i></div>
                          <h3 class="text-2xl font-bold mb-4">Naša vizija</h3>
                          <p class="text-gray-300 text-justify"> Naša je vizija postati uspješna, prepoznatljiva i priznata multinacionalna kompanija koja se odlikuje moralnom inteligencijom, visokim etičkim standardima i jasno definiranom društvenom misijom. Stalnim ulaganjem u razvoj, inovacije i nadogradnje učinkovitih i jednostavnih poslovnih modela, cilj nam je afirmirati se kao kompanija koja stvara globalnu mrežu uspješnih i zadovoljnih poslovnih suradnika, utemeljenu na čvrstim lokalnim i regionalnim korijenima. Uz iskustvo i znanje stečeno u više od dvije decenije poslovanja, zajedno sa iskustvom, znanjem i entuzijazmom naših zadovoljnih i vjernih suradnika, stvaramo jedinstvenu poslovno-društvenu zajednicu koja će nadilaziti tradicionalne poslovne modele. </p>
                      </div>
-                     <div class="glass-card p-8 fade-in feature-card" style="animation-delay: 0.3s;">
+                     <div class="glass-card p-8 fade-in feature-card interactive-card" style="animation-delay: 0.3s;">
                          <div class="text-purple-400 text-4xl mb-6"><i class="fas fa-crosshairs"></i></div>
                          <h3 class="text-2xl font-bold mb-4">Naša misija</h3>
                          <p class="text-gray-300 text-justify"> Naša misija je osigurati svakom pojedincu jedinstvenu poslovnu priliku kroz najmodernije tehnologije i napredna rješenja, bez obzira na njihovu prethodnu stručnost i iskustvo. Želimo biti lider u stvaranju digitalnog ekosustava koji nudi jednostavan pristup edukaciji, poslovnim alatima i podršci za razvoj osobnog i profesionalnog potencijala. </p>
                      </div>
-                     <div class="glass-card p-8 fade-in feature-card" style="animation-delay: 0.4s;">
-                         <div class="text-purple-400 text-4xl mb-6"><i class="fas fa-balance-scale"></i></div>
+                     <div class="glass-card p-8 fade-in feature-card interactive-card" style="animation-delay: 0.4s;">
+                         <div class="text-purple-400 text-4xl mb-6"><i class="fas fa-hand-holding-heart"></i></div>
                          <h3 class="text-2xl font-bold mb-4">Vrijednosti koje nas vode</h3>
                          <p class="text-gray-300 text-justify"> Povjerenje, transparentnost, etika i odgovornost predstavljaju temelje našeg poslovanja. Naš rad se temelji na međusobnom poštovanju, podršci i zajedničkom rastu. Vjerujemo u snagu zajednice i važnost svakog pojedinca u našem sustavu. Naša posvećenost stalnom usavršavanju i inovaciji osigurava dugoročnu održivost i uspjeh svih članova. </p>
                      </div>
@@ -335,22 +341,22 @@
                      <p class="text-xl text-gray-300 max-w-3xl mx-auto font-semibold">Genijalan u svojoj jednostavnosti, učinkovit poslovni model</p>
                  </div>
                  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                     <div class="glass-card p-8 fade-in feature-card flex flex-col items-center text-center" style="animation-delay: 0.1s;">
+                     <div class="glass-card p-8 fade-in feature-card interactive-card flex flex-col items-center text-center" style="animation-delay: 0.1s;">
                          <div class="flex justify-center mb-6"><div class="w-20 h-20 rounded-full bg-purple-900 bg-opacity-50 flex items-center justify-center shadow-lg"><i class="fas fa-user-plus text-4xl text-purple-400"></i></div></div>
                          <h3 class="text-2xl font-bold mb-4">Besplatna registracija</h3>
                          <p class="text-gray-300">Registrirajte se besplatno uz KYC verifikaciju i dobijte pristup "SFnet" društvenoj mreži, "SFshop" online trgovini i besplatni "SFkod" za sudjelovanje u nagradnim igrama.</p>
                      </div>
-                     <div class="glass-card p-8 fade-in feature-card flex flex-col items-center text-center" style="animation-delay: 0.2s;">
+                     <div class="glass-card p-8 fade-in feature-card interactive-card flex flex-col items-center text-center" style="animation-delay: 0.2s;">
                          <div class="flex justify-center mb-6"><div class="w-20 h-20 rounded-full bg-purple-900 bg-opacity-50 flex items-center justify-center shadow-lg"><i class="fas fa-box-open text-4xl text-purple-400"></i></div></div>
                          <h3 class="text-2xl font-bold mb-4">Odabir startnog paketa</h3>
                          <p class="text-gray-300">Za one koji žele više, odaberite startni paket koji odgovara vašim potrebama i mogućnostima. Svaki paket donosi različite pogodnosti i određuje limit zarade.</p>
                      </div>
-                     <div class="glass-card p-8 fade-in feature-card flex flex-col items-center text-center" style="animation-delay: 0.3s;">
+                     <div class="glass-card p-8 fade-in feature-card interactive-card flex flex-col items-center text-center" style="animation-delay: 0.3s;">
                          <div class="flex justify-center mb-6"><div class="w-20 h-20 rounded-full bg-purple-900 bg-opacity-50 flex items-center justify-center shadow-lg"><i class="fas fa-users text-4xl text-purple-400"></i></div></div>
                          <h3 class="text-2xl font-bold mb-4">Sudjelovanje u razvoju zajednice</h3>
                          <p class="text-gray-300">Pozovite prijatelje i poslovne suradnike da se pridruže zajednici. Za svaku preporuku dobivate bonus i povećavate svoje SFbodove.</p>
                      </div>
-                     <div class="glass-card p-8 fade-in feature-card flex flex-col items-center text-center" style="animation-delay: 0.4s;">
+                     <div class="glass-card p-8 fade-in feature-card interactive-card flex flex-col items-center text-center" style="animation-delay: 0.4s;">
                          <div class="flex justify-center mb-6"><div class="w-20 h-20 rounded-full bg-purple-900 bg-opacity-50 flex items-center justify-center shadow-lg"><i class="fas fa-coins text-4xl text-purple-400"></i></div></div>
                          <h3 class="text-2xl font-bold mb-4">Zarada</h3>
                          <p class="text-gray-300">Ostvarujte zaradu kroz raspodjelu sredstava sukladno pravilima SFalgoritma (prijateljski, direktni, sponzorski, rabat bonus) i druge načine zarade.</p>
@@ -499,7 +505,7 @@
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
             
-            <div class="glass-card p-6 text-center fade-in border border-orange-500/20 hover:border-blue-400/80 transition-all duration-300 shadow-sm hover:shadow-lg hover:shadow-blue-500/20 rounded-lg flex flex-col" style="animation-delay: 0.1s;">
+            <div class="glass-card p-6 text-center fade-in border interactive-card border-orange-500/20 hover:border-blue-400/80 transition-all duration-300 shadow-sm hover:shadow-lg hover:shadow-blue-500/20 rounded-lg flex flex-col" style="animation-delay: 0.1s;">
                 <div class="mx-auto w-32 h-32 flex-shrink-0">
                     <style>
                         .sfu-float { animation: sfu-float 5s ease-in-out infinite; }
@@ -516,7 +522,7 @@
                 <div class="mt-auto pt-2"><h3 class="text-2xl font-bold text-white"><span class="text-blue-300">SF</span>URED</h3></div>
             </div>
             
-            <div class="glass-card p-6 text-center fade-in border border-orange-500/20 hover:border-pink-400/80 transition-all duration-300 shadow-sm hover:shadow-lg hover:shadow-pink-500/20 rounded-lg flex flex-col" style="animation-delay: 0.2s;">
+            <div class="glass-card p-6 text-center fade-in border interactive-card border-orange-500/20 hover:border-pink-400/80 transition-all duration-300 shadow-sm hover:shadow-lg hover:shadow-pink-500/20 rounded-lg flex flex-col" style="animation-delay: 0.2s;">
                  <div class="mx-auto w-32 h-32 flex-shrink-0" style="perspective: 500px;">
                     <style>
                         .sfn-structure { transform-origin: center; animation: sfn-rotate-poly 20s linear infinite; transform-style: preserve-3d; }
@@ -535,7 +541,7 @@
                  <div class="mt-auto pt-2"><h3 class="text-2xl font-bold text-white"><span class="text-pink-300">SF</span>NET</h3></div>
             </div>
 
-            <div class="glass-card p-6 text-center fade-in border border-orange-500/20 hover:border-red-400/80 transition-all duration-300 shadow-sm hover:shadow-lg hover:shadow-red-500/20 rounded-lg flex flex-col" style="animation-delay: 0.3s;">
+            <div class="glass-card p-6 text-center fade-in border interactive-card border-orange-500/20 hover:border-red-400/80 transition-all duration-300 shadow-sm hover:shadow-lg hover:shadow-red-500/20 rounded-lg flex flex-col" style="animation-delay: 0.3s;">
                 <div class="mx-auto w-32 h-32 flex-shrink-0">
                     <style>
                         .sfs-cart-final { animation: sfs-rocking-final 5s ease-in-out infinite; transform-origin: 57px 85px; }
@@ -556,7 +562,7 @@
                 <div class="mt-auto pt-2"><h3 class="text-2xl font-bold text-white"><span class="text-red-300">SF</span>SHOP</h3></div>
             </div>
 
-            <div class="glass-card p-6 text-center fade-in border border-orange-500/20 hover:border-green-400/80 transition-all duration-300 shadow-sm hover:shadow-lg hover:shadow-green-500/20 rounded-lg flex flex-col" style="animation-delay: 0.4s;">
+            <div class="glass-card p-6 text-center fade-in border interactive-card border-orange-500/20 hover:border-green-400/80 transition-all duration-300 shadow-sm hover:shadow-lg hover:shadow-green-500/20 rounded-lg flex flex-col" style="animation-delay: 0.4s;">
                 <div class="mx-auto w-32 h-32 flex-shrink-0">
                     <style>
                         .sfi-bar-final { transform-origin: bottom; animation: sfi-grow-bar-final 6s ease-in-out infinite; }
@@ -592,7 +598,7 @@
                 <div class="mt-auto pt-2"><h3 class="text-2xl font-bold text-white"><span class="text-green-300">SF</span>INVEST</h3></div>
             </div>
 
-            <div class="glass-card p-6 text-center fade-in border border-orange-500/20 hover:border-yellow-400/80 transition-all duration-300 shadow-sm hover:shadow-lg hover:shadow-yellow-500/20 rounded-lg flex flex-col" style="animation-delay: 0.5s;">
+            <div class="glass-card p-6 text-center fade-in border interactive-card border-orange-500/20 hover:border-yellow-400/80 transition-all duration-300 shadow-sm hover:shadow-lg hover:shadow-yellow-500/20 rounded-lg flex flex-col" style="animation-delay: 0.5s;">
                 <div class="mx-auto w-32 h-32 flex-shrink-0">
                     <style>
                         .sfit-gear-large { animation: sfit-rotate-ccw 12s linear infinite; transform-origin: 45px 55px; }
@@ -641,10 +647,10 @@
                     <p class="text-xl text-gray-300 max-w-3xl mx-auto font-semibold">Naš put od vizije do realizacije - ključni koraci u izgradnji SFT21 platforme</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <div class="glass-card p-6 text-center fade-in faze-card" style="animation-delay: 0.1s;"><div class="w-16 h-16 mx-auto mb-6 rounded-full border-2 border-purple-500 flex items-center justify-center"><span class="text-2xl font-bold text-purple-400">1</span></div><h4 class="text-xl font-bold mb-3 text-white">Faza <br>planiranja razvoja</h4><p class="text-gray-300 text-sm">Definiranje vizije, misije i poslovnog modela. Istraživanje tržišta i izrada detaljnog plana razvoja SFT21 ekosustava.</p></div>
-                    <div class="glass-card p-6 text-center fade-in faze-card" style="animation-delay: 0.2s;"><div class="w-16 h-16 mx-auto mb-6 rounded-full border-2 border-purple-500 flex items-center justify-center"><span class="text-2xl font-bold text-purple-400">2</span></div><h4 class="text-xl font-bold mb-3 text-white">Faza <br>izgradnje i testiranja</h4><p class="text-gray-300 text-sm">Izgradnja osnovne infrastrukture, razvoj ključnih platformi (SFured, SFnet, SFshop) i interna testiranja funkcionalnosti.</p></div>
-                    <div class="glass-card p-6 text-center fade-in faze-card" style="animation-delay: 0.3s;"><div class="w-16 h-16 mx-auto mb-6 rounded-full border-2 border-purple-500 flex items-center justify-center"><span class="text-2xl font-bold text-purple-400">3</span></div><h4 class="text-xl font-bold mb-3 text-white">Faza <br>lansiranja i početak poslovanja</h4><p class="text-gray-300 text-sm">Službeno puštanje platforme u rad, početak registracije korisnika i franšizera, marketinške aktivnosti i izgradnja zajednice.</p></div>
-                    <div class="glass-card p-6 text-center fade-in faze-card" style="animation-delay: 0.4s;"><div class="w-16 h-16 mx-auto mb-6 rounded-full border-2 border-purple-500 flex items-center justify-center"><span class="text-2xl font-bold text-purple-400">4</span></div><h4 class="text-xl font-bold mb-3 text-white">Faza <br>ekspanzije uz stalne nadogradnje</h4><p class="text-gray-300 text-sm">Kontinuirano unapređenje postojećih funkcionalnosti, dodavanje novih modula (SFinvest, SFit), globalno širenje i jačanje brenda.</p></div>
+                    <div class="glass-card p-6 text-center fade-in faze-card interactive-card" style="animation-delay: 0.1s;"><div class="w-16 h-16 mx-auto mb-6 rounded-full border-2 border-purple-500 flex items-center justify-center"><span class="text-2xl font-bold text-purple-400">1</span></div><h4 class="text-xl font-bold mb-3 text-white">Faza <br>planiranja razvoja</h4><p class="text-gray-300 text-sm">Definiranje vizije, misije i poslovnog modela. Istraživanje tržišta i izrada detaljnog plana razvoja SFT21 ekosustava.</p></div>
+                    <div class="glass-card p-6 text-center fade-in faze-card interactive-card" style="animation-delay: 0.2s;"><div class="w-16 h-16 mx-auto mb-6 rounded-full border-2 border-purple-500 flex items-center justify-center"><span class="text-2xl font-bold text-purple-400">2</span></div><h4 class="text-xl font-bold mb-3 text-white">Faza <br>izgradnje i testiranja</h4><p class="text-gray-300 text-sm">Izgradnja osnovne infrastrukture, razvoj ključnih platformi (SFured, SFnet, SFshop) i interna testiranja funkcionalnosti.</p></div>
+                    <div class="glass-card p-6 text-center fade-in faze-card interactive-card" style="animation-delay: 0.3s;"><div class="w-16 h-16 mx-auto mb-6 rounded-full border-2 border-purple-500 flex items-center justify-center"><span class="text-2xl font-bold text-purple-400">3</span></div><h4 class="text-xl font-bold mb-3 text-white">Faza <br>lansiranja i početak poslovanja</h4><p class="text-gray-300 text-sm">Službeno puštanje platforme u rad, početak registracije korisnika i franšizera, marketinške aktivnosti i izgradnja zajednice.</p></div>
+                    <div class="glass-card p-6 text-center fade-in faze-card interactive-card" style="animation-delay: 0.4s;"><div class="w-16 h-16 mx-auto mb-6 rounded-full border-2 border-purple-500 flex items-center justify-center"><span class="text-2xl font-bold text-purple-400">4</span></div><h4 class="text-xl font-bold mb-3 text-white">Faza <br>ekspanzije uz stalne nadogradnje</h4><p class="text-gray-300 text-sm">Kontinuirano unapređenje postojećih funkcionalnosti, dodavanje novih modula (SFinvest, SFit), globalno širenje i jačanje brenda.</p></div>
                 </div>
             </div>
         </section>
@@ -679,7 +685,7 @@
                     <p class="text-gray-200 text-lg leading-relaxed text-justify">Cijena SFT21 franšize iznosi 1.450 €. Plaćanje je moguće putem platnih procesora ili prebacivanjem sredstava sa računa drugog korisnika. Platiti možete jednokratno uplatom SP7, što vam donosi najbolje pogodnosti ili uplatom manjih startnih paketa. Uplatom manjih startnih paketa preostali dio pretplatničkih perioda imate mogućnost naknadno nadoplaćivati ili će ih sistem s vremenom uplatiti novcem od zarade. Uplatom posljednjeg 21. pretplatničkog perioda smatra se da je SFT21 franšiza uplaćena u cijelosti.</p>
                 </div>
                  <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                    <div class="glass-card p-8 fade-in feature-card" style="animation-delay: 0.1s;">
+                    <div class="glass-card p-8 fade-in feature-card interactive-card" style="animation-delay: 0.1s;">
                         <div class="text-purple-400 text-4xl mb-6"><i class="fas fa-star"></i></div>
                         <h3 class="text-2xl font-bold mb-4">Prednosti</h3>
                         <ul class="text-gray-300 space-y-2">
@@ -689,7 +695,7 @@
                             <li class="flex items-center"><i class="fas fa-check text-green-400 mr-3"></i>Podrška 24/7</li>
                         </ul>
                     </div>
-                    <div class="glass-card p-8 fade-in feature-card" style="animation-delay: 0.2s;">
+                        <div class="glass-card p-8 fade-in feature-card interactive-card" style="animation-delay: 0.2s;">
                         <div class="text-purple-400 text-4xl mb-6"><i class="fas fa-shield-alt"></i></div>
                         <h3 class="text-2xl font-bold mb-4">Sigurnost</h3>
                         <p class="text-gray-300 mb-6 text-justify">Naša platforma dizajnirana je s fokusom na sigurnost i privatnost korisnika.</p>
@@ -783,17 +789,17 @@
                     <div class="w-24 h-1 bg-purple-500 mx-auto mb-8"></div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="glass-card p-8 fade-in flex flex-col" style="animation-delay: 0.1s;">
+                    <div class="glass-card p-8 fade-in flex flex-col interactive-card" style="animation-delay: 0.1s;">
                         <h4 class="text-2xl font-bold mb-4 text-center text-white">Za početnike</h4>
                         <hr class="border-t-2 border-dashed border-gray-600 my-4">
                         <p class="text-gray-300 text-center leading-relaxed text-justify"> Ako ste novi u online poslovanju i želite isprobati SFT21 koncept s minimalnim ulaganjem bez ikakvog rizika, preporučujemo startni paket SP1 (50 €) ili SP2 (200 €). Ovi paketi omogućuju vam da se upoznate s platformom i poslovnim modelom te započnete posslovanje uz malu početnu investiciju. </p>
                     </div>
-                     <div class="glass-card p-8 fade-in flex flex-col" style="animation-delay: 0.2s;">
+                     <div class="glass-card p-8 fade-in flex flex-col interactive-card" style="animation-delay: 0.2s;">
                         <h4 class="text-2xl font-bold mb-4 text-center text-white">Za ambiciozne poduzetnike</h4>
                          <hr class="border-t-2 border-dashed border-gray-600 my-4">
                          <p class="text-gray-300 text-center leading-relaxed text-justify"> Ako imate iskustva u online poslovanju, mrežnom marketingu, direktnoj prodaji i sličnim poslovima te želite brže napredovati, preporučujemo startne pakete SP3 (350 €), SP4 (500 €) ili SP5 (650 €). Ovi paketi nude bolji omjer cijene i vrijednosti te vam omogućuju bolju poziciju u raspodjeli sredstava. </p>
                      </div>
-                     <div class="glass-card p-8 fade-in flex flex-col" style="animation-delay: 0.3s;">
+                     <div class="glass-card p-8 fade-in flex flex-col interactive-card" style="animation-delay: 0.3s;">
                          <h4 class="text-2xl font-bold mb-4 text-center text-white">Za profesionalce</h4>
                           <hr class="border-t-2 border-dashed border-gray-600 my-4">
                          <p class="text-gray-300 text-center leading-relaxed text-justify"> Ako ste ozbiljni poduzetnik s iskustvom u navedenom poslovanju ili bi to voljeli biti i želite maksimizirati svoje mogućnosti zarade, preporučujemo startne pakete SP6 (1.050 €) ili SP7 (1.450 €). Ovi paketi nude najveći limit zarade, najviše pretplatničkih perioda, najveći broj SFbodova i SFkodova, što vam omogućuje brži napredak i veće pogodnosti. </p>
@@ -1025,7 +1031,7 @@
 
     <section class="relative overflow-hidden">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12 mb-12 container mx-auto px-6 max-w-5xl">
-            <div class="ip-card fade-in" style="animation-delay: 0.1s;">
+            <div class="ip-card fade-in interactive-card" style="animation-delay: 0.1s;">
                 <div class="ip-card-header"><h4>IP1: 100 €</h4></div>
                 <div class="ip-card-body">
                     <p><span class="label">Očekivana dobit 50%:</span> <span class="value">150 €</span><span class="duration">(unutar 3 godine)</span></p>
@@ -1039,7 +1045,7 @@
                 </div>
                 <div class="ip-card-footer"><a href="#" class="btn-primary open-investment-details-popup" data-package-value="100" data-package-name="IP1">Odaberi paket</a></div>
             </div>
-             <div class="ip-card fade-in" style="animation-delay: 0.2s;">
+             <div class="ip-card fade-in interactive-card" style="animation-delay: 0.2s;">
                 <div class="ip-card-header"><h4>IP2: 200 €</h4></div>
                 <div class="ip-card-body">
                      <p><span class="label">Očekivana dobit 55%:</span> <span class="value">310 €</span><span class="duration">(unutar 3 godine)</span></p>
@@ -1053,7 +1059,7 @@
                  </div>
                  <div class="ip-card-footer"><a href="#" class="btn-primary open-investment-details-popup" data-package-value="200" data-package-name="IP2">Odaberi paket</a></div>
              </div>
-             <div class="ip-card fade-in" style="animation-delay: 0.3s;">
+             <div class="ip-card fade-in interactive-card" style="animation-delay: 0.3s;">
                  <div class="ip-card-header"><h4>IP3: 500 €</h4></div>
                  <div class="ip-card-body">
                      <p><span class="label">Očekivana dobit 60%:</span> <span class="value">800 €</span><span class="duration">(unutar 3 godine)</span></p>
@@ -1067,7 +1073,7 @@
                 </div>
                  <div class="ip-card-footer"><a href="#" class="btn-primary open-investment-details-popup" data-package-value="500" data-package-name="IP3">Odaberi paket</a></div>
              </div>
-            <div class="ip-card fade-in" style="animation-delay: 0.4s;">
+            <div class="ip-card fade-in interactive-card" style="animation-delay: 0.4s;">
                 <div class="ip-card-header"><h4>IP4: 1.000 €</h4></div>
                 <div class="ip-card-body">
                     <p><span class="label">Očekivana dobit 70%:</span> <span class="value">1.700 €</span><span class="duration">(unutar 3 godine)</span></p>
@@ -1081,7 +1087,7 @@
                 </div>
                 <div class="ip-card-footer"><a href="#" class="btn-primary open-investment-details-popup" data-package-value="1000" data-package-name="IP4">Odaberi paket</a></div>
             </div>
-             <div class="ip-card fade-in" style="animation-delay: 0.5s;">
+             <div class="ip-card fade-in interactive-card" style="animation-delay: 0.5s;">
                  <div class="ip-card-header"><h4>IP5: 1.500 €</h4></div>
                  <div class="ip-card-body">
                     <p><span class="label">Očekivana dobit 80%:</span> <span class="value">2.700 €</span><span class="duration">(unutar 3 godine)</span></p>
@@ -1095,7 +1101,7 @@
                 </div>
                 <div class="ip-card-footer"><a href="#" class="btn-primary open-investment-details-popup" data-package-value="1500" data-package-name="IP5">Odaberi paket</a></div>
              </div>
-             <div class="ip-card fade-in" style="animation-delay: 0.6s;">
+             <div class="ip-card fade-in interactive-card" style="animation-delay: 0.6s;">
                  <div class="ip-card-header"><h4>IP6: 2.100 €</h4></div>
                  <div class="ip-card-body">
                     <p><span class="label">Očekivana dobit (90%):</span> <span class="value">3.990 €</span><span class="duration">(unutar 3 godine)</span></p>
@@ -1111,7 +1117,7 @@
              </div>
          </div>
          <div id="individual-package" class="container mx-auto px-6 relative z-10 mt-12 fade-in" style="animation-delay: 0.7s;">
-            <div class="glass-card max-w-5xl mx-auto ip-wide-card overflow-hidden">
+                <div class="glass-card max-w-5xl mx-auto ip-wide-card overflow-hidden interactive-card">
                 <div class="ip-wide-card-header"> <h3 class="ip-wide-card-header-title">IP7: Individualni paket</h3> </div>
                 <div class="p-8 md:p-12">
                     <p class="text-gray-300 text-center leading-relaxed mb-6"> Odaberite opciju ulaganja koja vam najviše odgovara. </p>
