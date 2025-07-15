@@ -1,3 +1,4 @@
+
 :root {
     --primary-color: #6a1b9a; /* Purple */
     --secondary-color: #ab47bc; /* Lighter Purple */
@@ -466,15 +467,6 @@ nav.fixed {
     color: var(--fluorescent-green) 
 }
 
-.feature-card {
-    transition: all 0.5s ease;
-    cursor: pointer;
-}
-
-.feature-card:hover {
-    transform: translateY(-10px) scale(1.03);
-    box-shadow: 0 15px 30px rgba(106, 27, 154, 0.3);
-}
 
 .timeline-item {
     position: relative;
@@ -726,10 +718,7 @@ body.overflow-hidden {
     backdrop-filter: blur(8px); 
     -webkit-backdrop-filter: blur(8px);
 }
-.ip-card:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 10px 25px rgba(106, 27, 154, 0.4);
-}
+
 .ip-card-header {
      background: linear-gradient(to right, var(--fluorescent-green), var(--success-green)); 
      padding: 1rem 1.5rem;
@@ -1766,3 +1755,134 @@ body.light-mode .accordion-header span.font-semibold {
     color: #800080; /* Tamno ljubičasta */
 }
 
+/* --- POPRAVLJANJE SKROLANJA MOBILNOG MENIJA I DROPDOVNA --- */
+
+/* Glavni mobilni meni */
+.nav-menu {
+    position: fixed;
+    top: 80px; /* Ispod fiksirane navigacije */
+    left: -100%; /* Sakriven izvan ekrana */
+    width: 100%;
+    height: calc(100vh - 80px); /* Visina od početka do dna ekrana, minus visina fiksne navigacije */
+    background-color: #0d0118; /* Tamna pozadina */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    transition: left 0.5s ease-in-out;
+    z-index: 100;
+    border-right: 1px solid var(--fluorescent-green); /* Dodatni obrub */
+    overflow-y: auto; /* Omogućuje skrolanje ako je sadržaj predugačak */
+    -webkit-overflow-scrolling: touch; /* Za glatkije skrolanje na iOS */
+    padding-bottom: 100px; /* Dodatni padding na dnu da se izbjegne preklapanje s gumbima */
+    box-sizing: border-box; /* Važno za padding */
+}
+
+.nav-menu.active {
+    left: 0; /* Prikaži meni */
+}
+
+/* Stilovi za elemente unutar mobilnog menija */
+.nav-menu a {
+    width: 100%; /* Da zauzmu punu širinu */
+    padding: 0.75rem 1.5rem;
+    text-align: left; /* Poravnanje teksta lijevo */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-bottom: 1px solid rgba(128, 255, 0, 0.1); /* Lagani zeleni separator */
+}
+.nav-menu a:last-child {
+    border-bottom: none; /* Makni granicu na zadnjem elementu */
+}
+
+.nav-menu a:hover {
+    background-color: rgba(106, 27, 154, 0.3); /* Ljubičasti hover */
+    color: var(--fluorescent-green);
+}
+.nav-menu a.active {
+    color: var(--fluorescent-green);
+}
+
+/* Dropdown meni unutar mobilnog menija */
+.nav-menu .sft21-nav-item.dropdown .dropdown-menu {
+    display: none; /* Skriven po defaultu */
+    position: static; /* Važno: Da se prikaže unutar flowa mobilnog izbornika */
+    margin-top: 0; /* Resetiraj marginu */
+    padding: 0; /* Resetiraj padding */
+    width: 100%; /* Da zauzme punu širinu */
+    background-color: #1f2937; /* Tamna pozadina */
+    border: none; /* Bez granica */
+    border-radius: 0;
+    box-shadow: none;
+    z-index: 10;
+    transition: none; /* Makni tranzicije */
+    max-height: 300px; /* Ograniči visinu dropdowna */
+    overflow-y: auto; /* Omogući skrolanje unutar dropdowna */
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Kada je dropdown otvoren */
+.nav-menu .sft21-nav-item.dropdown.open .dropdown-menu {
+    display: block;
+}
+
+/* Stil za stavke unutar mobilnog dropdowna */
+.nav-menu .dropdown-menu a.dropdown-item {
+    padding: 0.75rem 1.5rem;
+    text-align: left;
+    color: #e0e0e0;
+    font-size: 0.9rem;
+    display: block;
+    border-bottom: 1px solid rgba(128, 255, 0, 0.05); /* Lagani zeleni separator */
+}
+.nav-menu .dropdown-menu a.dropdown-item:hover {
+    background-color: rgba(106, 27, 154, 0.3);
+}
+.nav-menu .dropdown-menu a.dropdown-item:last-child {
+    border-bottom: none;
+}
+
+/* Stil za ikonu koja pokazuje da je dropdown otvoren */
+.nav-menu .mobile-dropdown-toggle i.fas {
+    margin-left: 0.5rem;
+    transition: transform 0.3s ease;
+    display: inline-block;
+}
+.nav-menu .sft21-nav-item.dropdown.open .mobile-dropdown-toggle i.fas {
+    transform: rotate(180deg); /* Rotiraj ikonu kada je otvoreno */
+}
+
+/* Skrolanje za jezik (ako je to dio dropdowna) */
+.nav-menu .mobile-language-selector .language-dropdown-mobile {
+    display: none; /* Sakriveno po defaultu */
+}
+.nav-menu .mobile-language-selector.open .language-dropdown-mobile {
+    display: block; /* Prikaži kad je selector otvoren */
+}
+
+/* Popravak za zatvaranje menija klikom na stavku */
+.nav-menu a:not([id*="lang-trigger"]):not(.mobile-dropdown-toggle) {
+    /* Event listener se dodaje u JS, ovo je samo fallback stil ako zatreba */
+}
+
+/* Dodatni padding na dno mobilnog menija kako bi se gumbovi vidjeli */
+.nav-menu {
+    padding-bottom: 100px; /* Prilagodite ako imate fiksni footer ili druge elemente na dnu */
+}
+
+/* Konačno, osigurajte da je body.overflow-hidden ispravno primijenjen u JS kad se hamburger aktivira */
+body.overflow-hidden {
+    overflow: hidden;
+}
+
+/* ================================================== */
+/*  KONAČNI UNIVERZALNI HOVER EFEKT S POJAČANJEM        */
+/* ================================================== */
+
+.interactive-card {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.interactive-card:hover {
+    transform: translateY(-5px) scale(1.03) !important;
+    box-shadow: 0 15px 25px rgba(23, 0, 43, 0.5) !important;
+}
