@@ -5,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registracija - SFT21 InFace Invest Group</title>
 
+        <!-- ============================================= -->
+    <!-- GLOBALNA SKRIPTA ZA INICIJALIZACIJU TEME -->
+    <!-- Sprječava "bljesak" krive teme pri učitavanju -->
+    <!-- ============================================= -->
+    <script>
+        (function() {
+            try {
+                const theme = localStorage.getItem('sft21_theme');
+                if (theme === 'light') {
+                    document.documentElement.classList.add('light-mode');
+                }
+            } catch (e) {
+                console.error('Failed to apply theme from localStorage', e);
+            }
+        })();
+    </script>
+
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -229,6 +246,257 @@
         }
 
     </style>
+    <!-- ================================================== -->
+<!-- === STILOVI ZA LIGHT MODE DIREKTNO U HTML-u === -->
+<!-- ================================================== -->
+<style>
+    /* Opći stilovi za light mode */
+    body.light-mode {
+        background-color: #f8fafc !important; /* Svijetla pozadina */
+        color: #334155 !important; /* Tamni tekst */
+    }
+
+    /* Navigacija u light modu */
+    body.light-mode nav.fixed {
+        background-color: rgba(255, 255, 255, 0.9) !important;
+        border-bottom-color: var(--primary-color) !important; /* Glavna ljubičasta */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05) !important;
+    }
+    body.light-mode .logo-nav .small-text,
+    body.light-mode .logo-nav .text-logo-orange,
+    body.light-mode .logo-nav .text-white {
+        color: var(--primary-color) !important; /* Logo tekst ljubičasti */
+    }
+    body.light-mode nav a.btn-primary.register-login-btn {
+        background-color: var(--primary-color) !important;
+        color: white !important;
+    }
+    body.light-mode nav a.btn-primary.register-login-btn:hover {
+        background-color: var(--secondary-color) !important;
+    }
+    body.light-mode nav a.btn-outline.register-register-btn {
+        color: var(--primary-color) !important;
+        border-color: var(--primary-color) !important;
+    }
+    body.light-mode nav a.btn-outline.register-register-btn:hover {
+        background-color: rgba(106, 27, 154, 0.1) !important;
+        color: var(--primary-color) !important;
+    }
+    body.light-mode nav .language-selector .language-trigger i,
+    body.light-mode nav .mobile-language-selector .mobile-language-trigger i,
+    body.light-mode #theme-toggle i,
+    body.light-mode #theme-toggle-mobile i {
+        color: var(--primary-color) !important; /* Ikone globusa i teme */
+    }
+    body.light-mode .fa-globe,
+    body.light-mode .language-trigger i,
+    body.light-mode i.fas.fa-globe {
+        color: var(--primary-color) !important;
+    }
+    body.light-mode .hamburger .bar {
+        background-color: var(--primary-color) !important; /* Boja hamburger linija */
+    }
+
+    /* Naslovi u light modu */
+    body.light-mode h1,
+    body.light-mode h2,
+    body.light-mode h3,
+    body.light-mode h4,
+    body.light-mode h5,
+    body.light-mode h6,
+    body.light-mode .registration-section h1,
+    body.light-mode .glass-card h4 {
+        color: var(--primary-color) !important; /* Svi naslovi ljubičasti */
+    }
+
+    /* Tekst u light modu */
+    body.light-mode p,
+    body.light-mode span,
+    body.light-mode div {
+        color: #475569; /* Tamno siva boja teksta za općenite elemente */
+    }
+    body.light-mode .text-gray-300 {
+        color: #475569 !important;
+    }
+    body.light-mode .text-gray-400 {
+        color: #64748b !important;
+    }
+
+
+    /* Kartice i kontejneri u light modu */
+    body.light-mode .glass-card,
+    body.light-mode .registration-form-container {
+        background-color: #ffffff !important;
+        border-color: #e2e8f0 !important; /* Svijetliji obrub */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important;
+    }
+    body.light-mode .image-placeholder {
+        border-color: #cbd5e1 !important; /* Obrub slike */
+        background-color: #f8fafc !important; /* Pozadina slike */
+    }
+
+    /* Lista prednosti i ikone */
+    body.light-mode .benefits-list li {
+        color: #334155 !important; /* Tekst liste */
+    }
+    body.light-mode .benefits-list i.fas.fa-check-circle {
+        color: var(--primary-color) !important; /* Boja ikona liste */
+    }
+
+    /* Gumbi za tip računa (Osobni/Poslovni) */
+    body.light-mode .btn-account-type {
+        border-color: var(--primary-color) !important;
+        background-color: transparent !important;
+        color: var(--primary-color) !important;
+    }
+    body.light-mode .btn-account-type.active {
+        background-color: var(--primary-color) !important;
+        color: white !important;
+    }
+    body.light-mode .btn-account-type:not(.active):hover {
+        background-color: rgba(106, 27, 154, 0.1) !important;
+        color: var(--primary-color) !important;
+    }
+    body.light-mode .btn-account-type.active:hover {
+        background-color: var(--secondary-color) !important;
+    }
+
+    /* Social media gumbi */
+    body.light-mode .social-login-button {
+        border-color: #cbd5e1 !important;
+        background-color: #f8fafc !important;
+        color: #334155 !important;
+    }
+    body.light-mode .social-login-button:hover {
+        background-color: #f1f5f9 !important;
+    }
+    body.light-mode .social-login-button i.fab.fa-apple {
+        color: #334155 !important;
+    }
+
+    /* Forma za registraciju */
+    body.light-mode .registration-form-container .border-gray-700 {
+        border-color: #e2e8f0 !important;
+    }
+    body.light-mode .form-label-register {
+        color: #475569 !important;
+    }
+    body.light-mode .form-input-register,
+    body.light-mode .custom-select-trigger,
+    body.light-mode .phone-input-wrapper {
+        background-color: #f1f5f9 !important;
+        border-color: #cbd5e1 !important;
+        color: #1e293b !important;
+    }
+    body.light-mode .form-input-register::placeholder {
+        color: #94a3b8 !important;
+    }
+    body.light-mode .form-input-register:focus,
+    body.light-mode .custom-select-trigger:hover,
+    body.light-mode .custom-select-trigger.active,
+    body.light-mode .phone-input-wrapper:focus-within {
+        border-color: var(--primary-color) !important;
+        box-shadow: 0 0 0 2px rgba(106, 27, 154, 0.2) !important;
+    }
+    body.light-mode .custom-select-options {
+        background-color: #f1f5f9 !important;
+        border-color: #cbd5e1 !important;
+    }
+    body.light-mode .custom-select-options .option {
+        color: #334155 !important;
+    }
+    body.light-mode .custom-select-options .option:hover {
+        background-color: var(--secondary-color) !important;
+        color: white !important;
+    }
+    body.light-mode .custom-select-trigger::after {
+        color: var(--primary-color) !important;
+    }
+    body.light-mode .country-code-select {
+        background-color: #e2e8f0 !important;
+        border-right-color: #cbd5e1 !important;
+        color: #334155 !important;
+    }
+
+    /* Radio i Checkbox gumbi */
+    body.light-mode .form-radio-register {
+        border-color: #94a3b8 !important;
+    }
+    body.light-mode .form-radio-register:checked {
+        border-color: var(--primary-color) !important;
+    }
+    body.light-mode .form-radio-register:checked::after {
+        background-color: var(--primary-color) !important;
+    }
+    body.light-mode .form-checkbox-register {
+        border-color: #94a3b8 !important;
+    }
+    body.light-mode .form-checkbox-register:checked {
+        background-color: var(--primary-color) !important;
+        border-color: var(--primary-color) !important;
+    }
+    body.light-mode .form-checkbox-register:checked::after {
+        color: white !important;
+    }
+    body.light-mode .space-y-3 span.text-gray-300 {
+        color: #475569 !important;
+    }
+    body.light-mode a.text-fluorescent-green.underline {
+        color: var(--primary-color) !important;
+    }
+    body.light-mode a.text-fluorescent-green.underline:hover {
+        color: var(--secondary-color) !important;
+    }
+
+    /* Gumb "Dalje" */
+    body.light-mode #dalje-button,
+    body.light-mode .btn-primary,
+    body.light-mode [type="submit"] {
+        background-color: var(--primary-color) !important;
+        color: white !important;
+    }
+    body.light-mode #dalje-button:hover,
+    body.light-mode .btn-primary:hover,
+    body.light-mode [type="submit"]:hover {
+        background-color: var(--secondary-color) !important;
+    }
+
+    /* Footer u light modu */
+    body.light-mode footer.bg-gray-900 {
+        background-color: #1e293b !important;
+        border-top-color: #334155 !important;
+    }
+    body.light-mode footer h3,
+    body.light-mode footer h4 {
+        color: white !important;
+    }
+    body.light-mode footer .text-gray-400,
+    body.light-mode footer a,
+    body.light-mode footer .fab {
+        color: #a0aec0 !important;
+    }
+    body.light-mode footer a:hover {
+        color: white !important;
+    }
+    body.light-mode footer .border-t.border-gray-800 {
+        border-color: #334155 !important;
+    }
+
+    /* Važni ispravci boja koji su možda bili pregaženi */
+    body.light-mode .text-logo-orange,
+    body.light-mode div:contains("Dobro došli u SFteam!"),
+    body.light-mode div:contains("Verifikacija identiteta - KYC") {
+        color: var(--primary-color) !important;
+    }
+
+    /* ================================================== */
+/* === ISPRAVAK BOJE LOGA ZA LIGHT MODE === */
+/* ================================================== */
+
+body.light-mode #site-logo {
+    filter: hue-rotate(240deg) brightness(0.8) saturate(3);
+}
+</style>
 </head>
 <style>
     body, h1, h2, h3, h4, h5, h6, p, span, div, button, input, select, textarea {
@@ -299,6 +567,10 @@
 
                 <div class="hidden md:flex items-center space-x-4">
                     <div class="language-selector relative">
+<button id="theme-toggle" type="button" class="text-white hover:text-fluorescent-green transition-colors duration-300 text-xl p-2 rounded-full">
+    <i id="theme-toggle-dark-icon" class="fas fa-moon"></i>
+    <i id="theme-toggle-light-icon" class="fas fa-sun hidden"></i>
+</button>
                         <button id="desktop-lang-trigger" class="language-trigger text-white hover:text-fluorescent-green transition-colors duration-300 text-xl">
                             <i class="fas fa-globe"></i>
                         </button>
@@ -330,6 +602,10 @@
                  <a href="#" id="mobile-lang-trigger" class="block text-center transition-colors duration-300 sft21-nav-link mobile-language-trigger text-gray-300 hover:text-fluorescent-green">
                      <i class="fas fa-globe mr-2"></i> Odaberi jezik <i class="fas fa-chevron-down ml-1 text-xs"></i>
                  </a>
+<button id="theme-toggle-mobile" type="button" class="text-white hover:text-fluorescent-green transition-colors duration-300 text-2xl p-2 rounded-full">
+    <i id="theme-toggle-dark-icon-mobile" class="fas fa-moon"></i>
+    <i id="theme-toggle-light-icon-mobile" class="fas fa-sun hidden"></i>
+</button>
                  <div id="mobile-lang-dropdown" class="language-dropdown-mobile">
                     <a href="#" class="language-item"> <img src="https://flagcdn.com/w20/gb.png" alt="Engleski" class="flag-image"> <span>ENG</span> </a>
                     <a href="#" class="language-item"> <img src="https://flagcdn.com/w20/hr.png" alt="Hrvatski" class="flag-image"> <span>HRV</span> </a>
@@ -624,6 +900,93 @@
         // <<< KRAJ KODA ZA PREPORUČITELJA >>>
         // ===========================================
 
+                // =======================================================
+        // === ISPRAVLJENA LOGIKA ZA DARK/LIGHT MODE PREKIDAČ ===
+        // =======================================================
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeToggleMobileBtn = document.getElementById('theme-toggle-mobile');
+
+        // Funkcija koja primjenjuje temu i mijenja SVE potrebne stilove
+        const applyTheme = (theme) => {
+            // Pronađi elemente sa specifičnim inline stilovima
+            const specificHeaders = document.querySelectorAll('h4[style*="color: #80ff00"]');
+            const daljeButton = document.getElementById('dalje-button');
+
+            if (theme === 'light') {
+                body.classList.add('light-mode');
+                
+                // Promijeni ikone na gumbima za temu
+                if (themeToggleBtn) {
+                    themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+                }
+                if (themeToggleMobileBtn) {
+                    themeToggleMobileBtn.innerHTML = '<i class="fas fa-moon mr-2"></i> Promijeni temu';
+                }
+
+                // *** JAVASCRIPT DIREKTNO MIJENJA INLINE STILOVE ***
+                // Mijenjamo specifične zelene naslove u ljubičaste
+                specificHeaders.forEach(header => {
+                    header.style.color = 'var(--secondary-color)'; // Svijetlo ljubičasta
+                });
+                // Mijenjamo gumb "Dalje"
+                if (daljeButton) {
+                    daljeButton.style.backgroundColor = 'var(--secondary-color)'; // Svijetlo ljubičasta
+                    daljeButton.style.color = 'white';
+                }
+
+            } else { // Vraćanje na tamnu temu
+                body.classList.remove('light-mode');
+                
+                // Vrati ikone na sunce
+                if (themeToggleBtn) {
+                    themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+                }
+                if (themeToggleMobileBtn) {
+                    themeToggleMobileBtn.innerHTML = '<i class="fas fa-sun mr-2"></i> Promijeni temu';
+                }
+
+                // *** JAVASCRIPT VRAĆA ORIGINALNE INLINE STILOVE ***
+                // Vraćamo zelenu boju na naslove
+                specificHeaders.forEach(header => {
+                    header.style.color = '#80ff00';
+                });
+                // Vraćamo zelenu boju na gumb "Dalje"
+                if (daljeButton) {
+                    daljeButton.style.backgroundColor = '#80ff00';
+                    daljeButton.style.color = '#0e076a';
+                }
+            }
+        };
+
+        // Funkcija koja upravlja promjenom teme
+        const handleThemeToggle = () => {
+            const isLight = body.classList.contains('light-mode');
+            const newTheme = isLight ? 'dark' : 'light';
+            localStorage.setItem('sft21_theme', newTheme);
+            applyTheme(newTheme);
+        };
+
+        // Glavna inicijalizacija teme
+        const initializeTheme = () => {
+            if (themeToggleBtn) {
+                themeToggleBtn.addEventListener('click', handleThemeToggle);
+            }
+            if (themeToggleMobileBtn) {
+                themeToggleMobileBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    handleThemeToggle();
+                });
+            }
+            const savedTheme = localStorage.getItem('sft21_theme') || 'dark';
+            applyTheme(savedTheme);
+        };
+
+        // Pokreni inicijalizaciju teme
+        initializeTheme();
+        // =======================================================
+        // === KRAJ LOGIKE ZA DARK/LIGHT MODE PREKIDAČ ===
+        // =======================================================
+
 
         // --- PODACI O ZEMLJAMA (UKLJUČUJUĆI POZIVNE BROJEVE) ---
         const countriesData = [
@@ -829,7 +1192,7 @@
     }); 
     </script>
     
-    <script>
+<script>
     document.addEventListener('DOMContentLoaded', () => {
         const canvas = document.getElementById('network-canvas');
         if (!canvas) return;
@@ -838,9 +1201,10 @@
         let particles = [];
         let mouse = { x: null, y: null };
 
-        const options = {
-            particleColor: "rgba(128, 255, 0, 0.85)",
-            lineColor: "rgba(170, 0, 255, 0.8)",
+        // Postavke za TAMNU temu
+        const darkOptions = {
+            particleColorRGB: '128, 255, 0',
+            lineColorRGB: '170, 0, 255',
             particleAmount: 120,
             defaultRadius: 1.3,
             linkRadius: 150,
@@ -850,30 +1214,40 @@
             mouseEffectStrength: 2,
         };
 
+        // Postavke za SVIJETLU temu (s ispravnim ljubičastim bojama)
+        const lightOptions = {
+            particleColorRGB: '106, 27, 154', // Ispravna ljubičasta boja
+            lineColorRGB: '171, 71, 188',     // Ispravna svjetlija ljubičasta
+            particleAmount: 120,
+            defaultRadius: 1.3,
+            linkRadius: 150,
+            particleSpeed: 0.25,
+            lineWidth: 0.4,
+            mouseInteractionRadius: 150,
+            mouseEffectStrength: 2,
+        };
+        
+        // Određivanje trenutne teme na početku
+        let currentOptions = document.documentElement.classList.contains('light-mode') ? lightOptions : darkOptions;
+
         const resizeCanvas = () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+            initParticles(); 
         };
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
 
-        window.addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-        });
-        window.addEventListener('mouseout', () => {
-             mouse.x = null;
-             mouse.y = null;
-        });
+        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+        window.addEventListener('mouseout', () => { mouse.x = null; mouse.y = null; });
 
         class Particle {
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
                 this.z = Math.random() * 2 - 1;
-                this.radius = options.defaultRadius * (1 + this.z * 0.5);
-                this.vx = (Math.random() - 0.5) * options.particleSpeed;
-                this.vy = (Math.random() - 0.5) * options.particleSpeed;
+                this.radius = currentOptions.defaultRadius * (1 + this.z * 0.5);
+                this.vx = (Math.random() - 0.5) * currentOptions.particleSpeed;
+                this.vy = (Math.random() - 0.5) * currentOptions.particleSpeed;
             }
 
             draw() {
@@ -883,21 +1257,22 @@
                     const dx = this.x - mouse.x;
                     const dy = this.y - mouse.y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < options.mouseInteractionRadius) {
-                        const effect = (1 - dist / options.mouseInteractionRadius);
-                        finalRadius += effect * options.mouseEffectStrength;
+                    if (dist < currentOptions.mouseInteractionRadius) {
+                        const effect = (1 - dist / currentOptions.mouseInteractionRadius);
+                        finalRadius += effect * currentOptions.mouseEffectStrength;
                         opacity += effect * 0.5;
                     }
                 }
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, finalRadius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(128, 255, 0, ${opacity * 0.85})`;
+                ctx.fillStyle = `rgba(${currentOptions.particleColorRGB}, ${opacity * 0.85})`;
                 ctx.fill();
             }
 
             update() {
                 this.x += this.vx * (1 + this.z * 0.5);
                 this.y += this.vy * (1 + this.z * 0.5);
+
                 if (this.x > canvas.width + 5) this.x = -5;
                 else if (this.x < -5) this.x = canvas.width + 5;
                 if (this.y > canvas.height + 5) this.y = -5;
@@ -907,7 +1282,7 @@
 
         const initParticles = () => {
             particles = [];
-            for (let i = 0; i < options.particleAmount; i++) {
+            for (let i = 0; i < currentOptions.particleAmount; i++) {
                 particles.push(new Particle());
             }
         };
@@ -919,21 +1294,22 @@
                     const p1 = particles[i];
                     const p2 = particles[j];
                     const dist = Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
-                    if (dist < options.linkRadius) {
-                        let opacity = 1 - (dist / options.linkRadius);
+
+                    if (dist < currentOptions.linkRadius) {
+                        let opacity = 1 - (dist / currentOptions.linkRadius);
                         opacity *= pulse;
                         if (mouse.x !== null) {
                            const distToMouse1 = Math.sqrt(Math.pow(p1.x - mouse.x, 2) + Math.pow(p1.y - mouse.y, 2));
                            const distToMouse2 = Math.sqrt(Math.pow(p2.x - mouse.x, 2) + Math.pow(p2.y - mouse.y, 2));
-                           if(distToMouse1 < options.mouseInteractionRadius || distToMouse2 < options.mouseInteractionRadius) {
+                           if(distToMouse1 < currentOptions.mouseInteractionRadius || distToMouse2 < currentOptions.mouseInteractionRadius) {
                                opacity = Math.min(1, opacity + 0.5);
                            }
                         }
                         ctx.beginPath();
                         ctx.moveTo(p1.x, p1.y);
                         ctx.lineTo(p2.x, p2.y);
-                        ctx.strokeStyle = `rgba(170, 0, 255, ${opacity * 0.5})`;
-                        ctx.lineWidth = options.lineWidth;
+                        ctx.strokeStyle = `rgba(${currentOptions.lineColorRGB}, ${opacity * 0.5})`;
+                        ctx.lineWidth = currentOptions.lineWidth;
                         ctx.stroke();
                     }
                 }
@@ -948,9 +1324,20 @@
             requestAnimationFrame(animate);
         };
 
-        initParticles();
+        // Funkcija koju poziva glavna skripta za promjenu teme
+        window.setAnimationTheme = (theme) => {
+            if (theme === 'light') {
+                currentOptions = lightOptions;
+            } else {
+                currentOptions = darkOptions;
+            }
+            initParticles();
+        };
+
+        // Inicijalno pokretanje
+        resizeCanvas();
         animate();
     });
-    </script>
+</script>
 </body>
 </html>
