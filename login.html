@@ -5,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prijava - SFT21 InFace Invest Group</title>
 
+        <!-- ============================================= -->
+    <!-- GLOBALNA SKRIPTA ZA INICIJALIZACIJU TEME -->
+    <!-- Sprječava "bljesak" krive teme pri učitavanju -->
+    <!-- ============================================= -->
+    <script>
+        (function() {
+            try {
+                const theme = localStorage.getItem('sft21_theme');
+                if (theme === 'light') {
+                    document.documentElement.classList.add('light-mode');
+                }
+            } catch (e) {
+                console.error('Failed to apply theme from localStorage', e);
+            }
+        })();
+    </script>
+
     <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -12,8 +29,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Link na vanjsku CSS datoteku -->
-    <link rel="stylesheet" href="css/style.css">
-
+    <link rel="stylesheet" href="css/style.css?v=7">
     <!-- Stilovi za Login Stranicu -->
     <style>
         /* Osnovni stilovi (mogu biti u style.css) */
@@ -228,6 +244,10 @@
                 <div class="hidden md:flex items-center space-x-4">
                     <!-- Odabir jezika - Desktop -->
                     <div class="language-selector relative">
+                        <button id="theme-toggle" type="button" class="text-white hover:text-fluorescent-green transition-colors duration-300 text-xl p-2 rounded-full">
+                        <i id="theme-toggle-dark-icon" class="fas fa-moon"></i>
+                        <i id="theme-toggle-light-icon" class="fas fa-sun hidden"></i>
+                        </button>
                         <button id="desktop-lang-trigger" class="language-trigger text-white hover:text-fluorescent-green transition-colors duration-300 text-xl">
                             <i class="fas fa-globe"></i>
                         </button>
@@ -259,6 +279,12 @@
 
         <!-- Mobilni Navigacijski Meni (Skriven na desktopu, prikazan na mobilnom) -->
         <div class="nav-menu md:hidden">
+            <div class="mb-4">
+    <button id="theme-toggle-mobile" type="button" class="text-white hover:text-fluorescent-green transition-colors duration-300 text-2xl p-2 rounded-full">
+        <i id="theme-toggle-dark-icon-mobile" class="fas fa-moon"></i>
+        <i id="theme-toggle-light-icon-mobile" class="fas fa-sun hidden"></i>
+    </button>
+</div>
              <!-- Mobilni Odabir jezika -->
              <div class="flex flex-col space-y-3 mt-5 px-6">
                  <div class="sft21-nav-item dropdown mobile-language-selector mb-3 border-t border-b border-gray-700 py-2">
@@ -493,22 +519,32 @@
         let particles = [];
         let mouse = { x: null, y: null };
 
-        // --- FINALNI PARAMETRI ZA "WOW" EFEKT ---
-        const options = {
-            particleColor: "rgba(128, 255, 0, 0.85)", // #80ff00 s prozirnošću
-            lineColor: "rgba(170, 0, 255, 0.8)",     // #aa00ff s prozirnošću
-            particleAmount: 120,                     // Optimalan broj za pokrivenost
-            defaultRadius: 1.3,                      // Manji, suptilniji čvorovi
-            rotationSpeed: 0.0003,                   // Malo sporija rotacija radi fokusa na interakciju
-            linkRadius: 150,                         // Radijus za povezivanje
-            perspective: 1000,                       // Jača 3D perspektiva
-            cameraZ: 300,
+        const darkOptions = {
+            particleColorRGB: '128, 255, 0',
+            lineColorRGB: '170, 0, 255',
+            particleAmount: 120,
+            defaultRadius: 1.3,
+            linkRadius: 150,
             particleSpeed: 0.25,
             lineWidth: 0.4,
-            // Parametri za interakciju s mišem
-            mouseInteractionRadius: 150, // Domet utjecaja miša
-            mouseEffectStrength: 2,      // Koliko će se čvorovi povećati
+            mouseInteractionRadius: 150,
+            mouseEffectStrength: 2,
         };
+
+        const lightOptions = {
+            particleColorRGB: '106, 27, 154', // Primarna ljubičasta boja
+            lineColorRGB: '171, 71, 188',     // Sekundarna, svjetlija 
+            particleAmount: 120,
+            defaultRadius: 1.3,
+            linkRadius: 150,
+            particleSpeed: 0.25,
+            lineWidth: 0.4,
+            mouseInteractionRadius: 150,
+            mouseEffectStrength: 2,
+        };
+        
+        let currentOptions = document.body.classList.contains('light-mode') ? lightOptions : darkOptions;
+
 
         const resizeCanvas = () => {
             canvas.width = window.innerWidth;
@@ -517,7 +553,6 @@
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        // Praćenje pozicije miša za interakciju s česticama
         window.addEventListener('mousemove', (e) => {
             mouse.x = e.clientX;
             mouse.y = e.clientY;
@@ -533,37 +568,35 @@
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
                 this.z = Math.random() * 2 - 1; // Z-os za parallax efekt
-                this.radius = options.defaultRadius * (1 + this.z * 0.5);
-                this.vx = (Math.random() - 0.5) * options.particleSpeed;
-                this.vy = (Math.random() - 0.5) * options.particleSpeed;
+                this.radius = currentOptions.defaultRadius * (1 + this.z * 0.5);
+                this.vx = (Math.random() - 0.5) * currentOptions.particleSpeed;
+                this.vy = (Math.random() - 0.5) * currentOptions.particleSpeed;
             }
 
             draw() {
                 let finalRadius = this.radius;
                 let opacity = 1;
 
-                // Provjera blizine miša
                 if (mouse.x !== null) {
                     const dx = this.x - mouse.x;
                     const dy = this.y - mouse.y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
 
-                    if (dist < options.mouseInteractionRadius) {
-                        const effect = (1 - dist / options.mouseInteractionRadius);
-                        finalRadius += effect * options.mouseEffectStrength;
+                    if (dist < currentOptions.mouseInteractionRadius) {
+                        const effect = (1 - dist / currentOptions.mouseInteractionRadius);
+                        finalRadius += effect * currentOptions.mouseEffectStrength;
                         opacity += effect * 0.5;
                     }
                 }
                 
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, finalRadius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(128, 255, 0, ${opacity * 0.85})`;
+                ctx.fillStyle = `rgba(${currentOptions.particleColorRGB}, ${opacity * 0.85})`;
                 ctx.fill();
             }
 
-            // Nova logika kretanja - "wraparound"
             update() {
-                this.x += this.vx * (1 + this.z * 0.5); // Parallax efekt brzine
+                this.x += this.vx * (1 + this.z * 0.5); 
                 this.y += this.vy * (1 + this.z * 0.5);
 
                 if (this.x > canvas.width + 5) this.x = -5;
@@ -575,13 +608,13 @@
 
         const initParticles = () => {
             particles = [];
-            for (let i = 0; i < options.particleAmount; i++) {
+            for (let i = 0; i < currentOptions.particleAmount; i++) {
                 particles.push(new Particle());
             }
         };
 
         const drawLines = () => {
-            let pulse = Math.sin(Date.now() * 0.001) * 0.2 + 0.8; // Faktor pulsiranja (0.6 do 1.0)
+            let pulse = Math.sin(Date.now() * 0.001) * 0.2 + 0.8; 
             for (let i = 0; i < particles.length; i++) {
                 for (let j = i + 1; j < particles.length; j++) {
                     const p1 = particles[i];
@@ -591,15 +624,14 @@
                     const dy = p1.y - p2.y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
 
-                    if (dist < options.linkRadius) {
-                        let opacity = 1 - (dist / options.linkRadius);
-                        opacity *= pulse; // Primijeni pulsiranje
+                    if (dist < currentOptions.linkRadius) {
+                        let opacity = 1 - (dist / currentOptions.linkRadius);
+                        opacity *= pulse; 
 
-                        // Linije su jače ako je miš blizu
                         if (mouse.x !== null) {
                            const distToMouse1 = Math.sqrt(Math.pow(p1.x - mouse.x, 2) + Math.pow(p1.y - mouse.y, 2));
                            const distToMouse2 = Math.sqrt(Math.pow(p2.x - mouse.x, 2) + Math.pow(p2.y - mouse.y, 2));
-                           if(distToMouse1 < options.mouseInteractionRadius || distToMouse2 < options.mouseInteractionRadius) {
+                           if(distToMouse1 < currentOptions.mouseInteractionRadius || distToMouse2 < currentOptions.mouseInteractionRadius) {
                                opacity = Math.min(1, opacity + 0.5);
                            }
                         }
@@ -607,34 +639,111 @@
                         ctx.beginPath();
                         ctx.moveTo(p1.x, p1.y);
                         ctx.lineTo(p2.x, p2.y);
-                        ctx.strokeStyle = `rgba(170, 0, 255, ${opacity * 0.5})`;
-                        ctx.lineWidth = options.lineWidth;
+                        ctx.strokeStyle = `rgba(${currentOptions.lineColorRGB}, ${opacity * 0.5})`;
+                        ctx.lineWidth = currentOptions.lineWidth;
                         ctx.stroke();
                     }
                 }
             }
         };
-
-        // Glavna petlja animacije
+        
         const animate = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            particles.forEach(p => {
-                p.update();
-            });
-            
+            particles.forEach(p => p.update());
             drawLines();
-            
-            particles.forEach(p => {
-                p.draw();
-            });
-
+            particles.forEach(p => p.draw());
             requestAnimationFrame(animate);
+        };
+
+        // Globalna funkcija za promjenu teme animacije
+        window.setAnimationTheme = (theme) => {
+            if (theme === 'light') {
+                currentOptions = lightOptions;
+            } else {
+                currentOptions = darkOptions;
+            }
+            initParticles();
         };
 
         initParticles();
         animate();
     });
     </script>
+
+    <!-- NOVI SCRIPT ZA UPRAVLJANJE TEMAMA -->
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Pronađi gumbe i ikone za obje verzije (desktop i mobilnu)
+        const themeToggleBtns = [
+            document.getElementById('theme-toggle'),
+            document.getElementById('theme-toggle-mobile')
+        ];
+        const darkIcons = [
+            document.getElementById('theme-toggle-dark-icon'),
+            document.getElementById('theme-toggle-dark-icon-mobile')
+        ];
+        const lightIcons = [
+            document.getElementById('theme-toggle-light-icon'),
+            document.getElementById('theme-toggle-light-icon-mobile')
+        ];
+
+        const setTheme = (isLight) => {
+            const logoImg = document.getElementById('site-logo');
+            
+            if (isLight) {
+                document.body.classList.add('light-mode');
+                if(logoImg) logoImg.src = 'img/IFIG-logo_purple.png';
+
+                themeToggleBtns.forEach(btn => {
+                    if (btn) btn.classList.remove('text-white');
+                });
+
+                darkIcons.forEach(icon => icon.classList.add('hidden'));
+                lightIcons.forEach(icon => icon.classList.remove('hidden'));
+                localStorage.setItem('theme', 'light');
+
+            } else {
+                document.body.classList.remove('light-mode');
+                if(logoImg) logoImg.src = 'img/IFIG-logo.png';
+
+                themeToggleBtns.forEach(btn => {
+                    if (btn) btn.classList.add('text-white');
+                });
+
+                darkIcons.forEach(icon => icon.classList.remove('hidden'));
+                lightIcons.forEach(icon => icon.classList.add('hidden'));
+                localStorage.setItem('theme', 'dark');
+            }
+
+            // Pozovi funkciju za promjenu teme animacije
+            if (window.setAnimationTheme) {
+                window.setAnimationTheme(isLight ? 'light' : 'dark');
+            }
+        };
+
+        // 1. Provjeri je li tema već spremljena u memoriji preglednika
+        const savedTheme = localStorage.getItem('theme');
+
+        // Ako je spremljena 'light' tema, postavi je.
+        // U SVIM OSTALIM SLUČAJEVIMA (ako je spremljeno 'dark' ili ako nije ništa spremljeno),
+        // postavi tamnu temu kao zadanu.
+        if (savedTheme === 'light') {
+            setTheme(true); // Postavi svijetlu temu
+        } else {
+            setTheme(false); // Postavi tamnu temu (ovo je sada naša zadana vrijednost)
+        }
+
+        // 2. Dodaj event listener na oba gumba
+        themeToggleBtns.forEach(btn => {
+            if (btn) {
+                btn.addEventListener('click', () => {
+                    const isLight = document.body.classList.contains('light-mode');
+                    setTheme(!isLight); // Postavi suprotnu temu
+                });
+            }
+        });
+    });
+    </script>
+
 </body>
 </html>
