@@ -17,9 +17,9 @@
 }
 
 body {
-    font-family: 'Arial Narrow', 'Arial Narrow', Arial, sans-serif; /* Changed font family */
-    background-color: #0d0118;
-    color: var(--text-color); /* Use text-color variable */
+    font-family: 'Arial Narrow', 'Arial Narrow', Arial, sans-serif;
+    background-color: transparent; /* Postavite na prozirno */
+    color: var(--text-color);
     overflow-x: hidden;
 }
 
@@ -1642,7 +1642,7 @@ body.light-mode #paket-info .text-4xl .fas {
 }
 
 body.light-mode canvas#network-canvas {
-    background-color: transparent;
+     background-color: transparent;
 }
 
 body.light-mode button#theme-toggle i,
@@ -1885,4 +1885,604 @@ body.overflow-hidden {
 .interactive-card:hover {
     transform: translateY(-5px) scale(1.03) !important;
     box-shadow: 0 15px 25px rgba(23, 0, 43, 0.5) !important;
+}
+
+/* === DODATNI STILOVI ZA LIGHT MODE NA LOGIN STRANICI === */
+
+/* Pozadina i osnovni tekst za login stranicu */
+body.light-mode.login-page {
+    background-color: #f8fafc; /* Svijetlo siva pozadina */
+    color: #334155; /* Tamno sivi tekst */
+}
+
+/* Stilovi za login karticu */
+body.light-mode .login-card {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-color: #e2e8f0; /* Svijetlo sivi obrub */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Naslovi na kartici */
+body.light-mode .login-title,
+body.light-mode .login-subtitle {
+    color: var(--primary-color); /* Ljubičasta */
+}
+
+/* Input polja */
+body.light-mode .form-input-login {
+    background-color: #f1f5f9; /* Vrlo svijetlo siva */
+    border-color: #cbd5e1; /* Malo tamnije siva */
+    color: #1e293b; /* Vrlo tamna siva za tekst */
+}
+body.light-mode .form-input-login::placeholder {
+    color: #94a3b8; /* Srednje siva za placeholder */
+}
+body.light-mode .form-input-login:focus {
+    border-color: var(--primary-color); /* Ljubičasti obrub na fokus */
+    box-shadow: 0 0 0 3px rgba(106, 27, 154, 0.2);
+    background-color: #ffffff;
+}
+
+/* Labela iznad input polja */
+body.light-mode .login-label {
+    color: #475569; /* Tamno siva */
+}
+
+/* Gumb za prijavu */
+body.light-mode .login-submit-button {
+    background-color: var(--primary-color);
+    color: white;
+}
+body.light-mode .login-submit-button:hover {
+    background-color: var(--secondary-color);
+}
+
+/* Checkbox */
+body.light-mode .checkbox-label-login {
+    color: #475569;
+}
+body.light-mode .form-checkbox-login {
+    border-color: #94a3b8;
+}
+body.light-mode .form-checkbox-login:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
+}
+body.light-mode .form-checkbox-login:focus {
+    box-shadow: 0 0 0 3px rgba(106, 27, 154, 0.2);
+}
+
+/* Linkovi */
+body.light-mode .login-link {
+    color: var(--primary-color);
+}
+body.light-mode .login-link:hover {
+    color: var(--secondary-color);
+}
+body.light-mode .register-prompt-text {
+    color: #64748b;
+}
+body.light-mode .register-link {
+    color: var(--primary-color);
+}
+body.light-mode .register-link:hover {
+    color: var(--secondary-color);
+}
+
+/* Horizontalna linija */
+body.light-mode hr {
+    border-color: #e2e8f0;
+}
+
+/* Gumb za zatvaranje */
+body.light-mode .login-close-btn {
+    color: var(--primary-color);
+}
+body.light-mode .login-close-btn:hover {
+    color: var(--secondary-color);
+}
+
+/*
+ * ==================================================
+ * NOVI I ISPRAVLJENI DODACI ZA LIGHT MODE NA REGISTER.HTML STRANICI
+ * Molimo zalijepite ovaj blok na sam KRAJ vašeg style.css fajla.
+ * ==================================================
+ */
+
+/* Opći stilovi za light mode */
+body.light-mode {
+    background-color: #f8fafc !important; /* Svijetla pozadina */
+    color: #334155 !important; /* Tamni tekst */
+}
+
+/* Navigacija u light modu */
+body.light-mode nav.fixed {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    border-bottom-color: var(--primary-color) !important; /* Glavna ljubičasta */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05) !important;
+}
+body.light-mode .logo-nav .small-text,
+body.light-mode .logo-nav .text-logo-orange,
+body.light-mode .logo-nav .text-white {
+    color: var(--primary-color) !important; /* Logo tekst ljubičasti */
+}
+body.light-mode nav a.btn-primary.register-login-btn {
+    background-color: var(--primary-color) !important;
+    color: white !important;
+}
+body.light-mode nav a.btn-primary.register-login-btn:hover {
+    background-color: var(--secondary-color) !important;
+}
+body.light-mode nav a.btn-outline.register-register-btn {
+    color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+body.light-mode nav a.btn-outline.register-register-btn:hover {
+    background-color: rgba(106, 27, 154, 0.1) !important;
+    color: var(--primary-color) !important;
+}
+body.light-mode nav .language-selector .language-trigger i,
+body.light-mode nav .mobile-language-selector .mobile-language-trigger i,
+body.light-mode #theme-toggle i,
+body.light-mode #theme-toggle-mobile i {
+    color: var(--primary-color) !important; /* Ikone globusa i teme */
+}
+body.light-mode .hamburger .bar {
+    background-color: var(--primary-color) !important; /* Boja hamburger linija */
+}
+
+/* Naslovi u light modu (vrlo specifični zbog globalnog h1-h6 pravila) */
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
+body.light-mode h4,
+body.light-mode h5,
+body.light-mode h6,
+body.light-mode .registration-section h1,
+body.light-mode .glass-card h4 {
+    color: var(--primary-color) !important; /* Svi naslovi ljubičasti */
+}
+
+/* Tekst u light modu */
+body.light-mode p,
+body.light-mode span,
+body.light-mode div { /* Općenito za sav tekst */
+    color: #475569 !important; /* Tamno siva boja teksta za općenite elemente */
+}
+body.light-mode .text-gray-300 { /* Ciljamo Tailwind klasu koja se koristi za tekst */
+    color: #475569 !important;
+}
+body.light-mode .text-gray-400 { /* Ciljamo Tailwind klasu za sitniji tekst */
+    color: #64748b !important;
+}
+
+
+/* Kartice i kontejneri u light modu */
+body.light-mode .glass-card,
+body.light-mode .registration-form-container {
+    background-color: #ffffff !important;
+    border-color: #e2e8f0 !important; /* Svijetliji obrub */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important;
+}
+body.light-mode .image-placeholder {
+    border-color: #cbd5e1 !important; /* Obrub slike */
+    background-color: #f8fafc !important; /* Pozadina slike */
+}
+
+/* Lista prednosti i ikone */
+body.light-mode .benefits-list li {
+    color: #334155 !important; /* Tekst liste */
+}
+body.light-mode .benefits-list i.fas.fa-check-circle {
+    color: var(--primary-color) !important; /* Boja ikona liste */
+}
+
+/* Gumbi za tip računa (Osobni/Poslovni) */
+body.light-mode .btn-account-type {
+    border-color: var(--primary-color) !important;
+    background-color: transparent !important;
+    color: var(--primary-color) !important;
+}
+body.light-mode .btn-account-type.active {
+    background-color: var(--primary-color) !important;
+    color: white !important;
+}
+body.light-mode .btn-account-type:not(.active):hover {
+    background-color: rgba(106, 27, 154, 0.1) !important;
+    color: var(--primary-color) !important;
+}
+body.light-mode .btn-account-type.active:hover {
+    background-color: var(--secondary-color) !important;
+    color: white !important;
+}
+
+/* Social media gumbi */
+body.light-mode .social-login-button {
+    border-color: #cbd5e1 !important;
+    background-color: #f8fafc !important;
+    color: #334155 !important;
+}
+body.light-mode .social-login-button:hover {
+    background-color: #f1f5f9 !important;
+}
+body.light-mode .social-login-button i.fab.fa-apple {
+    color: #334155 !important; /* Apple ikona */
+}
+body.light-mode .social-login-button:hover i.fab.fa-apple {
+    color: #334155 !important;
+}
+
+/* Forma za registraciju */
+body.light-mode .registration-form-container .border-gray-700 {
+    border-color: #e2e8f0 !important; /* Granica iznad teksta "...ili nastavite" */
+}
+body.light-mode .form-label-register {
+    color: #475569 !important; /* Boja labela */
+}
+body.light-mode .form-input-register,
+body.light-mode .custom-select-trigger,
+body.light-mode .phone-input-wrapper {
+    background-color: #f1f5f9 !important; /* Svijetla pozadina inputa */
+    border-color: #cbd5e1 !important; /* Svijetli obrub inputa */
+    color: #1e293b !important; /* Tamni tekst inputa */
+}
+body.light-mode .form-input-register::placeholder {
+    color: #94a3b8 !important; /* Placeholder tekst */
+}
+body.light-mode .form-input-register:focus,
+body.light-mode .custom-select-trigger:hover,
+body.light-mode .custom-select-trigger.active,
+body.light-mode .phone-input-wrapper:focus-within {
+    border-color: var(--primary-color) !important; /* Fokus obrub ljubičasti */
+    box-shadow: 0 0 0 2px rgba(106, 27, 154, 0.2) !important;
+}
+body.light-mode .custom-select-options {
+    background-color: #f1f5f9 !important; /* Pozadina dropdown opcija */
+    border-color: #cbd5e1 !important;
+}
+body.light-mode .custom-select-options .option {
+    color: #334155 !important; /* Tekst dropdown opcija */
+}
+body.light-mode .custom-select-options .option:hover {
+    background-color: var(--secondary-color) !important;
+    color: white !important;
+}
+body.light-mode .custom-select-trigger::after {
+    color: var(--primary-color) !important; /* Strelica dropdowna */
+}
+body.light-mode .country-code-select {
+    background-color: #e2e8f0 !important; /* Pozadina pozivnog broja */
+    border-right-color: #cbd5e1 !important;
+    color: #334155 !important;
+}
+
+/* Radio i Checkbox gumbi */
+body.light-mode .form-radio-register {
+    border-color: #94a3b8 !important;
+}
+body.light-mode .form-radio-register:checked {
+    border-color: var(--primary-color) !important;
+}
+body.light-mode .form-radio-register:checked::after {
+    background-color: var(--primary-color) !important;
+}
+body.light-mode .form-checkbox-register {
+    border-color: #94a3b8 !important;
+}
+body.light-mode .form-checkbox-register:checked {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+body.light-mode .form-checkbox-register:checked::after {
+    color: white !important; /* Kvačica unutar checkboxa */
+}
+body.light-mode .space-y-3 span.text-gray-300 {
+    color: #475569 !important; /* Tekst checkbox i radio buttona */
+}
+body.light-mode .text-fluorescent-green.underline { /* Specifičniji selektor */
+    color: var(--primary-color) !important; /* Linkovi u checkbox labelama */
+}
+body.light-mode .text-fluorescent-green.underline:hover {
+    color: var(--secondary-color) !important; /* Hover za linkove u checkboxu */
+}
+
+/* Gumb "Dalje" */
+body.light-mode #dalje-button {
+    background-color: var(--primary-color) !important; /* Promijeni boju gumba u light modu */
+    color: white !important;
+}
+body.light-mode #dalje-button:hover {
+    background-color: var(--secondary-color) !important;
+    color: white !important;
+}
+body.light-mode .registration-form-container .text-xs.text-gray-400.leading-relaxed {
+    color: #64748b !important; /* Tekst ispod forme */
+}
+
+/* Footer u light modu */
+body.light-mode footer.bg-gray-900 {
+    background-color: #1e293b !important; /* Tamniji footer u light modu */
+    border-top-color: #334155 !important;
+}
+body.light-mode footer h3,
+body.light-mode footer h4 {
+    color: white !important; /* Bijeli naslovi u footeru */
+}
+body.light-mode footer .text-gray-400 {
+    color: #a0aec0 !important; /* Svijetliji tekst u footeru */
+}
+body.light-mode footer a {
+    color: #a0aec0 !important;
+}
+body.light-mode footer a:hover {
+    color: white !important;
+}
+body.light-mode footer .fab {
+    color: #a0aec0 !important; /* Ikone društvenih mreža */
+}
+body.light-mode footer .border-t.border-gray-800 {
+    border-color: #334155 !important;
+}
+
+/* Popup za validaciju (ako se dinamički kreira i dodaje) */
+#validation-popup-overlay #validation-popup-content {
+    background-color: #ffffff !important; /* Bijela pozadina popupa */
+    border-color: var(--primary-color) !important;
+}
+#validation-popup-overlay #validation-popup-content h4 {
+    color: var(--primary-color) !important;
+}
+#validation-popup-overlay #validation-popup-content p {
+    color: #334155 !important;
+}
+#validation-popup-overlay #validation-popup-ok {
+    background-color: var(--primary-color) !important;
+    color: white !important;
+}
+#validation-popup-overlay #validation-popup-ok:hover {
+    background-color: var(--secondary-color) !important;
+    color: white !important;
+}
+
+
+/* ================================================== */
+/* === STILOVI ZA POPUP U LIGHT MODU === */
+/* ================================================== */
+
+/* Opći stil za popup kontenjer u light modu */
+body.light-mode .popup-content {
+    background: #ffffff; /* Bijela pozadina */
+    border: 1px solid var(--primary-color); /* Ljubičasti obrub */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Blaža sjena */
+}
+
+/* Stil za tekst unutar popupa (paragrafi, liste) */
+body.light-mode .popup-content p,
+body.light-mode .popup-content li {
+    color: #334155; /* Tamno siva boja teksta */
+}
+
+/* Naslov unutar popupa */
+body.light-mode .popup-content h4 {
+    color: var(--primary-color); /* Ljubičasta boja naslova */
+}
+
+/* Poseban ispravak za zeleni tekst u listi koji je definiran inline */
+body.light-mode #welcome-popup ul li span[style*="color: #39FF14"] {
+    color: #334155 !important; /* Postavlja boju na tamno sivu, !important je nužan da premosti inline stil */
+}
+
+/* Gumb za zatvaranje ('x') u light modu */
+body.light-mode .popup-close {
+    color: #64748b; /* Siva boja */
+}
+
+body.light-mode .popup-close:hover {
+    color: #1e293b; /* Tamnija siva na hover */
+}
+
+/* Gumb "NASTAVI" unutar popupa - koristi postojeće stilove za .btn-primary u light modu */
+body.light-mode #welcome-popup-continue.btn-primary {
+   background-color: var(--primary-color); /* Ljubičasta pozadina */
+   color: white; /* Bijeli tekst */
+}
+
+body.light-mode #welcome-popup-continue.btn-primary:hover {
+   background-color: var(--secondary-color); /* Svjetlija ljubičasta na hover */
+}
+
+/* ================================================== */
+/* === ISPRAVAK BOJE TEKSTA U INPUT POLJIMA ZA LIGHT MODE === */
+/* ================================================== */
+
+/* Stil za input polja i textarea u light modu */
+body.light-mode .form-input {
+    background-color: #f1f5f9; /* Vrlo svijetlo siva pozadina */
+    border-color: #cbd5e1;     /* Malo tamniji sivi obrub */
+    color: #1e293b;            /* Tamno siva boja teksta (za ono što korisnik upiše) */
+}
+
+/* Stil za placeholder tekst (npr. "Unesite vaše ime") u light modu */
+body.light-mode .form-input::placeholder {
+    color: #94a3b8; /* Srednje siva boja za placeholder */
+}
+
+/* Stil kada je korisnik kliknuo na polje (focus) u light modu */
+body.light-mode .form-input:focus {
+    border-color: var(--primary-color); /* Ljubičasti obrub kad je polje aktivno */
+    box-shadow: 0 0 0 3px rgba(106, 27, 154, 0.2); /* Blagi ljubičasti sjaj */
+    background-color: #ffffff; /* Opcionalno: pozadina postaje potpuno bijela na fokus */
+}
+
+/* ================================================== */
+/* === ISPRAVAK ZA INVESTMENT DETAILS POPUP U LIGHT MODU === */
+/* ================================================== */
+
+/* Glavne labele i općeniti tekst */
+body.light-mode #investment-details-popup label,
+body.light-mode #investment-details-popup .package-label,
+body.light-mode #investment-details-popup .text-gray-300, /* Cilja labele radio buttona */
+body.light-mode #investment-details-popup .text-lg.font-semibold, /* Tekst "Ukupno namjeravam uložiti:" */
+body.light-mode #investment-details-popup .text-gray-400 /* Pokriva tekst napomene i tekst zadanog preporučitelja */
+{
+    color: #475569 !important; /* Tamno siva boja */
+}
+
+/* Naslovi H4 i H5 unutar popupa */
+body.light-mode #investment-details-popup h4,
+body.light-mode #investment-details-popup h5 {
+    color: var(--primary-color) !important; /* Ljubičasta boja */
+}
+
+/* Sva tekstualna i numerička input polja unutar popupa */
+body.light-mode #investment-details-popup input[type="text"],
+body.light-mode #investment-details-popup input[type="email"],
+body.light-mode #investment-details-popup input[type="number"] {
+    background-color: #f1f5f9;
+    border-color: #cbd5e1;
+    color: #1e293b; /* Tamna boja teksta koji korisnik upisuje */
+}
+body.light-mode #investment-details-popup input::placeholder {
+    color: #94a3b8; /* Svjetlija siva za placeholder */
+}
+body.light-mode #investment-details-popup input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(106, 27, 154, 0.2);
+    background-color: #ffffff;
+}
+
+/* Kontejner s investicijskim paketima */
+body.light-mode #investment-details-popup .investment-package-field-container {
+    background-color: #f8fafc; /* Vrlo svijetla pozadina */
+    border-color: #e2e8f0;
+}
+
+/* Posebno stiliziranje za ukupan iznos i podebljani tekst napomene */
+body.light-mode #investment-details-popup #total-investment-amount-details {
+    color: var(--primary-color) !important; /* Iznos u ljubičastoj boji */
+}
+body.light-mode #investment-details-popup .text-sm.text-gray-400 strong {
+    color: #334155 !important; /* Podebljani tekst napomene */
+}
+
+/* Radio gumbi */
+body.light-mode #investment-details-popup .form-radio {
+    border-color: #94a3b8;
+}
+body.light-mode #investment-details-popup .form-radio:checked {
+    border-color: var(--primary-color);
+    background-color: var(--primary-color);
+}
+
+/* Checkbox gumbi za pakete */
+body.light-mode #investment-details-popup .package-item input[type="checkbox"] {
+     accent-color: var(--primary-color); /* Najjednostavniji način za bojanje modernih checkboxa */
+}
+
+/* ================================================== */
+/* === ISPRAVAK ZA DODATNE POPUPE/FORME U LIGHT MODU === */
+/* ================================================== */
+
+/* --- 1. Stilovi za "Veći iznos" (Kontakt) Popup --- */
+
+/* Naslov i labele unutar popupa */
+body.light-mode #contact-form-popup h4,
+body.light-mode #contact-form-popup label {
+    color: var(--primary-color) !important; /* Ljubičasta boja */
+}
+
+/* Opisni tekst unutar popupa */
+body.light-mode #contact-form-popup p {
+    color: #475569 !important; /* Tamno siva boja */
+}
+
+/* Tekstualna polja (Ime, Email, Telefon) */
+body.light-mode #contact-form-popup input[type="text"],
+body.light-mode #contact-form-popup input[type="email"],
+body.light-mode #contact-form-popup input[type="tel"] {
+    background-color: #f1f5f9;
+    border-color: #cbd5e1;
+    color: #1e293b; /* Tamna boja za upisani tekst */
+}
+body.light-mode #contact-form-popup input::placeholder {
+    color: #94a3b8; /* Siva boja za placeholder */
+}
+body.light-mode #contact-form-popup input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(106, 27, 154, 0.2);
+    background-color: #ffffff;
+}
+
+/* Gumb "Pošalji" */
+body.light-mode #contact-form-popup .btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+
+/* --- 2. Stilovi za "Do 10.000 €" polje za unos --- */
+
+/* Labela iznad polja */
+body.light-mode .ip-wide-card .amount-input-container label {
+    color: #475569 !important;
+}
+
+/* Polje za unos iznosa */
+body.light-mode .ip-wide-card .amount-input {
+    background-color: #f1f5f9;
+    border-color: #cbd5e1;
+    color: #1e293b;
+}
+body.light-mode .ip-wide-card .amount-input::placeholder {
+    color: #94a3b8;
+}
+body.light-mode .ip-wide-card .amount-input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(106, 27, 154, 0.2);
+    background-color: #ffffff;
+}
+
+/* Simbol valute (€) */
+body.light-mode .ip-wide-card .currency-symbol {
+    color: #475569 !important;
+}
+
+/* Gumbi "POTVRDI" i "OTKAŽI" */
+body.light-mode .ip-wide-card .input-buttons .btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+body.light-mode .ip-wide-card .input-buttons .btn-primary:hover {
+    background-color: var(--secondary-color);
+}
+body.light-mode .ip-wide-card .input-buttons .btn-outline {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+body.light-mode .ip-wide-card .input-buttons .btn-outline:hover {
+    background-color: rgba(106, 27, 154, 0.1);
+}
+
+/* Opći stilovi za desktop i mobilni padajući izbornik */
+body.light-mode .language-dropdown,
+body.light-mode .language-dropdown-mobile {
+    background-color: #ffffff; /* Bijela pozadina */
+    border-color: #e2e8f0; /* Svijetlo sivi obrub */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+}
+
+/* Stil za pojedinačne stavke (tekst jezika) */
+body.light-mode .language-item span {
+    color: #334155; /* Tamno siva boja teksta */
+}
+
+/* Stil za stavke kada se prijeđe mišem preko njih (hover) */
+body.light-mode .language-item:hover {
+    background-color: var(--primary-color); /* Ljubičasta pozadina na hover */
+}
+
+/* Stil za tekst unutar stavke kada se prijeđe mišem preko nje */
+body.light-mode .language-item:hover span {
+    color: #ffffff; /* Bijeli tekst na hover */
 }
