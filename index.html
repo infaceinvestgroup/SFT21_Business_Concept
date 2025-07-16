@@ -6,6 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SFT21 - InFace Invest Group</title>
 
+        <!-- ============================================= -->
+    <!-- GLOBALNA SKRIPTA ZA INICIJALIZACIJU TEME -->
+    <!-- Sprječava "bljesak" krive teme pri učitavanju -->
+    <!-- ============================================= -->
+    <script>
+        (function() {
+            try {
+                const theme = localStorage.getItem('sft21_theme');
+                if (theme === 'light') {
+                    document.documentElement.classList.add('light-mode');
+                }
+            } catch (e) {
+                console.error('Failed to apply theme from localStorage', e);
+            }
+        })();
+    </script>
+
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -2088,40 +2105,74 @@ if (starterPackageEmailForm && starterPackageEmailInput && validationPopup) {
             console.warn("Elementi za Choose Investor Type ili Investment Details popup nisu pronađeni.");
         }
 
-        const mainContactForm = document.querySelector('#kontakt form');
-        if (mainContactForm) {
-            mainContactForm.addEventListener('submit', function(event) {
-                event.preventDefault();
-                
-                const formData = new FormData(mainContactForm);
-                formData.append('requestType', 'contact');
-                
-                if(validationPopup && popupOverlay) {
-                    popupOverlay.style.display = 'flex';
-                    validationPopup.style.display = 'block';
-                    validationPopup.innerHTML = `<h4>Slanje...</h4><p>Molimo pričekajte.</p>`;
-                }
-                
-                fetch(WEBAPP_URL, {
-                    method: 'POST', 
-                    body: formData 
-                })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.success) {
-                            validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori popup" onclick="document.getElementById('popup-overlay').style.display='none'">×</button><h4>Poslano!</h4><p>Hvala Vam na poruci.</p>`;
-                            mainContactForm.reset();
-                            setTimeout(closeAllPopups, 4000);
-                        } else {
-                            throw new Error(data.message || 'Nepoznata greška.');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Greška:', error);
-                        validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori popup" onclick="document.getElementById('popup-overlay').style.display='none'">×</button><h4>Greška</h4><p>Došlo je do pogreške prilikom slanja.</p>`;
-                    });
-            });
+const mainContactForm = document.querySelector('#kontakt form');
+if (mainContactForm) {
+    mainContactForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // === POČETAK VALIDACIJE ===
+        const nameInput = mainContactForm.querySelector('#name');
+        const emailInput = mainContactForm.querySelector('#email');
+        const subjectInput = mainContactForm.querySelector('#subject');
+        const messageInput = mainContactForm.querySelector('#message');
+        
+        const nameValue = nameInput ? nameInput.value.trim() : '';
+        const emailValue = emailInput ? emailInput.value.trim() : '';
+        const subjectValue = subjectInput ? subjectInput.value.trim() : '';
+        const messageValue = messageInput ? messageInput.value.trim() : '';
+        
+        let errorMessage = null;
+
+        if (!nameValue || nameValue.split(' ').filter(n => n).length < 2) {
+            errorMessage = "Molimo unesite vaše puno ime i prezime.";
+        } else if (!emailValue || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
+            errorMessage = "Molimo unesite ispravnu email adresu.";
+        } else if (!subjectValue) {
+            errorMessage = "Molimo unesite predmet poruke.";
+        } else if (!messageValue) {
+            errorMessage = "Molimo unesite vašu poruku.";
         }
+
+        if (errorMessage) {
+            if(validationPopup && popupOverlay) {
+                popupOverlay.style.display = 'flex';
+                validationPopup.style.display = 'block';
+                // Prikazujemo popup s greškom i gumbom za zatvaranje
+                validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori popup" onclick="document.getElementById('popup-overlay').style.display='none'">×</button><h4>Greška u unosu</h4><p>${errorMessage}</p>`;
+            }
+            return; // Prekida izvršavanje ako postoji greška
+        }
+        // === KRAJ VALIDACIJE ===
+
+        const formData = new FormData(mainContactForm);
+        formData.append('requestType', 'contact');
+        
+        if(validationPopup && popupOverlay) {
+            popupOverlay.style.display = 'flex';
+            validationPopup.style.display = 'block';
+            validationPopup.innerHTML = `<h4>Slanje...</h4><p>Molimo pričekajte.</p>`;
+        }
+        
+        fetch(WEBAPP_URL, {
+            method: 'POST', 
+            body: formData 
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori popup" onclick="document.getElementById('popup-overlay').style.display='none'">×</button><h4>Poslano!</h4><p>Hvala Vam na poruci.</p>`;
+                mainContactForm.reset();
+                setTimeout(closeAllPopups, 4000);
+            } else {
+                throw new Error(data.message || 'Nepoznata greška.');
+            }
+        })
+        .catch(error => {
+            console.error('Greška:', error);
+            validationPopup.innerHTML = `<button class="popup-close" aria-label="Zatvori popup" onclick="document.getElementById('popup-overlay').style.display='none'">×</button><h4>Greška</h4><p>Došlo je do pogreške prilikom slanja.</p>`;
+        });
+    });
+}
 
         // ======================================================================
         // KONAČNA LOGIKA - RUČNO PRIKUPLJANJE I KALKULACIJA SVIH PODATAKA
@@ -2350,160 +2401,6 @@ if (starterPackageEmailForm && starterPackageEmailInput && validationPopup) {
         initializeReferrerFields();
     });
 </script>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const canvas = document.getElementById('network-canvas');
-        if (!canvas) return;
-
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        let mouse = { x: null, y: null };
-
-        const darkOptions = {
-            particleColorRGB: '128, 255, 0',
-            lineColorRGB: '170, 0, 255',
-            particleAmount: 120,
-            defaultRadius: 1.3,
-            linkRadius: 150,
-            particleSpeed: 0.25,
-            lineWidth: 0.4,
-            mouseInteractionRadius: 150,
-            mouseEffectStrength: 2,
-        };
-
-        const lightOptions = {
-            particleColorRGB: '255, 0, 255',
-            lineColorRGB: '170, 0, 255',
-            particleAmount: 120,
-            defaultRadius: 1.3,
-            linkRadius: 150,
-            particleSpeed: 0.25,
-            lineWidth: 0.4,
-            mouseInteractionRadius: 150,
-            mouseEffectStrength: 2,
-        };
-
-        let currentOptions = darkOptions;
-
-        const resizeCanvas = () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            initParticles(); 
-        };
-
-        window.addEventListener('resize', resizeCanvas);
-
-        window.addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-        });
-        window.addEventListener('mouseout', () => {
-            mouse.x = null;
-            mouse.y = null;
-        });
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.z = Math.random() * 2 - 1;
-                this.radius = currentOptions.defaultRadius * (1 + this.z * 0.5);
-                this.vx = (Math.random() - 0.5) * currentOptions.particleSpeed;
-                this.vy = (Math.random() - 0.5) * currentOptions.particleSpeed;
-            }
-
-            draw() {
-                let finalRadius = this.radius;
-                let opacity = 1;
-
-                if (mouse.x !== null) {
-                    const dx = this.x - mouse.x;
-                    const dy = this.y - mouse.y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-
-                    if (dist < currentOptions.mouseInteractionRadius) {
-                        const effect = (1 - dist / currentOptions.mouseInteractionRadius);
-                        finalRadius += effect * currentOptions.mouseEffectStrength;
-                        opacity += effect * 0.5;
-                    }
-                }
-
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, finalRadius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${currentOptions.particleColorRGB}, ${opacity * 0.85})`;
-                ctx.fill();
-            }
-
-            update() {
-                this.x += this.vx * (1 + this.z * 0.5);
-                this.y += this.vy * (1 + this.z * 0.5);
-
-                if (this.x > canvas.width + 5) this.x = -5;
-                else if (this.x < -5) this.x = canvas.width + 5;
-                if (this.y > canvas.height + 5) this.y = -5;
-                else if (this.y < -5) this.y = canvas.height + 5;
-            }
-        }
-
-        const initParticles = () => {
-            particles = [];
-            for (let i = 0; i < currentOptions.particleAmount; i++) {
-                particles.push(new Particle());
-            }
-        };
-
-        const drawLines = () => {
-            let pulse = Math.sin(Date.now() * 0.001) * 0.2 + 0.8;
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const p1 = particles[i];
-                    const p2 = particles[j];
-                    const dist = Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
-
-                    if (dist < currentOptions.linkRadius) {
-                        let opacity = 1 - (dist / currentOptions.linkRadius);
-                        opacity *= pulse;
-
-                        if (mouse.x !== null) {
-                           const distToMouse1 = Math.sqrt(Math.pow(p1.x - mouse.x, 2) + Math.pow(p1.y - mouse.y, 2));
-                           const distToMouse2 = Math.sqrt(Math.pow(p2.x - mouse.x, 2) + Math.pow(p2.y - mouse.y, 2));
-                           if(distToMouse1 < currentOptions.mouseInteractionRadius || distToMouse2 < currentOptions.mouseInteractionRadius) {
-                               opacity = Math.min(1, opacity + 0.5);
-                           }
-                        }
-
-                        ctx.beginPath();
-                        ctx.moveTo(p1.x, p1.y);
-                        ctx.lineTo(p2.x, p2.y);
-                        ctx.strokeStyle = `rgba(${currentOptions.lineColorRGB}, ${opacity * 0.5})`;
-                        ctx.lineWidth = currentOptions.lineWidth;
-                        ctx.stroke();
-                    }
-                }
-            }
-        };
-
-        const animate = () => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => p.update());
-            drawLines();
-            particles.forEach(p => p.draw());
-            requestAnimationFrame(animate);
-        };
-
-        window.setAnimationTheme = (theme) => {
-            if (theme === 'light') {
-                currentOptions = lightOptions;
-            } else {
-                currentOptions = darkOptions;
-            }
-            initParticles();
-        };
-
-        resizeCanvas();
-        animate();
-    });
-</script>
   
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -2558,9 +2455,9 @@ if (starterPackageEmailForm && starterPackageEmailInput && validationPopup) {
         };
 
         // Postavke za LIGHT temu (nova)
-        const lightOptions = {
-            particleColorRGB: '255, 0, 255', // Fluorescentno ljubičasta
-            lineColorRGB: '170, 0, 255',
+            const lightOptions = {
+            particleColorRGB: '106, 27, 154', // Primarna ljubičasta boja
+            lineColorRGB: '171, 71, 188',     // Sekundarna, svjetlija 
             particleAmount: 120,
             defaultRadius: 1.3,
             linkRadius: 150,
@@ -2875,6 +2772,33 @@ const setTheme = (isLight) => {
     });
 </script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const mobileDropdownToggle = document.querySelector('.nav-menu .mobile-dropdown-toggle');
+        
+        if (mobileDropdownToggle) {
+            const dropdownItem = mobileDropdownToggle.closest('.sft21-nav-item.dropdown');
+            const dropdownMenu = dropdownItem.querySelector('.dropdown-menu');
+            const icon = mobileDropdownToggle.querySelector('i.fas');
+
+            mobileDropdownToggle.addEventListener('click', (event) => {
+                event.preventDefault(); // Spriječi da link skoči na vrh stranice
+                
+                // Otvori ili zatvori dropdown
+                const isOpen = dropdownItem.classList.toggle('open');
+                
+                // Podesi prikaz menija i rotaciju ikone
+                if (isOpen) {
+                    if (dropdownMenu) dropdownMenu.style.display = 'block';
+                    if (icon) icon.style.transform = 'rotate(180deg)';
+                } else {
+                    if (dropdownMenu) dropdownMenu.style.display = 'none';
+                    if (icon) icon.style.transform = 'rotate(0deg)';
+                }
+            });
+        }
+    });
+</script>
 
 </body>
 </html>
