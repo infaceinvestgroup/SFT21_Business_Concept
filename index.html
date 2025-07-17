@@ -254,10 +254,10 @@
                         </div>
                     </div>
 
-                        <button id="theme-toggle" type="button" class="text-white hover:text-fluorescent-green transition-colors duration-300 text-xl p-2 rounded-full">
-                        <i id="theme-toggle-dark-icon" class="fas fa-moon"></i>
-                        <i id="theme-toggle-light-icon" class="fas fa-sun hidden"></i>
-                        </button>
+<button id="theme-toggle" type="button" class="text-white hover:text-fluorescent-green transition-colors duration-300 text-xl p-2 rounded-full">
+    <i id="theme-toggle-dark-icon" class="fas fa-moon"></i>
+    <i id="theme-toggle-light-icon" class="fas fa-sun"></i>
+</button>
 
                     <div class="language-selector relative">
                         <button id="desktop-lang-trigger" class="language-trigger text-white hover:text-fluorescent-green transition-colors duration-300 text-xl">
@@ -284,10 +284,10 @@
 
         <div class="nav-menu md:hidden">
             <div class="mb-4">
-    <button id="theme-toggle-mobile" type="button" class="text-white hover:text-fluorescent-green transition-colors duration-300 text-2xl p-2 rounded-full">
-        <i id="theme-toggle-dark-icon-mobile" class="fas fa-moon"></i>
-        <i id="theme-toggle-light-icon-mobile" class="fas fa-sun hidden"></i>
-    </button>
+<button id="theme-toggle-mobile" type="button" class="text-white hover:text-fluorescent-green transition-colors duration-300 text-2xl p-2 rounded-full">
+    <i id="theme-toggle-dark-icon-mobile" class="fas fa-moon"></i>
+    <i id="theme-toggle-light-icon-mobile" class="fas fa-sun"></i>
+</button>
  </div>
              <a href="#pocetna" class="block py-3 text-center hover:text-purple-400 transition-colors duration-300">Početna</a>
              <a href="#poslovni-koncept" class="block py-3 text-center hover:text-purple-400 transition-colors duration-300">Poslovni koncept</a>
@@ -2627,73 +2627,66 @@ if (mainContactForm) {
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Pronađi gumbe i ikone za obje verzije (desktop i mobilnu)
+        // Selektori za sve relevantne elemente
         const themeToggleBtns = [
             document.getElementById('theme-toggle'),
             document.getElementById('theme-toggle-mobile')
         ];
-        const darkIcons = [
+        const moonIcons = [ // Ikone mjeseca
             document.getElementById('theme-toggle-dark-icon'),
             document.getElementById('theme-toggle-dark-icon-mobile')
         ];
-        const lightIcons = [
+        const sunIcons = [ // Ikone sunca
             document.getElementById('theme-toggle-light-icon'),
             document.getElementById('theme-toggle-light-icon-mobile')
         ];
+        const logoImg = document.getElementById('site-logo');
 
-const setTheme = (isLight) => {
-    const logoImg = document.getElementById('site-logo');
-    // Ova linija već postoji, samo osigurava da imamo pristup gumbima
-    const themeToggleBtns = [
-        document.getElementById('theme-toggle'),
-        document.getElementById('theme-toggle-mobile')
-    ];
+        const setTheme = (isLight) => {
+            // Postavljanje klase na <html> i <body> elemente radi dosljednosti
+            document.documentElement.classList.toggle('light-mode', isLight);
+            document.body.classList.toggle('light-mode', isLight);
 
-    if (isLight) {
-        document.body.classList.add('light-mode');
-        if(logoImg) logoImg.src = 'img/IFIG-logo_purple.png';
+            if (isLight) {
+                // --- POSTAVKE ZA SVIJETLU TEMU ---
+                if(logoImg) logoImg.src = 'img/IFIG-logo_purple.png';
+                
+                // Direktno upravljanje vidljivošću: Prikazujemo MJESEC, skrivamo SUNCE
+                moonIcons.forEach(icon => { if(icon) icon.style.display = 'inline-block'; });
+                sunIcons.forEach(icon => { if(icon) icon.style.display = 'none'; });
+                
+                themeToggleBtns.forEach(btn => btn?.classList.remove('text-white'));
 
-        // NOVI DIO: Uklanjamo 'text-white' klasu u light modu
-        themeToggleBtns.forEach(btn => {
-            if (btn) btn.classList.remove('text-white');
-        });
+            } else {
+                // --- POSTAVKE ZA TAMNU TEMU ---
+                if(logoImg) logoImg.src = 'img/IFIG-logo.png';
+                
+                // Direktno upravljanje vidljivošću: Prikazujemo SUNCE, skrivamo MJESEC
+                moonIcons.forEach(icon => { if(icon) icon.style.display = 'none'; });
+                sunIcons.forEach(icon => { if(icon) icon.style.display = 'inline-block'; });
+                
+                themeToggleBtns.forEach(btn => btn?.classList.add('text-white'));
+            }
 
-        darkIcons.forEach(icon => icon.classList.add('hidden'));
-        lightIcons.forEach(icon => icon.classList.remove('hidden'));
-        localStorage.setItem('theme', 'light');
+            // Spremanje odabira u localStorage
+            localStorage.setItem('sft21_theme', isLight ? 'light' : 'dark');
 
-    } else {
-        document.body.classList.remove('light-mode');
-        if(logoImg) logoImg.src = 'img/IFIG-logo.png';
+            // Ažuriranje pozadinske animacije
+            if (typeof window.setAnimationTheme === 'function') {
+                window.setAnimationTheme(isLight ? 'light' : 'dark');
+            }
+        };
 
-        // NOVI DIO: Vraćamo 'text-white' klasu u dark modu
-        themeToggleBtns.forEach(btn => {
-            if (btn) btn.classList.add('text-white');
-        });
+        // Inicijalna provjera teme pri učitavanju stranice
+        const currentTheme = localStorage.getItem('sft21_theme');
+        setTheme(currentTheme === 'light');
 
-        darkIcons.forEach(icon => icon.classList.remove('hidden'));
-        lightIcons.forEach(icon => icon.classList.add('hidden'));
-        localStorage.setItem('theme', 'dark');
-    }
-
-    if (window.setAnimationTheme) {
-        window.setAnimationTheme(isLight ? 'light' : 'dark');
-    }
-};
-
-        // 1. Provjeri je li tema već spremljena u memoriji preglednika
-        if (localStorage.getItem('theme') === 'light') {
-            setTheme(true);
-        } else {
-            setTheme(false); // Default je dark
-        }
-
-        // 2. Dodaj event listener na oba gumba
+        // Dodavanje event listenera na gumbe
         themeToggleBtns.forEach(btn => {
             if (btn) {
                 btn.addEventListener('click', () => {
-                    const isLight = document.body.classList.contains('light-mode');
-                    setTheme(!isLight); // Postavi suprotnu temu
+                    const isCurrentlyLight = document.documentElement.classList.contains('light-mode');
+                    setTheme(!isCurrentlyLight); // Prebaci na suprotnu temu
                 });
             }
         });
