@@ -2629,3 +2629,157 @@ body.light-mode .user-counter-show-btn:hover {
 body.light-mode .user-counter-show-btn i {
     color: white !important;
 }
+
+/* ======================================================= */
+/* === KONAČNI POPRAVAK ZA AI CHATBOT U SVIM MODovima === */
+/* ======================================================= */
+
+
+   /* Plutajuća ikona */
+body.light-mode .ai-chat-float-icon {
+    background-color: var(--primary-color) !important;
+    border-color: var(--fluorescent-green) !important;
+    color: white !important;
+}
+
+/* Glavni prozor popupa */
+body.light-mode .ai-chat-popup {
+    background-color: #1f2937 !important; /* Tamno plavo-siva */
+    border-color: var(--fluorescent-green) !important;
+}
+
+/* Header popupa */
+body.light-mode .ai-chat-popup-header {
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color)) !important;
+    color: white !important;
+}
+body.light-mode .ai-chat-popup-header span {
+    color: white !important;
+}
+body.light-mode .ai-chat-close-btn {
+    color: white !important;
+}
+
+/* Tijelo popupa (gdje su poruke) */
+body.light-mode .ai-chat-popup-body {
+    background-color: #111827 !important; /* Vrlo tamna pozadina */
+}
+body.light-mode .ai-chat-popup-body p {
+    color: #9ca3af !important; /* Originalna siva boja teksta */
+}
+
+/* Kontejner za unos teksta na dnu popupa */
+body.light-mode .ai-chat-popup .ai-chat-input-container {
+    background-color: #1f2937 !important;
+    border-top-color: var(--fluorescent-green) !important;
+}
+
+/* Samo polje za unos teksta */
+body.light-mode .ai-chat-popup .ai-chat-input {
+    background-color: #374151 !important;
+    border-color: #4b5563 !important;
+    color: white !important;
+}
+body.light-mode .ai-chat-popup .ai-chat-input::placeholder {
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Gumbi za slanje i dodavanje datoteke */
+body.light-mode .ai-chat-popup .ai-chat-button {
+    color: #9ca3af !important; /* Vraća sivu boju na spajalicu */
+}
+body.light-mode .ai-chat-popup .ai-chat-button:hover {
+    color: white !important;
+}
+/* Specifično ciljanje gumba za slanje (avion) */
+body.light-mode .ai-chat-popup .ai-chat-button.text-purple-400 {
+    color: #a78bfa !important; /* Originalna Tailwind purple-400 boja */
+}
+body.light-mode .ai-chat-popup .ai-chat-button.text-purple-400:hover {
+    color: #c4b5fd !important; /* Originalna Tailwind purple-300 boja */
+}
+
+/* ======================================================= */
+/* === FIKSIRANJE IZGLEDA BROJAČA KORISNIKA U SVIM MODovima === */
+/* ======================================================= */
+
+
+/* Glavni kontejner widgeta */
+body.light-mode .user-counter-widget {
+    background: rgba(13, 1, 24, 0.9) !important;
+    border-color: var(--fluorescent-green) !important;
+}
+
+/* Header widgeta */
+body.light-mode .user-counter-header {
+    border-bottom-color: rgba(128, 255, 0, 0.2) !important;
+}
+body.light-mode .user-counter-header h3 {
+    color: var(--fluorescent-green) !important;
+}
+/* Ikona korisnika u headeru */
+body.light-mode .user-counter-header h3 i {
+    color: var(--fluorescent-green) !important;
+}
+/* Gumbi za zatvaranje/skrivanje */
+body.light-mode .user-counter-actions button {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Tijelo widgeta */
+body.light-mode .user-counter-number {
+    color: var(--fluorescent-green) !important;
+    text-shadow: 0 0 8px rgba(128, 255, 0, 0.5) !important;
+}
+
+/* Lista korisnika */
+body.light-mode .user-counter-list {
+    scrollbar-color: var(--secondary-color) rgba(128, 255, 0, 0.1) !important;
+}
+
+/* Pojedinačna stavka u listi */
+body.light-mode .user-counter-item {
+    border-bottom-color: rgba(128, 255, 0, 0.1) !important;
+}
+body.light-mode .user-counter-name {
+    color: #e0e0e0 !important;
+}
+body.light-mode .user-counter-time {
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+body.light-mode .user-counter-placeholder {
+    color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* Gumb za prikaz skrivenog widgeta */
+body.light-mode .user-counter-show-btn {
+    background: var(--primary-color) !important;
+    color: white !important;
+    border-color: var(--fluorescent-green) !important;
+}
+body.light-mode .user-counter-show-btn:hover {
+    background: var(--secondary-color) !important;
+}
+/* Ikona na gumbu za prikaz */
+body.light-mode .user-counter-show-btn i {
+    color: white !important;
+}
+
+/* ======================================================= */
+/* === KONAČNI POPRAVAK ZA REGISTER STRANICU LIGHT MODE === */
+/* ======================================================= */
+
+/* Ovo osigurava da se tekstualni dio loga ispravno boji */
+body.light-mode .logo-nav span, 
+body.light-mode .logo-nav div {
+    color: var(--primary-color) !important;
+}
+
+/* Ovo osigurava da specifični naslovi u lijevoj koloni ispravno mijenjaju boju */
+body:not(.light-mode) .glass-card h4[style*="font-family: 'Century Gothic'"] {
+    color: #80ff00 !important; /* Zelena za dark mode */
+}
+
+body.light-mode .glass-card h4[style*="font-family: 'Century Gothic'"] {
+    color: var(--primary-color) !important; /* Ljubičasta za light mode */
+}
