@@ -27,6 +27,29 @@
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+
+    <!-- KONAČNI POPRAVAK ZA CTA SEKCIJU - DIREKTNI STIL -->
+<style>
+    /* Ovo pravilo osigurava da elementi unutar CTA sekcije
+       ZADRŽE svoj originalni izgled čak i u light modu. */
+
+    body.light-mode #cta-section h2 {
+        color: var(--fluorescent-green) !important;
+    }
+
+    body.light-mode #cta-section p {
+        color: #e5e7eb !important; 
+    }
+
+    body.light-mode #cta-section a.btn-primary {
+        background-color: var(--fluorescent-green) !important;
+        color: #0e076a !important;
+    }
+    
+    body.light-mode #cta-section a.btn-primary:hover {
+        background-color: color-mix(in srgb, var(--fluorescent-green) 85%, black 15%) !important;
+    }
+</style>
 </head>
 
 <body class="bg-gray-900">
@@ -1306,7 +1329,7 @@
         </div>
     </section>
 
-    <section class="py-24 bg-gradient-to-r from-purple-900 to-purple-800 relative overflow-hidden">
+    <section id="cta-section" class="py-24 bg-gradient-to-r from-purple-900 to-purple-800 relative overflow-hidden">
         <div class="container mx-auto px-6 relative z-10">
             <div class="text-center fade-in">
                 <h2 class="text-3xl md:text-5xl font-bold mb-8">Pridružite se SFT21 zajednici danas</h2>
