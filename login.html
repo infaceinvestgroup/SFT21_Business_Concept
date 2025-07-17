@@ -220,6 +220,29 @@
             z-index: -1; /* Postavlja platno iza svog sadržaja */
         }
     </style>
+
+    <style>
+    /* U tamnom (default) modu, sakrij ikonu mjeseca, prikaži sunce */
+    #theme-toggle-dark-icon,
+    #theme-toggle-dark-icon-mobile {
+        display: none !important;
+    }
+    #theme-toggle-light-icon,
+    #theme-toggle-light-icon-mobile {
+        display: inline-block !important;
+    }
+
+    /* Kada je light-mode aktivan na BODY elementu: */
+    body.light-mode #theme-toggle-dark-icon,
+    body.light-mode #theme-toggle-dark-icon-mobile {
+        display: inline-block !important; /* Prikaži mjesec */
+    }
+
+    body.light-mode #theme-toggle-light-icon,
+    body.light-mode #theme-toggle-light-icon-mobile {
+        display: none !important; /* Sakrij sunce */
+    }
+</style>
 </head>
 
 <body class="login-page">
