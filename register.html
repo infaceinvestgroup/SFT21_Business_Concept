@@ -9,18 +9,20 @@
     <!-- GLOBALNA SKRIPTA ZA INICIJALIZACIJU TEME -->
     <!-- Sprječava "bljesak" krive teme pri učitavanju -->
     <!-- ============================================= -->
-    <script>
-        (function() {
-            try {
-                const theme = localStorage.getItem('sft21_theme');
-                if (theme === 'light') {
-                    document.documentElement.classList.add('light-mode');
-                }
-            } catch (e) {
-                console.error('Failed to apply theme from localStorage', e);
+<script>
+    (function() {
+        try {
+            const theme = localStorage.getItem('sft21_theme') || 'dark';
+            if (theme === 'light') {
+                document.documentElement.classList.add('light-mode');
+            } else {
+                document.documentElement.classList.remove('light-mode');
             }
-        })();
-    </script>
+        } catch (e) {
+            console.error(e);
+        }
+    })();
+</script>
 
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
@@ -489,21 +491,14 @@
         color: var(--primary-color) !important;
     }
 
-    /* ================================================== */
-/* === ISPRAVAK BOJE LOGA ZA LIGHT MODE === */
-/* ================================================== */
-
-body.light-mode #site-logo {
-    filter: hue-rotate(240deg) brightness(0.8) saturate(3);
-}
 </style>
 </head>
 <style>
     body, h1, h2, h3, h4, h5, h6, p, span, div, button, input, select, textarea {
         font-family: 'Arial Narrow', Arial, sans-serif !important;
     }
-        /* Vraćanje zelene boje za globus u headeru */
-        .fa-globe, 
+    /* Vraćanje zelene boje za globus u headeru */
+    .fa-globe, 
     .language-trigger i,
     i.fas.fa-globe {
         color: #80ff00 !important;
@@ -514,41 +509,282 @@ body.light-mode #site-logo {
     a i.fas.fa-globe {
         color: #80ff00 !important;
     }
-            /* Stanje greške za input/select polja */
-        .form-input-register.border-red-500,
-        .custom-select-trigger.border-red-500, /* DODANO za novi selektor */
-        .phone-input-wrapper.border-red-500 {
-            border-color: #ef4444 !important; /* Tailwind red-500 */
-        }
-        .form-input-register.border-red-500:focus,
-        .custom-select-trigger.border-red-500.active, /* DODANO */
-        .form-input-register-phone:focus + .phone-input-wrapper.border-red-500 {
-            box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.3) !important; /* Crveni focus ring */
-        }
+    /* Stanje greške za input/select polja */
+    .form-input-register.border-red-500,
+    .custom-select-trigger.border-red-500, /* DODANO za novi selektor */
+    .phone-input-wrapper.border-red-500 {
+        border-color: #ef4444 !important; /* Tailwind red-500 */
+    }
+    .form-input-register.border-red-500:focus,
+    .custom-select-trigger.border-red-500.active, /* DODANO */
+    .form-input-register-phone:focus + .phone-input-wrapper.border-red-500 {
+        box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.3) !important; /* Crveni focus ring */
+    }
 
-        /* Stanje greške za labele (povezane s inputima ili checkboxima) */
-        label.text-red-500 {
-            color: #ef4444 !important; /* Tailwind red-500 */
-        }
+    /* Stanje greške za labele (povezane s inputima ili checkboxima) */
+    label.text-red-500 {
+        color: #ef4444 !important; /* Tailwind red-500 */
+    }
 
-        /* Stil za gumb "U redu" u popupu za validaciju */
-        #validation-popup-ok {
-             background-color: var(--fluorescent-green) !important;
-             color: #0e076a !important;
-             border: none;
-             border-radius: 50px;
-             font-weight: 600;
-             padding: 8px 24px; /* Malo manji padding */
-             transition: background-color 0.3s;
-        }
-        #validation-popup-ok:hover {
-             background-color: color-mix(in srgb, var(--fluorescent-green) 85%, black 15%) !important;
-        }
+    /* Stil za gumb "U redu" u popupu za validaciju */
+    #validation-popup-ok {
+            background-color: var(--fluorescent-green) !important;
+            color: #0e076a !important;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            padding: 8px 24px; /* Malo manji padding */
+            transition: background-color 0.3s;
+    }
+    #validation-popup-ok:hover {
+            background-color: color-mix(in srgb, var(--fluorescent-green) 85%, black 15%) !important;
+    }
 
-        /* Osiguraj da je popup overlay iznad ostalih elemenata */
-         #validation-popup-overlay {
-            z-index: 9999; /* Visoki z-index */
-         }
+    /* Osiguraj da je popup overlay iznad ostalih elemenata */
+    #validation-popup-overlay {
+        z-index: 9999; /* Visoki z-index */
+    }
+</style>
+<style>
+    /* Opći stilovi za light mode - SADA CILJAJU `html` ELEMENT */
+    html.light-mode body {
+        background-color: #f8fafc !important; /* Svijetla pozadina */
+        color: #334155 !important; /* Tamni tekst */
+    }
+
+    /* Navigacija u light modu */
+    html.light-mode nav.fixed {
+        background-color: rgba(255, 255, 255, 0.9) !important;
+        border-bottom-color: var(--primary-color) !important; /* Glavna ljubičasta */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05) !important;
+    }
+    html.light-mode .logo-nav .small-text,
+    html.light-mode .logo-nav .text-logo-orange,
+    html.light-mode .logo-nav .text-white {
+        color: var(--primary-color) !important; /* Logo tekst ljubičasti */
+    }
+    html.light-mode nav a.btn-primary.register-login-btn {
+        background-color: var(--primary-color) !important;
+        color: white !important;
+    }
+    html.light-mode nav a.btn-primary.register-login-btn:hover {
+        background-color: var(--secondary-color) !important;
+    }
+    html.light-mode nav a.btn-outline.register-register-btn {
+        color: var(--primary-color) !important;
+        border-color: var(--primary-color) !important;
+    }
+    html.light-mode nav a.btn-outline.register-register-btn:hover {
+        background-color: rgba(106, 27, 154, 0.1) !important;
+        color: var(--primary-color) !important;
+    }
+    html.light-mode nav .language-selector .language-trigger i,
+    html.light-mode nav .mobile-language-selector .mobile-language-trigger i,
+    html.light-mode #theme-toggle i,
+    html.light-mode #theme-toggle-mobile i {
+        color: var(--primary-color) !important; /* Ikone globusa i teme */
+    }
+    html.light-mode .fa-globe,
+    html.light-mode .language-trigger i,
+    html.light-mode i.fas.fa-globe {
+        color: var(--primary-color) !important;
+    }
+    html.light-mode .hamburger .bar {
+        background-color: var(--primary-color) !important; /* Boja hamburger linija */
+    }
+
+    /* Naslovi u light modu */
+    html.light-mode h1,
+    html.light-mode h2,
+    html.light-mode h3,
+    html.light-mode h4,
+    html.light-mode h5,
+    html.light-mode h6,
+    html.light-mode .registration-section h1,
+    html.light-mode .glass-card h4 {
+        color: var(--primary-color) !important; /* Svi naslovi ljubičasti */
+    }
+
+    /* Tekst u light modu */
+    html.light-mode p,
+    html.light-mode span,
+    html.light-mode div {
+        color: #475569; /* Tamno siva boja teksta za općenite elemente */
+    }
+    html.light-mode .text-gray-300 {
+        color: #475569 !important;
+    }
+    html.light-mode .text-gray-400 {
+        color: #64748b !important;
+    }
+
+
+    /* Kartice i kontejneri u light modu */
+    html.light-mode .glass-card,
+    html.light-mode .registration-form-container {
+        background-color: #ffffff !important;
+        border-color: #e2e8f0 !important; /* Svijetliji obrub */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important;
+    }
+    html.light-mode .image-placeholder {
+        border-color: #cbd5e1 !important; /* Obrub slike */
+        background-color: #f8fafc !important; /* Pozadina slike */
+    }
+
+    /* Lista prednosti i ikone */
+    html.light-mode .benefits-list li {
+        color: #334155 !important; /* Tekst liste */
+    }
+    html.light-mode .benefits-list i.fas.fa-check-circle {
+        color: var(--primary-color) !important; /* Boja ikona liste */
+    }
+
+    /* Gumbi za tip računa (Osobni/Poslovni) */
+    html.light-mode .btn-account-type {
+        border-color: var(--primary-color) !important;
+        background-color: transparent !important;
+        color: var(--primary-color) !important;
+    }
+    html.light-mode .btn-account-type.active {
+        background-color: var(--primary-color) !important;
+        color: white !important;
+    }
+    html.light-mode .btn-account-type:not(.active):hover {
+        background-color: rgba(106, 27, 154, 0.1) !important;
+        color: var(--primary-color) !important;
+    }
+    html.light-mode .btn-account-type.active:hover {
+        background-color: var(--secondary-color) !important;
+    }
+
+    /* Social media gumbi */
+    html.light-mode .social-login-button {
+        border-color: #cbd5e1 !important;
+        background-color: #f8fafc !important;
+        color: #334155 !important;
+    }
+    html.light-mode .social-login-button:hover {
+        background-color: #f1f5f9 !important;
+    }
+    html.light-mode .social-login-button i.fab.fa-apple {
+        color: #334155 !important;
+    }
+
+    /* Forma za registraciju */
+    html.light-mode .registration-form-container .border-gray-700 {
+        border-color: #e2e8f0 !important;
+    }
+    html.light-mode .form-label-register {
+        color: #475569 !important;
+    }
+    html.light-mode .form-input-register,
+    html.light-mode .custom-select-trigger,
+    html.light-mode .phone-input-wrapper {
+        background-color: #f1f5f9 !important;
+        border-color: #cbd5e1 !important;
+        color: #1e293b !important;
+    }
+    html.light-mode .form-input-register::placeholder {
+        color: #94a3b8 !important;
+    }
+    html.light-mode .form-input-register:focus,
+    html.light-mode .custom-select-trigger:hover,
+    html.light-mode .custom-select-trigger.active,
+    html.light-mode .phone-input-wrapper:focus-within {
+        border-color: var(--primary-color) !important;
+        box-shadow: 0 0 0 2px rgba(106, 27, 154, 0.2) !important;
+    }
+    html.light-mode .custom-select-options {
+        background-color: #f1f5f9 !important;
+        border-color: #cbd5e1 !important;
+    }
+    html.light-mode .custom-select-options .option {
+        color: #334155 !important;
+    }
+    html.light-mode .custom-select-options .option:hover {
+        background-color: var(--secondary-color) !important;
+        color: white !important;
+    }
+    html.light-mode .custom-select-trigger::after {
+        color: var(--primary-color) !important;
+    }
+    html.light-mode .country-code-select {
+        background-color: #e2e8f0 !important;
+        border-right-color: #cbd5e1 !important;
+        color: #334155 !important;
+    }
+
+    /* Radio i Checkbox gumbi */
+    html.light-mode .form-radio-register {
+        border-color: #94a3b8 !important;
+    }
+    html.light-mode .form-radio-register:checked {
+        border-color: var(--primary-color) !important;
+    }
+    html.light-mode .form-radio-register:checked::after {
+        background-color: var(--primary-color) !important;
+    }
+    html.light-mode .form-checkbox-register {
+        border-color: #94a3b8 !important;
+    }
+    html.light-mode .form-checkbox-register:checked {
+        background-color: var(--primary-color) !important;
+        border-color: var(--primary-color) !important;
+    }
+    html.light-mode .form-checkbox-register:checked::after {
+        color: white !important;
+    }
+    html.light-mode .space-y-3 span.text-gray-300 {
+        color: #475569 !important;
+    }
+    html.light-mode a.text-fluorescent-green.underline {
+        color: var(--primary-color) !important;
+    }
+    html.light-mode a.text-fluorescent-green.underline:hover {
+        color: var(--secondary-color) !important;
+    }
+
+    /* Gumb "Dalje" */
+    html.light-mode #dalje-button,
+    html.light-mode .btn-primary,
+    html.light-mode [type="submit"] {
+        background-color: var(--primary-color) !important;
+        color: white !important;
+    }
+    html.light-mode #dalje-button:hover,
+    html.light-mode .btn-primary:hover,
+    html.light-mode [type="submit"]:hover {
+        background-color: var(--secondary-color) !important;
+    }
+
+    /* Footer u light modu */
+    html.light-mode footer.bg-gray-900 {
+        background-color: #1e293b !important;
+        border-top-color: #334155 !important;
+    }
+    html.light-mode footer h3,
+    html.light-mode footer h4 {
+        color: white !important;
+    }
+    html.light-mode footer .text-gray-400,
+    html.light-mode footer a,
+    html.light-mode footer .fab {
+        color: #a0aec0 !important;
+    }
+    html.light-mode footer a:hover {
+        color: white !important;
+    }
+    html.light-mode footer .border-t.border-gray-800 {
+        border-color: #334155 !important;
+    }
+
+    /* Važni ispravci boja koji su možda bili pregaženi */
+    html.light-mode .text-logo-orange,
+    html.light-mode div:contains("Dobro došli u SFteam!"),
+    html.light-mode div:contains("Verifikacija identiteta - KYC") {
+        color: var(--primary-color) !important;
+    }
+
 </style>
 <body class="bg-gray-900">
     <canvas id="network-canvas"></canvas>
@@ -641,8 +877,7 @@ body.light-mode #site-logo {
 
                 <div class="w-full lg:w-5/12 fade-in" style="animation-delay: 0.2s;">
                     <div class="glass-card p-6 mb-8">
-                        <h4 style="font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif !important; color: #80ff00 !important;"><strong>PREPORUKA</strong></h4><br>
-                        <div class="space-y-3">
+                            <h4 style="font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif !important;"><strong>PREPORUKA</strong></h4>                        <div class="space-y-3">
                             <label class="flex items-center cursor-pointer">
                                 <input type="radio" id="recommender-no" name="recommender_choice" value="none" class="form-radio-register" checked>
                                 <span class="ml-2 text-sm text-gray-300">Nemam preporučitelja/icu</span>
@@ -661,8 +896,7 @@ body.light-mode #site-logo {
                         </div>
                     </div>
                     <div class="glass-card p-6">
-                        <h4 style="font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif !important; color: #80ff00 !important;"><strong>Dobro došli u SFteam!</strong> </h4><br>
-                        <p class="text-gray-300 mb-4"><strong>Besplatno se registriraj i koristi usluge naše platforme:</strong></p>
+                        <h4 style="font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif !important;"><strong>Dobro došli u SFteam!</strong> </h4>                        <p class="text-gray-300 mb-4"><strong>Besplatno se registriraj i koristi usluge naše platforme:</strong></p>
                         <ul class="benefits-list">
                             <li><i class="fas fa-check-circle"></i>SFnet - poslovno-društvena mreža</li>
                             <li><i class="fas fa-check-circle"></i>SFshop - online trgovina</li>
@@ -672,8 +906,7 @@ body.light-mode #site-logo {
                         </ul>
                     </div>
                 <div class="glass-card p-6 mt-8">
-                    <h4 style="font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif !important; color: #80ff00 !important; margin-top: 2rem !important;"><strong>Verifikacija identiteta - KYC</strong></h4><br>
-                    <p class="text-gray-300 mb-4 text-justify"Prije nego li započnete sa procesom registracije želimo Vam napomenuti da ćete u procesu registracije trebati potvrditi svoj identitet, unosom osobnog dokumenta i vlastite fotografije. Ukoliko ne želite potvrditi svoj identitet molimo da prekinete proces registracije.</p>
+                     <h4 style="font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif !important; margin-top: 2rem !important;"><strong>Verifikacija identiteta - KYC</strong></h4>                    <p class="text-gray-300 mb-4 text-justify"Prije nego li započnete sa procesom registracije želimo Vam napomenuti da ćete u procesu registracije trebati potvrditi svoj identitet, unosom osobnog dokumenta i vlastite fotografije. Ukoliko ne želite potvrditi svoj identitet molimo da prekinete proces registracije.</p>
                      <p class="text-gray-300 mb-4 text-justify">KYC STANDARD PREDSTAVLJA PROCES U KOJEM SU KLIJENTI OBAVEZNI POTVRDITI SVOJ IDENTITET U SVRHU NASTAVKA LEGALNOG KORIŠTENJA STRANICA NAŠEG PORTALA, KAKO BI SE PRVENSTVENO SPRIJEČILO LAŽNO ILI VIŠESTRUKO REGISTRIRANJE, KRAĐA IDENTITETA, FINANCIJSKE PREVARE, PRANJE NOVCA, FINANCIRANJE TERORIZMA I SL. 
                         </p>
                     </div>
@@ -900,94 +1133,76 @@ body.light-mode #site-logo {
         // <<< KRAJ KODA ZA PREPORUČITELJA >>>
         // ===========================================
 
-                // =======================================================
-        // === ISPRAVLJENA LOGIKA ZA DARK/LIGHT MODE PREKIDAČ ===
-        // =======================================================
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const themeToggleMobileBtn = document.getElementById('theme-toggle-mobile');
+// =======================================================
+// === KONAČNA I OBJEDINJENA LOGIKA ZA TEMU I LOGO ===
+// =======================================================
+const themeToggleBtn = document.getElementById('theme-toggle');
+const themeToggleMobileBtn = document.getElementById('theme-toggle-mobile');
+const logoImage = document.getElementById('site-logo');
 
-        // Funkcija koja primjenjuje temu i mijenja SVE potrebne stilove
-        const applyTheme = (theme) => {
-            // Pronađi elemente sa specifičnim inline stilovima
-            const specificHeaders = document.querySelectorAll('h4[style*="color: #80ff00"]');
-            const daljeButton = document.getElementById('dalje-button');
+// Funkcija koja mijenja SAMO sliku logotipa
+function updateLogoForTheme() {
+    if (!logoImage) return;
+    const isLight = document.documentElement.classList.contains('light-mode');
+    if (isLight) {
+        logoImage.src = 'img/IFIG-logo_purple.png';
+    } else {
+        logoImage.src = 'img/IFIG-logo.png';
+    }
+}
 
-            if (theme === 'light') {
-                body.classList.add('light-mode');
-                
-                // Promijeni ikone na gumbima za temu
-                if (themeToggleBtn) {
-                    themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
-                }
-                if (themeToggleMobileBtn) {
-                    themeToggleMobileBtn.innerHTML = '<i class="fas fa-moon mr-2"></i> Promijeni temu';
-                }
+// Funkcija koja mijenja SAMO klasu na stranici i ikone na gumbu
+function applyThemeClassAndIcons(theme) {
+    if (theme === 'light') {
+        document.documentElement.classList.add('light-mode');
+        if (themeToggleBtn) { themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>'; }
+        if (themeToggleMobileBtn) { themeToggleMobileBtn.innerHTML = '<i class="fas fa-moon mr-2"></i> Promijeni temu'; }
+    } else {
+        document.documentElement.classList.remove('light-mode');
+        if (themeToggleBtn) { themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>'; }
+        if (themeToggleMobileBtn) { themeToggleMobileBtn.innerHTML = '<i class="fas fa-sun mr-2"></i> Promijeni temu'; }
+    }
+}
 
-                // *** JAVASCRIPT DIREKTNO MIJENJA INLINE STILOVE ***
-                // Mijenjamo specifične zelene naslove u ljubičaste
-                specificHeaders.forEach(header => {
-                    header.style.color = 'var(--secondary-color)'; // Svijetlo ljubičasta
-                });
-                // Mijenjamo gumb "Dalje"
-                if (daljeButton) {
-                    daljeButton.style.backgroundColor = 'var(--secondary-color)'; // Svijetlo ljubičasta
-                    daljeButton.style.color = 'white';
-                }
+// Glavna funkcija koja se poziva na klik
+function handleThemeToggle() {
+    const isLight = document.documentElement.classList.contains('light-mode');
+    const newTheme = isLight ? 'dark' : 'light';
+    
+    // 1. Spremi novu temu
+    localStorage.setItem('sft21_theme', newTheme);
+    
+    // 2. Primijeni klasu i promijeni ikone
+    applyThemeClassAndIcons(newTheme);
+    
+    // 3. Odmah ažuriraj logo
+    updateLogoForTheme();
+}
 
-            } else { // Vraćanje na tamnu temu
-                body.classList.remove('light-mode');
-                
-                // Vrati ikone na sunce
-                if (themeToggleBtn) {
-                    themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
-                }
-                if (themeToggleMobileBtn) {
-                    themeToggleMobileBtn.innerHTML = '<i class="fas fa-sun mr-2"></i> Promijeni temu';
-                }
+// Inicijalizacija pri učitavanju stranice
+function initializeTheme() {
+    // 1. Postavi event listenere na gumbe
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', handleThemeToggle);
+    }
+    if (themeToggleMobileBtn) {
+        themeToggleMobileBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            handleThemeToggle();
+        });
+    }
 
-                // *** JAVASCRIPT VRAĆA ORIGINALNE INLINE STILOVE ***
-                // Vraćamo zelenu boju na naslove
-                specificHeaders.forEach(header => {
-                    header.style.color = '#80ff00';
-                });
-                // Vraćamo zelenu boju na gumb "Dalje"
-                if (daljeButton) {
-                    daljeButton.style.backgroundColor = '#80ff00';
-                    daljeButton.style.color = '#0e076a';
-                }
-            }
-        };
+    // 2. Odmah po učitavanju stranice, uskladi ikone i logo s postojećom temom
+    const currentTheme = localStorage.getItem('sft21_theme') || 'dark';
+    applyThemeClassAndIcons(currentTheme);
+    updateLogoForTheme();
+}
 
-        // Funkcija koja upravlja promjenom teme
-        const handleThemeToggle = () => {
-            const isLight = body.classList.contains('light-mode');
-            const newTheme = isLight ? 'dark' : 'light';
-            localStorage.setItem('sft21_theme', newTheme);
-            applyTheme(newTheme);
-        };
-
-        // Glavna inicijalizacija teme
-        const initializeTheme = () => {
-            if (themeToggleBtn) {
-                themeToggleBtn.addEventListener('click', handleThemeToggle);
-            }
-            if (themeToggleMobileBtn) {
-                themeToggleMobileBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    handleThemeToggle();
-                });
-            }
-            const savedTheme = localStorage.getItem('sft21_theme') || 'dark';
-            applyTheme(savedTheme);
-        };
-
-        // Pokreni inicijalizaciju teme
-        initializeTheme();
-        // =======================================================
-        // === KRAJ LOGIKE ZA DARK/LIGHT MODE PREKIDAČ ===
-        // =======================================================
-
-
+// Pokreni inicijalizaciju
+initializeTheme();
+// =======================================================
+// === KRAJ LOGIKE ZA TEMU I LOGO ===
+// =======================================================
         // --- PODACI O ZEMLJAMA (UKLJUČUJUĆI POZIVNE BROJEVE) ---
         const countriesData = [
             { code: 'HR', name: 'Hrvatska', flagUrl: 'https://flagcdn.com/w20/hr.png', phonePrefix: '+385' },
@@ -1339,5 +1554,6 @@ body.light-mode #site-logo {
         animate();
     });
 </script>
+
 </body>
 </html>
