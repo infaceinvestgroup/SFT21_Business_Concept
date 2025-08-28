@@ -5,6 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Korisnički podaci - SFT21 InFace Invest Group</title>
 
+    <!-- ============================================= -->
+    <!-- UNIVERZALNA SKRIPTA ZA INICIJALIZACIJU TEME -->
+    <!-- Rješava "bljesak" i problem s back-forward cacheom -->
+    <!-- ============================================= -->
+    <script>
+        // Funkcija za primjenu teme, da izbjegnemo ponavljanje koda
+        function applySft21Theme() {
+            try {
+                // Ako tema nije postavljena, zadana je 'dark'
+                const theme = localStorage.getItem('sft21_theme') || 'dark';
+
+                if (theme === 'light') {
+                    // Ako je tema 'light', DODAJ klasu
+                    document.documentElement.classList.add('light-mode');
+                } else {
+                    // U svim ostalim slučajevima (ako je 'dark'), UKLONI klasu
+                    document.documentElement.classList.remove('light-mode');
+                }
+            } catch (e) {
+                console.error('Greška pri primjeni teme:', e);
+            }
+        }
+
+        // 1. Primijeni temu ODMAH pri učitavanju da se spriječi "bljesak"
+        applySft21Theme();
+
+        // 2. Dodaj listener za 'pageshow' događaj. Ovo rješava problem
+        //    kada se stranica učita iz "back-forward" cachea preglednika.
+        window.addEventListener('pageshow', function(event) {
+            // event.persisted je 'true' ako je stranica učitana iz cachea
+            if (event.persisted) {
+                console.log('Stranica učitana iz bfcachea, ponovno provjeravam temu.');
+                applySft21Theme();
+            }
+        });
+    </script>
+
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
     <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -286,6 +326,72 @@
             }
         }
     </style>
+
+        <!-- NOVI STILOVI ZA LIGHT MODE -->
+    <style>
+        html.light-mode body {
+            background-color: #f8fafc !important;
+            color: #334155 !important;
+        }
+        html.light-mode #network-canvas {
+            background-color: transparent !important; /* Canvas postaje proziran */
+        }
+        html.light-mode .glass-card {
+            background-color: #ffffff !important;
+            border-color: #e2e8f0 !important;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important;
+        }
+        html.light-mode .input-title {
+            color: var(--primary-color) !important; /* Ljubičasta */
+        }
+        html.light-mode .input-field {
+            background-color: #f1f5f9 !important;
+            border-color: #cbd5e1 !important;
+            color: #1e293b !important;
+        }
+        html.light-mode .input-field::placeholder {
+            color: #94a3b8 !important;
+        }
+        html.light-mode .input-field:focus {
+            border-color: var(--primary-color) !important;
+            box-shadow: 0 0 0 3px rgba(106, 27, 154, 0.2) !important;
+            background-color: #ffffff !important;
+        }
+        html.light-mode .requirement {
+            color: #475569 !important; /* Tamno siva boja */
+        }
+        html.light-mode .toggle-password {
+            color: var(--primary-color) !important;
+        }
+        html.light-mode .warning-note {
+            color: var(--primary-color) !important;
+        }
+        html.light-mode .save-button {
+            background-color: var(--primary-color) !important;
+            color: white !important;
+        }
+        html.light-mode .save-button:hover {
+            background-color: var(--secondary-color) !important;
+        }
+        /* Stilovi za popup u light modu */
+        html.light-mode .popup {
+            background-color: #ffffff !important;
+            border-color: var(--primary-color) !important;
+        }
+        html.light-mode .popup-title {
+            color: var(--primary-color) !important;
+        }
+        html.light-mode .popup-message {
+            color: #334155 !important;
+        }
+        html.light-mode .popup-button {
+            background-color: var(--primary-color) !important;
+            color: white !important;
+        }
+        html.light-mode .popup-button:hover {
+            background-color: var(--secondary-color) !important;
+        }
+    </style>
 </head>
 
 <body class="bg-gray-900">
@@ -295,8 +401,6 @@
     <!-- Custom Cursor -->
     <!-- Ovo je kontrolirano vanjskim script.js fajlom -->
     <div class="custom-cursor"></div>
-    <div class="cursor-trail"></div>
-
 
     <!-- Popup Overlay -->
     <div id="popup-overlay" class="popup-overlay"></div>
