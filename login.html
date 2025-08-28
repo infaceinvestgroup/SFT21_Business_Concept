@@ -5,27 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prijava - SFT21 InFace Invest Group</title>
 
-        <!-- ============================================= -->
-    <!-- GLOBALNA SKRIPTA ZA INICIJALIZACIJU TEME -->
-    <!-- Sprječava "bljesak" krive teme pri učitavanju -->
+    <!-- ============================================= -->
+    <!-- UNIVERZALNA SKRIPTA ZA INICIJALIZACIJU TEME -->
+    <!-- Rješava "bljesak" i problem s back-forward cacheom -->
     <!-- ============================================= -->
     <script>
-        (function() {
+        // Funkcija za primjenu teme, da izbjegnemo ponavljanje koda
+        function applySft21Theme() {
             try {
-                const theme = localStorage.getItem('sft21_theme');
+                // Ako tema nije postavljena, zadana je 'dark'
+                const theme = localStorage.getItem('sft21_theme') || 'dark';
+
                 if (theme === 'light') {
+                    // Ako je tema 'light', DODAJ klasu
                     document.documentElement.classList.add('light-mode');
+                } else {
+                    // U svim ostalim slučajevima (ako je 'dark'), UKLONI klasu
+                    document.documentElement.classList.remove('light-mode');
                 }
             } catch (e) {
-                console.error('Failed to apply theme from localStorage', e);
+                console.error('Greška pri primjeni teme:', e);
             }
-        })();
+        }
+
+        // 1. Primijeni temu ODMAH pri učitavanju da se spriječi "bljesak"
+        applySft21Theme();
+
+        // 2. Dodaj listener za 'pageshow' događaj. Ovo rješava problem
+        //    kada se stranica učita iz "back-forward" cachea preglednika.
+        window.addEventListener('pageshow', function(event) {
+            // event.persisted je 'true' ako je stranica učitana iz cachea
+            if (event.persisted) {
+                console.log('Stranica učitana iz bfcachea, ponovno provjeravam temu.');
+                applySft21Theme();
+            }
+        });
     </script>
 
     <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" rel="stylesheet"/>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Link na vanjsku CSS datoteku -->
@@ -219,6 +239,19 @@
             height: 100%;
             z-index: -1; /* Postavlja platno iza svog sadržaja */
         }
+
+        /* ISPRAVAK: Onemogućeni "Prijava" gumb u headeru - zeleno i bez prozirnosti u dark modu */
+body:not(.light-mode) nav button.btn-outline[disabled] {
+    color: var(--fluorescent-green) !important;
+    border-color: var(--fluorescent-green) !important;
+    opacity: 1 !important; /* Ovo poništava 'opacity-50' klasu */
+}
+
+/* ISPRAVAK: Onemogućeni "Prijava" gumb u headeru - puna ljubičasta boja u light modu */
+body.light-mode nav button.btn-outline[disabled] {
+    opacity: 1 !important; /* Poništava 'opacity-50' klasu */
+}
+
     </style>
 
     <style>
@@ -250,6 +283,8 @@
     <!-- Platno za animaciju pozadine -->
     <canvas id="network-canvas"></canvas>
 
+    <div class="custom-cursor"></div>
+
     <nav class="fixed top-0 left-0 w-full z-50">
         <div class="container mx-auto px-6 py-4">
             <!-- GLAVNI RED HEADERA: LOGO LIJEVO, GUMBI/HAMBURGER DESNO -->
@@ -274,17 +309,17 @@
                         <button id="desktop-lang-trigger" class="language-trigger text-white hover:text-fluorescent-green transition-colors duration-300 text-xl">
                             <i class="fas fa-globe"></i>
                         </button>
-                        <div id="desktop-lang-dropdown" class="language-dropdown">
-                            <a href="#" class="language-item"> <img src="https://flagcdn.com/w20/gb.png" alt="Engleski" class="flag-image"> <span>ENG</span> </a>
-                            <a href="#" class="language-item"> <img src="https://flagcdn.com/w20/hr.png" alt="Hrvatski" class="flag-image"> <span>HRV</span> </a>
-                            <a href="#" class="language-item"> <img src="https://flagcdn.com/w20/rs.png" alt="Srpski" class="flag-image"> <span>SRB</span> </a>
+<div id="desktop-lang-dropdown" class="language-dropdown">
+    <a href="login_en.html" class="language-item"> <img src="https://flagcdn.com/w20/gb.png" alt="Engleski" class="flag-image"> <span>ENG</span> </a>
+    <a href="login.html" class="language-item"> <img src="https://flagcdn.com/w20/hr.png" alt="Hrvatski" class="flag-image"> <span>HRV</span> </a>
+                             <!--<a href="#" class="language-item"> <img src="https://flagcdn.com/w20/rs.png" alt="Srpski" class="flag-image"> <span>SRB</span> </a>
                             <a href="#" class="language-item"> <img src="https://flagcdn.com/w20/si.png" alt="Slovenski" class="flag-image"> <span>SLO</span> </a>
                             <a href="#" class="language-item"> <img src="https://flagcdn.com/w20/ro.png" alt="Rumunjski" class="flag-image"> <span>ROU</span> </a>
                             <a href="#" class="language-item"> <img src="https://flagcdn.com/w20/it.png" alt="Talijanski" class="flag-image"> <span>ITA</span> </a>
                             <a href="#" class="language-item"> <img src="https://flagcdn.com/w20/de.png" alt="Njemački" class="flag-image"> <span>DEU</span> </a>
                             <a href="#" class="language-item"> <img src="https://flagcdn.com/w20/hu.png" alt="Mađarski" class="flag-image"> <span>HUN</span> </a>
                             <a href="#" class="language-item"> <img src="https://flagcdn.com/w20/fr.png" alt="Francuski" class="flag-image"> <span>FRA</span> </a>
-                            <a href="#" class="language-item"> <img src="https://flagcdn.com/w20/es.png" alt="Španjolski" class="flag-image"> <span>ESP</span> </a>
+                            <a href="#" class="language-item"> <img src="https://flagcdn.com/w20/es.png" alt="Španjolski" class="flag-image"> <span>ESP</span> </a> -->
                         </div>
                     </div>
                      <!-- Gumb Prijava (onemogućen na login stranici) -->
@@ -314,17 +349,17 @@
                      <a href="#" id="mobile-lang-trigger" class="block text-center transition-colors duration-300 sft21-nav-link mobile-language-trigger text-gray-300 hover:text-fluorescent-green">
                          <i class="fas fa-globe mr-2"></i> Odaberi jezik <i class="fas fa-chevron-down ml-1 text-xs"></i>
                      </a>
-                     <div id="mobile-lang-dropdown" class="language-dropdown-mobile">
-                         <a href="#" class="language-item"> <img src="https://flagcdn.com/w20/gb.png" alt="Engleski" class="flag-image"> <span>ENG</span> </a>
-                         <a href="#" class="language-item"> <img src="https://flagcdn.com/w20/hr.png" alt="Hrvatski" class="flag-image"> <span>HRV</span> </a>
+<div id="mobile-lang-dropdown" class="language-dropdown-mobile">
+    <a href="login_en.html" class="language-item"> <img src="https://flagcdn.com/w20/gb.png" alt="Engleski" class="flag-image"> <span>ENG</span> </a>
+    <a href="login.html" class="language-item"> <img src="https://flagcdn.com/w20/hr.png" alt="Hrvatski" class="flag-image"> <span>HRV</span> </a>
                            <a href="#" class="language-item"> <img src="https://flagcdn.com/w20/rs.png" alt="Srpski" class="flag-image"> <span>SRB</span> </a>
                             <a href="#" class="language-item"> <img src="https://flagcdn.com/w20/si.png" alt="Slovenski" class="flag-image"> <span>SLO</span> </a>
-                            <a href="#" class="language-item"> <img src="https://flagcdn.com/w20/ro.png" alt="Rumunjski" class="flag-image"> <span>ROU</span> </a>
+                             <!--<a href="#" class="language-item"> <img src="https://flagcdn.com/w20/ro.png" alt="Rumunjski" class="flag-image"> <span>ROU</span> </a>
                             <a href="#" class="language-item"> <img src="https://flagcdn.com/w20/it.png" alt="Talijanski" class="flag-image"> <span>ITA</span> </a>
                             <a href="#" class="language-item"> <img src="https://flagcdn.com/w20/de.png" alt="Njemački" class="flag-image"> <span>DEU</span> </a>
                             <a href="#" class="language-item"> <img src="https://flagcdn.com/w20/hu.png" alt="Mađarski" class="flag-image"> <span>HUN</span> </a>
                             <a href="#" class="language-item"> <img src="https://flagcdn.com/w20/fr.png" alt="Francuski" class="flag-image"> <span>FRA</span> </a>
-                            <a href="#" class="language-item"> <img src="https://flagcdn.com/w20/es.png" alt="Španjolski" class="flag-image"> <span>ESP</span> </a>
+                            <a href="#" class="language-item"> <img src="https://flagcdn.com/w20/es.png" alt="Španjolski" class="flag-image"> <span>ESP</span> </a>-->
                     </div>
                  </div>
                 <!-- Gumbi u mobilnom meniju -->
@@ -402,19 +437,55 @@
         </div>
     </main>
 
-    <footer class="py-16 bg-gray-900 border-t border-gray-800">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
-                 <div class="md:col-span-1"> <h3 class="text-2xl font-bold mb-6 text-white">InFace Invest Group</h3> <p class="text-gray-400 mb-8">Na jakim lokalnim i regionalnim temeljima stvaramo globalnu online zajednica koja povezuje ljude na jedan novi, humaniji i prije svega pošteniji način.</p> <div class="flex space-x-4"><a href="#" class="text-gray-400 hover:text-purple-400 transition-colors duration-300"><i class="fab fa-facebook-f text-xl"></i></a><a href="#" class="text-gray-400 hover:text-purple-400 transition-colors duration-300"><i class="fab fa-twitter text-xl"></i></a><a href="#" class="text-gray-400 hover:text-purple-400 transition-colors duration-300"><i class="fab fa-instagram text-xl"></i></a><a href="#" class="text-gray-400 hover:text-purple-400 transition-colors duration-300"><i class="fab fa-linkedin-in text-xl"></i></a></div> </div>
-                 <div> <h4 class="text-lg font-bold mb-6 text-white">Brzi linkovi</h4> <ul class="space-y-3"> <li><a href="index.html" class="text-gray-400 hover:text-purple-400 transition-colors duration-300">Početna</a></li> <li><a href="index.html#poslovni-koncept" class="text-gray-400 hover:text-purple-400 transition-colors duration-300">Poslovni koncept</a></li> <li><a href="index.html#startni-paketi" class="text-gray-400 hover:text-purple-400 transition-colors duration-300">Startni paketi</a></li> <li><a href="index.html#investicija" class="text-gray-400 hover:text-purple-400 transition-colors duration-300">Investicijski paketi</a></li> <li><a href="register.html" class="text-gray-400 hover:text-purple-400 transition-colors duration-300">Registracija</a></li> <li><a href="index.html#kontakt" class="text-gray-400 hover:text-purple-400 transition-colors duration-300">Kontakt</a></li> </ul> </div>
-                 <div> <h4 class="text-lg font-bold mb-6 text-white">Kontakt</h4> <ul class="space-y-3"> <li class="text-gray-400">InFace Invest Group d.o.o.</li> <li class="text-gray-400">Rovinj, Hrvatska</li> <li><a href="mailto:info@sft21.com" class="text-gray-400 hover:text-purple-400 transition-colors duration-300">info@sft21.com</a></li> <li class="text-gray-400">+385 XX XXX XXXX</li> </ul> </div>
-                 <div> <h4 class="text-lg font-bold mb-6 text-white">Pravne informacije</h4> <ul class="space-y-3"> <li><a href="#" class="text-gray-400 hover:text-purple-400 transition-colors duration-300">Uvjeti korištenja</a></li> <li><a href="#" class="text-gray-400 hover:text-purple-400 transition-colors duration-300">Politika privatnosti</a></li> <li><a href="#" class="text-gray-400 hover:text-purple-400 transition-colors duration-300">GDPR</a></li> <li><a href="#" class="text-gray-400 hover:text-purple-400 transition-colors duration-300">Pravila poslovanja</a></li> </ul> </div>
-             </div>
-             <div class="border-t border-gray-800 mt-12 pt-8 text-center">
-                 <p class="text-gray-400">© 2025 InFace Invest Group d.o.o. Sva prava pridržana.</p>
+<footer class="py-16 bg-gray-900 border-t border-gray-800">
+    <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div class="md:col-span-1">
+                <h3 class="text-2xl font-bold mb-6 text-white">InFace Invest Group</h3>
+                <p class="text-gray-400 mb-8">Na jakim lokalnim i regionalnim temeljima stvaramo globalnu online zajednica koja povezuje ljude na jedan novi, humaniji i prije svega pošteniji način.</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors duration-300"><i class="fab fa-facebook-f text-xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors duration-300"><i class="fab fa-x-twitter text-xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors duration-300"><i class="fab fa-instagram text-xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors duration-300"><i class="fab fa-linkedin-in text-xl"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-lg font-bold mb-6 text-white">Brzi linkovi</h4>
+                <ul class="space-y-3">
+                    <li><a href="index.html#pocetna" class="text-gray-400 hover:text-purple-400 transition-colors duration-300">Početna</a></li>
+                    <li><a href="index.html#poslovni-koncept" class="text-gray-400 hover:text-purple-400 transition-colors duration-300">Poslovni koncept</a></li>
+                    <li><a href="index.html#investicija" class="text-gray-400 hover:text-purple-400 transition-colors duration-300">Inicijalni paketi</a></li>
+                    <li><a href="index.html#startni-paketi" class="text-gray-400 hover:text-purple-400 transition-colors duration-300">Startni paketi</a></li>
+                    <li><a href="register.html" class="text-gray-400 hover:text-purple-400 transition-colors duration-300">Registracija</a></li>
+                    <li><a href="login.html" class="text-gray-400 hover:text-purple-400 transition-colors duration-300">Prijava</a></li>
+                    <li><a href="index.html#kontakt" class="text-gray-400 hover:text-purple-400 transition-colors duration-300">Kontakt</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-lg font-bold mb-6 text-white">Kontakt</h4>
+                <ul class="space-y-3">
+                    <li class="text-gray-400">InFace Invest Group d.o.o.</li>
+                    <li class="text-gray-400">Rovinj, Hrvatska</li>
+                    <li><a href="mailto:info@sft21.com" class="text-gray-400 hover:text-purple-400 transition-colors duration-300">info@infaceinvestgroup.com</a></li>
+                    <li class="text-gray-400">+385 XX XXX XXXX</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-lg font-bold mb-6 text-white">Pravne informacije</h4>
+                <ul class="space-y-3">
+                    <li><a href="#" class="text-gray-400 hover:text-purple-400 transition-colors duration-300">Uvjeti korištenja</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-purple-400 transition-colors duration-300">Politika privatnosti</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-purple-400 transition-colors duration-300">GDPR</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-purple-400 transition-colors duration-300">Pravila poslovanja</a></li>
+                </ul>
             </div>
         </div>
-    </footer>
+        <div class="border-t border-gray-800 mt-12 pt-8 text-center">
+            <p class="text-gray-400">© 2025 InFace Invest Group d.o.o. Sva prava pridržana.</p>
+        </div>
+    </div>
+</footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -426,7 +497,29 @@
             const mobileLangIcon = mobileLangTrigger?.querySelector('i.fas.fa-chevron-down');
             const hamburger = document.querySelector('.hamburger');
             const navMenu = document.querySelector('.nav-menu');
-
+            // =================================================================
+            // === KOD ZA CUSTOM CURSOR ========================================
+            // =================================================================
+            const cursor = document.querySelector('.custom-cursor');
+            if (cursor && body) {
+                let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
+                const speed = 0.1;
+                const updateCursorPosition = () => {
+                    cursorX += (mouseX - cursorX) * speed;
+                    cursorY += (mouseY - cursorY) * speed;
+                    cursor.style.left = `${cursorX}px`;
+                    cursor.style.top = `${cursorY}px`;
+                    requestAnimationFrame(updateCursorPosition);
+                };
+                requestAnimationFrame(updateCursorPosition);
+                window.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+                document.addEventListener('mouseleave', () => { if (cursor) cursor.style.opacity = '0'; });
+                document.addEventListener('mouseenter', () => { if (cursor) cursor.style.opacity = '1'; });
+                document.querySelectorAll('a, button, input, .checkbox-label-login, .login-close-btn').forEach(el => {
+                    el.addEventListener('mouseenter', () => { if (cursor && typeof gsap !== 'undefined') gsap.to(cursor, { duration: 0.3, scale: 1.5, backgroundColor: 'rgba(128, 255, 0, 0.5)' }); });
+                    el.addEventListener('mouseleave', () => { if (cursor && typeof gsap !== 'undefined') gsap.to(cursor, { duration: 0.3, scale: 1, backgroundColor: 'rgba(106, 27, 154, 0.6)' }); });
+                });
+            }
             const closeAllLanguageDropdowns = () => { if (desktopLangDropdown?.classList.contains('active')) { desktopLangDropdown.classList.remove('active'); } if (mobileLangDropdown?.classList.contains('active')) { mobileLangDropdown.classList.remove('active'); if (mobileLangIcon) { mobileLangIcon.classList.remove('fa-chevron-up'); mobileLangIcon.classList.add('fa-chevron-down'); } } };
             const toggleLanguageDropdown = (dropdownElement, otherDropdownElement, triggerIcon) => { if (!dropdownElement) return; const isActive = dropdownElement.classList.contains('active'); if (otherDropdownElement?.classList.contains('active')) { otherDropdownElement.classList.remove('active'); const otherIcon = document.getElementById('mobile-lang-trigger')?.querySelector('i.fas'); if (otherDropdownElement.id === 'mobile-lang-dropdown' && otherIcon?.classList.contains('fa-chevron-up')){ otherIcon.classList.replace('fa-chevron-up', 'fa-chevron-down'); } } dropdownElement.classList.toggle('active', !isActive); if (triggerIcon && dropdownElement.id === 'mobile-lang-dropdown') { triggerIcon.classList.toggle('fa-chevron-down', !isActive); triggerIcon.classList.toggle('fa-chevron-up', isActive); } };
 
@@ -693,76 +786,53 @@
     });
     </script>
 
-    <!-- NOVI SCRIPT ZA UPRAVLJANJE TEMAMA -->
+    <!-- ISPRAVLJENI SCRIPT ZA UPRAVLJANJE TEMAMA -->
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Pronađi gumbe i ikone za obje verzije (desktop i mobilnu)
         const themeToggleBtns = [
             document.getElementById('theme-toggle'),
             document.getElementById('theme-toggle-mobile')
         ];
-        const darkIcons = [
-            document.getElementById('theme-toggle-dark-icon'),
-            document.getElementById('theme-toggle-dark-icon-mobile')
-        ];
-        const lightIcons = [
-            document.getElementById('theme-toggle-light-icon'),
-            document.getElementById('theme-toggle-light-icon-mobile')
-        ];
+        const logoImg = document.getElementById('site-logo');
 
-        const setTheme = (isLight) => {
-            const logoImg = document.getElementById('site-logo');
+        // Funkcija koja samo ažurira izgled (ikonice, logo) na temelju klase na <html> elementu
+        function updateThemeUI() {
+            const isLight = document.documentElement.classList.contains('light-mode');
             
+            // Ažuriraj body klasu za svaki slučaj (zbog starih CSS pravila)
+            document.body.classList.toggle('light-mode', isLight);
+
             if (isLight) {
-                document.body.classList.add('light-mode');
                 if(logoImg) logoImg.src = 'img/IFIG-logo_purple.png';
-
-                themeToggleBtns.forEach(btn => {
-                    if (btn) btn.classList.remove('text-white');
-                });
-
-                darkIcons.forEach(icon => icon.classList.add('hidden'));
-                lightIcons.forEach(icon => icon.classList.remove('hidden'));
-                localStorage.setItem('theme', 'light');
-
             } else {
-                document.body.classList.remove('light-mode');
                 if(logoImg) logoImg.src = 'img/IFIG-logo.png';
-
-                themeToggleBtns.forEach(btn => {
-                    if (btn) btn.classList.add('text-white');
-                });
-
-                darkIcons.forEach(icon => icon.classList.remove('hidden'));
-                lightIcons.forEach(icon => icon.classList.add('hidden'));
-                localStorage.setItem('theme', 'dark');
             }
-
-            // Pozovi funkciju za promjenu teme animacije
+             // Pozovi funkciju za promjenu teme animacije
             if (window.setAnimationTheme) {
                 window.setAnimationTheme(isLight ? 'light' : 'dark');
             }
-        };
-
-        // 1. Provjeri je li tema već spremljena u memoriji preglednika
-        const savedTheme = localStorage.getItem('theme');
-
-        // Ako je spremljena 'light' tema, postavi je.
-        // U SVIM OSTALIM SLUČAJEVIMA (ako je spremljeno 'dark' ili ako nije ništa spremljeno),
-        // postavi tamnu temu kao zadanu.
-        if (savedTheme === 'light') {
-            setTheme(true); // Postavi svijetlu temu
-        } else {
-            setTheme(false); // Postavi tamnu temu (ovo je sada naša zadana vrijednost)
         }
 
-        // 2. Dodaj event listener na oba gumba
+        // Funkcija koja se poziva na klik gumba
+        function handleThemeToggle() {
+            // Promijeni temu (dodaj/ukloni klasu)
+            document.documentElement.classList.toggle('light-mode');
+            const isNowLight = document.documentElement.classList.contains('light-mode');
+            
+            // Spremi novu temu u localStorage pod ISPRAVNIM imenom
+            localStorage.setItem('sft21_theme', isNowLight ? 'light' : 'dark');
+            
+            // Ažuriraj izgled stranice
+            updateThemeUI();
+        }
+
+        // 1. Inicijalno ažuriraj izgled stranice na temelju teme koju je postavio skript u <head>
+        updateThemeUI();
+        
+        // 2. Dodaj event listenere na gumbe za promjenu teme
         themeToggleBtns.forEach(btn => {
             if (btn) {
-                btn.addEventListener('click', () => {
-                    const isLight = document.body.classList.contains('light-mode');
-                    setTheme(!isLight); // Postavi suprotnu temu
-                });
+                btn.addEventListener('click', handleThemeToggle);
             }
         });
     });
