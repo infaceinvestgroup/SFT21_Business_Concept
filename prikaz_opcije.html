@@ -365,7 +365,7 @@
                 <div class="option-card" id="opcijaAktivniBezIP" data-interactive>
                     <h2>Nastaviti poslovanje kao AKTIVAN član</h2>
                     <h3 id="opcijaAktivniBezIP_sub">(SFstarter ili SFfranšizer)</h3>
-                    <p class="choice-text" id="opcijaAktivniBezIP_choice">ne želim ulagati u Investicijski paket</p>
+                    <p class="choice-text" id="opcijaAktivniBezIP_choice">ne želim uplatiti Licencni paket</p>
                     <p id="opcijaAktivniBezIP_desc1">Poslovanje nastavljate otvaranjem <strong>osobnog ili poslovnog</strong> računa sa <strong>SPfree</strong>.</p>
                     <p id="opcijaAktivniBezIP_desc2">Na osnovi ukupnog broja SFbodova iz starog sistema;</p>
                     <ul id="opcijaAktivniBezIP_list">
@@ -377,17 +377,17 @@
                 <!-- Druga kartica -->
                 <div class="option-card" id="opcijaAktivniSaIP" data-interactive>
                     <h2>Nastaviti poslovanje kao AKTIVAN član</h2>
-                    <h3>(SFinvestitor/starter ili SFinvestitor/franšizer)</h3>
-                    <p class="choice-text">želim uložiti u Investicijski paket</p>
+                    <h3>(SFAlicenca)</h3>
+                    <p class="choice-text">želim uplatiti Licencni paket</p>
                     
                     <div class="deduction-info">
-                        <p class="deduction-text">Iznos Investicijskog paketa umanjuje vam se za</p>
+                        <p class="deduction-text">Iznos Licencnog paketa umanjuje vam se za</p>
                         <p class="deduction-amount-display"><span class="dynamic-deduction-amount">30 €</span></p>
                     </div>
 
-                    <p class="veci-iznos-card-specific-text hidden">(cijeli iznos investicije iz starog sistema pretvara vam se u Investicijski paket)</p>
-                    <p>Poslovanje nastavljate otvaranjem <strong>investicijskog</strong> računa sa <strong>SPfree</strong>,</p>
-                    <p>Na osnovi zbroja SFbodova iz starog sistema sa brojem SFbodova dobivenih ulaganjem u Investicijski paket;</p>
+                    <p class="veci-iznos-card-specific-text hidden">(cijeli iznos investicije iz starog sistema pretvara vam se u Inicijalni paket)</p>
+                    <p>Poslovanje nastavljate otvaranjem <strong>Licencnog</strong> računa sa <strong>SPfree</strong>,</p>
+                    <p>Na osnovi zbroja SFbodova iz starog sistema sa brojem SFbodova dobivenih uplatom Licencnog paketa;</p>
                     <ul>
                         <li>zauzimate poziciju u SFalgoritmu</li>
                         <li>određuje vam se LIMIT maksimalne zarade (do max. 2100 SFC)</li>
@@ -397,17 +397,17 @@
                 <!-- Treća kartica -->
                 <div class="option-card" id="opcijaPasivniSaIP" data-interactive>
                     <h2>Nastaviti poslovanje kao PASIVAN član</h2>
-                    <h3>(SFinvestitor)</h3>
-                    <p class="choice-text">želim uložiti u Investicijski paket</p>
+                    <h3>(SFPlicenca)</h3>
+                    <p class="choice-text">želim uplatiti Licencni paket</p>
 
                     <div class="deduction-info">
-                        <p class="deduction-text">Iznos Investicijskog paketa umanjuje vam se za</p>
+                        <p class="deduction-text">Iznos Licencnog paketa umanjuje vam se za</p>
                         <p class="deduction-amount-display"><span class="dynamic-deduction-amount">30 €</span></p>
                     </div>
                     
-                    <p class="veci-iznos-card-specific-text hidden">(cijeli iznos investicije iz starog sistema pretvara vam se u Investicijski paket)</p>
-                    <p>Poslovanje nastavljate otvaranjem <strong>investicijskog</strong> računa bez startnog paketa,</p>
-                    <p>Na osnovi zbroja SFbodova iz starog sistema sa brojem SFbodova dobivenih ulaganjem u Invest paket, zauzimate poziciju u SFalgoritmu, kao SFinvestitor.</p>
+                    <p class="veci-iznos-card-specific-text hidden">(cijeli iznos investicije iz starog sistema pretvara vam se u Inicijalni paket)</p>
+                    <p>Poslovanje nastavljate otvaranjem <strong>Licencnog </strong> računa bez startnog paketa,</p>
+                    <p>Na osnovi zbroja SFbodova iz starog sistema sa brojem SFbodova dobivenih ulaganjem u Licencni paket, zauzimate poziciju u SFalgoritmu.</p>
                 </div>
 
                 <!-- Četvrta kartica -->
@@ -465,7 +465,7 @@
             let calculatedSfbPoints = 60; 
 
             if (card1Sub) card1Sub.innerHTML = '(SFstarter ili SFfranšizer)';
-            if (card1Choice) card1Choice.innerHTML = 'ne želim ulagati u Investicijski paket';
+            if (card1Choice) card1Choice.innerHTML = 'ne želim uplatiti Licencni paket';
             if (card1Desc1) card1Desc1.innerHTML = 'Poslovanje nastavljate otvaranjem <strong>osobnog ili poslovnog</strong> računa sa <strong>SPfree</strong>.';
             if (card1Desc2) {
                 card1Desc2.innerHTML = 'Na osnovi ukupnog broja SFbodova iz starog sistema;';
