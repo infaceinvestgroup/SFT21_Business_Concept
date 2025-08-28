@@ -14,6 +14,20 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
 
+<script>
+    // Ova skripta se izvršava odmah kako bi se spriječilo "bljeskanje" krive teme.
+    try {
+        // KORISTIMO ISPRAVAN KLJUČ 'sft21_theme' KAO NA INDEX STRANICI
+        const theme = localStorage.getItem('sft21_theme') || 'dark';
+        if (theme === 'light') {
+            // Postavljamo klasu na <html> element radi dosljednosti
+            document.documentElement.classList.add('light-mode');
+        }
+    } catch (e) {
+        console.error('Nije moguće pristupiti localStorage za postavljanje teme.');
+    }
+</script>
+
     <style>
         /* Osnovni stilovi */
         body {
@@ -342,95 +356,159 @@
         }
 
                 /* --- STILOVI ZA LIGHT MODE --- */
-        body.light-mode {
+        html.light-mode body {
             background-color: #f8fafc; /* Svijetlo siva pozadina */
             color: #334155; /* Tamni tekst */
         }
-        body.light-mode .sfalgoritam-container {
+        html.light-mode body .sfalgoritam-container {
             background: rgba(255, 255, 255, 0.8);
             border-color: #e2e8f0;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
         }
-        body.light-mode .sfalgoritam-title,
-        body.light-mode .sfalgoritam-subtitle,
-        body.light-mode .section-title,
-        body.light-mode .pp-details-header h1,
-        body.light-mode .fluorescent-purple-text {
+        html.light-mode body .sfalgoritam-title,
+        html.light-mode body .sfalgoritam-subtitle,
+        html.light-mode body .section-title,
+        html.light-mode body .pp-details-header h1,
+        html.light-mode body .fluorescent-purple-text {
             color: #6a1b9a; /* Glavna ljubičasta */
         }
-        body.light-mode .section-title {
+        html.light-mode body .section-title {
             border-bottom-color: #6a1b9a;
         }
-        body.light-mode .bonus-info,
-        body.light-mode .end-of-period-info {
+        html.light-mode body .bonus-info,
+        html.light-mode body .end-of-period-info {
             background: rgba(171, 71, 188, 0.08);
             border-color: rgba(171, 71, 188, 0.5);
         }
-        body.light-mode .fluorescent-green-text, 
-        body.light-mode .sfc-value {
+        html.light-mode body .fluorescent-green-text, 
+        html.light-mode body .sfc-value {
             color: #16a34a !important; /* Tamno zelena */
         }
-        body.light-mode .arrow-list-item i,
-        body.light-mode .arrow-list-item span {
+        html.light-mode body .arrow-list-item i,
+        html.light-mode body .arrow-list-item span {
             color: #16a34a;
         }
-        body.light-mode .fluorescent-red-text {
+        html.light-mode body .fluorescent-red-text {
             color: #dc2626 !important; /* Tamno crvena */
         }
-        body.light-mode .fluorescent-gold-text,
-        body.light-mode .fluorescent-yellow-text {
+        html.light-mode body .fluorescent-gold-text,
+        html.light-mode body .fluorescent-yellow-text {
             color: #ca8a04 !important; /* Tamno žuta/zlatna */
         }
-        body.light-mode .fluorescent-lightblue-text,
-        body.light-mode .lightblue-value {
+        html.light-mode body .fluorescent-lightblue-text,
+        html.light-mode body .lightblue-value {
             color: #0284c7 !important; /* Tamno plava */
         }
-        body.light-mode .continue-button,
-        body.light-mode .icon-circle-button.light-purple-icon-bg {
+        html.light-mode body .continue-button,
+        html.light-mode body .icon-circle-button.light-purple-icon-bg {
              background-color: #6a1b9a;
              color: white;
         }
-        body.light-mode .continue-button:hover,
-        body.light-mode .icon-circle-button.light-purple-icon-bg:hover {
+        html.light-mode body .continue-button:hover,
+        html.light-mode body .icon-circle-button.light-purple-icon-bg:hover {
             background-color: #ab47bc;
         }
-        body.light-mode canvas#network-canvas {
+        html.light-mode body canvas#network-canvas {
             background-color: transparent;
         }
 
-                body.light-mode .text-gray-400,
-        body.light-mode .sfalgoritam-subtitle,
-        body.light-mode .pp-details-header p,
-        body.light-mode .bonus-info p, 
-        body.light-mode .end-of-period-info p,
-        body.light-mode .uppercase-title,
-        body.light-mode .pp-details-content .flex-shrink-0,
-        body.light-mode .pp-details-content span:not([class*="fluorescent"]):not([class*="font-bold"]) {
+                html.light-mode body .text-gray-400,
+        html.light-mode body .sfalgoritam-subtitle,
+        html.light-mode body .pp-details-header p,
+        html.light-mode body .bonus-info p, 
+        html.light-mode body .end-of-period-info p,
+        html.light-mode body .uppercase-title,
+        html.light-mode body .pp-details-content .flex-shrink-0,
+        html.light-mode body .pp-details-content span:not([class*="fluorescent"]):not([class*="font-bold"]) {
             color: #4c1d95; /* Tamna ljubičasta za sivi tekst */
         }
         
-        body.light-mode table, 
-        body.light-mode td, 
-        body.light-mode th,
-        body.light-mode .grid > div {
+        html.light-mode body table, 
+        html.light-mode body td, 
+        html.light-mode body th,
+        html.light-mode body .grid > div {
              color: #4c1d95 !important; /* Za tekst u tablicama */
         }
         
-        body.light-mode table td.text-white {
+        html.light-mode body table td.text-white {
              color: white !important; /* Osigurava da tekst na zelenoj pozadini ostane bijel */
         }
         
-        body.light-mode a.popup-close {
+        html.light-mode body a.popup-close {
             color: #6a1b9a; /* Promjena boje X gumba za zatvaranje */
         }
 
-        body.light-mode .grid .font-bold[style*="color: #ef4444"] {
+        html.light-mode body .grid .font-bold[style*="color: #ef4444"] {
             color: #ef4444 !important; /* Osigurava da ostane crvena i u light modu */
         }
+
+        /* START: Global Pagination Styles */
+.pagination-wrapper {
+    max-width: 800px;
+    margin: -20px auto 40px auto; /* Negativna gornja margina da se približi kontejneru */
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px; /* Malo veći razmak */
+    background: rgba(106, 27, 154, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+}
+.page-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;  /* Malo veći */
+    height: 38px; /* Malo veći */
+    border: 1px solid #ff00ff;
+    color: #ff00ff;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+.page-number:hover {
+    background-color: #ff00ff;
+    color: white;
+    transform: scale(1.1);
+}
+.page-number.active {
+    background-color: #ff00ff;
+    color: white;
+    border-color: #ff00ff;
+    cursor: default;
+    box-shadow: 0 0 10px #ff00ff; /* Dodajemo sjaj aktivnom broju */
+}
+
+/* Light mode pagination */
+html.light-mode .pagination-wrapper {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: #e2e8f0;
+}
+html.light-mode .page-number {
+    border-color: #6a1b9a;
+    color: #6a1b9a;
+}
+html.light-mode .page-number:hover {
+    background-color: #6a1b9a;
+    color: white;
+}
+html.light-mode .page-number.active {
+    background-color: #6a1b9a;
+    color: white;
+    border-color: #6a1b9a;
+    box-shadow: 0 0 10px #6a1b9a;
+}
+/* END: Global Pagination Styles */
 
     </style>
 </head>
 <body>
+
     <canvas id="network-canvas"></canvas>
     <div class="mouse-cursor-glow"></div>
 
@@ -1618,7 +1696,7 @@
                 U Državnom novčaniku (DN) nalazi se <strong>2.660,34 SFC</strong>.
             </p>
              <p class="text-justify my-4">
-                U Automatskom novčaniku (AN) nalazi se <strong>87,69 SFC</strong>.
+                U Automatskom novčaniku (AN) nalazi se <strong>135,69 SFC</strong>.
             </p>
             <p class="text-justify my-4">
                 U Kompanijskom novčaniku (KN) nalazi se <strong>240,00 SFC</strong>.
@@ -1702,7 +1780,7 @@
                 U Rezervnom novčaniku (RN) imate <strong>0,00 SFC</strong>.
             </p>
             <p class="text-justify my-4">
-                U Državnom novčaniku (DN) nalazi se <strong>2.901,34 SFC</strong>.
+                U Državnom novčaniku (DN) nalazi se <strong>2.910,34 SFC</strong>.
             </p>
              <p class="text-justify my-4">
                 U Automatskom novčaniku (AN) nalazi se <strong>149,476 SFC</strong>.
@@ -1744,7 +1822,7 @@
                Na osnovi uplata pretplatničkih perioda vašeg drugog direktnog člana dobili ste 21 SFC Direktnog bonusa dok ste na osnovi uplate RFN vašeg prvog direktnog člana dobili 50 SFC (DB: 71 SFC).
             </p>
             <p class="text-justify my-4">
-               Na osnovi uplate pretplatničkih perioda dvijetisućečetrdesetšest (2.046) računa iz povezanih pozicija, od <strong>1.904</strong> računa koji plaćaju pretplatnički period 50 € dobili ste <strong>4.569,20 SFC</strong> (1.904 x 2,40 SFC) Prijateljskog bonusa, od stočetrdesetjednog <strong>(141)</strong> računa koji plaćaju 100 € pretplatnički period dobili (141 x 5,4) <strong>761,40 SFC</strong> dok ste od jednog <strong>(1)</strong> računa koji plaća Redovnu Franšiznu Naknadu 210 SFC dobili <strong>5 SFC</strong> (Ukupno <strong>PB: 5.335,40 SFC</strong>).
+               Na osnovi uplate pretplatničkih perioda dvijetisućečetrdesetšest (2.046) računa iz povezanih pozicija, od <strong>1.904</strong> računa koji plaćaju pretplatnički period 50 € dobili ste <strong>4.569,60 SFC</strong> (1.904 x 2,40 SFC) Prijateljskog bonusa, od stočetrdesetjednog <strong>(141)</strong> računa koji plaćaju 100 € pretplatnički period dobili (141 x 5,4) <strong>761,40 SFC</strong> dok ste od jednog <strong>(1)</strong> računa koji plaća Redovnu Franšiznu Naknadu 210 SFC dobili <strong>5 SFC</strong> (Ukupno <strong>PB: 5.335,40 SFC</strong>).
             </p>
             <p class="text-justify my-4">
                U Rezervnom Novčaniku (RN) imate <strong>5.335,40 SFC</strong>.
@@ -1833,7 +1911,7 @@
                Na osnovi uplate Redovne Franšizne Naknade vaša dva direktna člana dobili ste 2 x 50 SFC Direktnog bonusa <strong>(DB: 100 SFC)</strong>.
             </p>
             <p class="text-justify my-4">
-               Na osnovi uplate pretplatničkih perioda dvijetisućečetrdesetšest (2.046) računa iz povezanih pozicija, od <strong>1.815</strong> računa koji plaćaju pretplatnički period 50 € dobili se <strong>4.356,00 SFC</strong> (1.815 x 2,40 SFC) Prijateljskog bonusa, od dvjestodvadesetosam <strong>(228)</strong> računa koji plaćaju 100 € pretplatnički period dobili (228 x 5,4) <strong>1.231,20 SFC</strong>, od tri <strong>(3)</strong> računa koji plaćaju Redovnu Franšiznu Naknadu 210 SFC dobili <strong>15 SFC</strong> (Ukupno <strong>PB: 5.335,40 SFC</strong>), te ste po prvi put dobili sponzorski bonus <strong>6 SFC</strong> jer je vaš prvi direktni član dobio PB od RFN.
+               Na osnovi uplate pretplatničkih perioda dvijetisućečetrdesetšest (2.046) računa iz povezanih pozicija, od <strong>1.815</strong> računa koji plaćaju pretplatnički period 50 € dobili se <strong>4.356,00 SFC</strong> (1.815 x 2,40 SFC) Prijateljskog bonusa, od dvjestodvadesetosam <strong>(228)</strong> računa koji plaćaju 100 € pretplatnički period dobili (228 x 5,4) <strong>1.231,20 SFC</strong>, od tri <strong>(3)</strong> računa koji plaćaju Redovnu Franšiznu Naknadu 210 SFC dobili <strong>15 SFC</strong> (Ukupno <strong>PB: 5.602,20 SFC</strong>), te ste po prvi put dobili sponzorski bonus <strong>6 SFC</strong> jer je vaš prvi direktni član dobio PB od RFN.
             </p>
             <p class="text-justify my-4">
                U Rezervnom Novčaniku (RN) imate <strong>5.608,20 SFC</strong>.
@@ -1846,14 +1924,14 @@
                 <li class="popup-list-square !text-yellow-300 pl-8"><strong>21%</strong> od 5.398,20 = 1.133,622 SFC, od čega <strong>250,00 SFC</strong> odlazi u Državni novčanik (DN), što je maksimalni iznos koji može primiti Državni novčanik u jednom pretplatničkom periodu, dok <strong>883,622 SFC</strong> odlazi u Automatski Novčanik (AN)</li>
             </ul>
             <p class="text-justify my-4">
-               <strong>Na kraju drugog obračunskog perioda (OP2);</strong>
+               <strong>Na kraju trećeg obračunskog perioda (OP3);</strong>
             </p>
             <ul class="mt-4 space-y-2">
                 <li class="popup-list-arrow-right">u Rezervnom novčaniku (RN) imate <strong>0,00 SFC</strong></li>
-                <li class="popup-list-arrow-right">u Novčaniku (N) imate <strong>24.400,16 SFC</strong> (22.100,16 SFC iz OP1, plus 100,00 SFC Direktnog bonusa, plus 2.200,00 SFC Prijateljskog bonusa)</li>
+                <li class="popup-list-arrow-right">u Novčaniku (N) imate <strong>24.406,16 SFC</strong> (22.100,16 SFC iz OP2, plus 100,00 SFC Direktnog bonusa, plus 2.200,00 SFC Prijateljskog bonusa, plus 6,00 Sponzrskog bonusa)</li>
                 <li class="popup-list-arrow-right">u Državnom novčaniku (DN) nalazi se <strong>3.410,34 SFC</strong></li>
-                <li class="popup-list-arrow-right">u Automatskom novčaniku (AN) nalazi se <strong>2.773,622 SFC</strong></li>
-                <li class="popup-list-square !text-yellow-300 pl-8">Od iznosa iz Automatskog novčanika sistem će kreirati <strong>četrnaest Sistemskih računa (14 x 200 SFC)</strong> sa kojim će vratiti 2.800 SFC ponovo u raspodjelu</li>
+                <li class="popup-list-arrow-right">u Automatskom novčaniku (AN) nalazi se <strong>3.121,822 SFC</strong></li>
+                <li class="popup-list-square !text-yellow-300 pl-8">Od iznosa iz Automatskog novčanika sistem će kreirati <strong>četrnaest Sistemskih računa (15 x 200 SFC)</strong> sa kojim će vratiti 3.000 SFC ponovo u raspodjelu</li>
                 <li class="popup-list-square !text-yellow-300 pl-8">U Automatskom novčaniku (AN) ostaje 121,822 SFC</li>
             </ul>
             <div class="flex justify-end mt-4">
@@ -1934,8 +2012,8 @@
                     <p class="flex justify-between items-center mb-1"><span>N - novčanik:</span> <span class="font-bold fluorescent-green-text">0,00 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>RN - rezervni novčanik:</span> <span class="font-bold fluorescent-purple-text">0,00 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>DN - državni novčanik:</span> <span class="font-bold fluorescent-red-text">0,00 SFC</span></p>
-                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-gold-text">0,00 SFC</span></p>
-                    <p class="flex justify-between items-center"><span>KN - kompanijski novčanik:</span> <span class="font-bold" style="color:#1c10f4;">0,00 SFC</span></p>
+                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-lightblue-text mt-0">0,00 SFC</span></p>
+                    <p class="flex justify-between items-center"><span>KN - kompanijski novčanik:</span> <span class="font-bold" style="font-bold lightblue-value">0,00 SFC</span></p>
                 </div>
 
                 <!-- START: PP1 TABLICE -->
@@ -2128,7 +2206,7 @@
                     <p class="flex justify-between items-center mb-1"><span>N - novčanik:</span> <span class="font-bold fluorescent-green-text">0,00 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>RN - rezervni novčanik:</span> <span class="font-bold fluorescent-purple-text">0,00 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>DN - državni novčanik:</span> <span class="font-bold fluorescent-red-text">0,00 SFC</span></p>
-                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-gold-text">0,00 SFC</span></p>
+                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-lightblue-text mt-0">0,00 SFC</span></p>
                     <p class="flex justify-between items-center"><span>KN - kompanijski novčanik:</span> <span class="font-bold lightblue-value">5,00 SFC</span></p>
                 </div>
 
@@ -2318,7 +2396,7 @@
                     <p class="flex justify-between items-center mb-1"><span>N - novčanik:</span> <span class="font-bold fluorescent-green-text">0,00 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>RN - rezervni novčanik:</span> <span class="font-bold fluorescent-purple-text">2,40 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>DN - državni novčanik:</span> <span class="font-bold fluorescent-red-text">0,00 SFC</span></p>
-                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-gold-text">0,00 SFC</span></p>
+                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-lightblue-text mt-0">0,00 SFC</span></p>
                     <p class="flex justify-between items-center"><span>KN - kompanijski novčanik:</span> <span class="font-bold lightblue-value">10,00 SFC</span></p>
                 </div>
 
@@ -2511,7 +2589,7 @@
                     <p class="flex justify-between items-center mb-1"><span>N - novčanik:</span> <span class="font-bold fluorescent-green-text">0,00 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>RN - rezervni novčanik:</span> <span class="font-bold fluorescent-purple-text">9,60 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>DN - državni novčanik:</span> <span class="font-bold fluorescent-red-text">0,00 SFC</span></p>
-                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-gold-text">0,00 SFC</span></p>
+                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-lightblue-text mt-0">0,00 SFC</span></p>
                     <p class="flex justify-between items-center"><span>KN - kompanijski novčanik:</span> <span class="font-bold lightblue-value">15,00 SFC</span></p>
                 </div>
 
@@ -2705,7 +2783,7 @@
                     <p class="flex justify-between items-center mb-1"><span>N - novčanik:</span> <span class="font-bold fluorescent-green-text">0,00 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>RN - rezervni novčanik:</span> <span class="font-bold fluorescent-purple-text">24,00 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>DN - državni novčanik:</span> <span class="font-bold fluorescent-red-text">0,00 SFC</span></p>
-                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-gold-text">0,00 SFC</span></p>
+                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-lightblue-text mt-0">0,00 SFC</span></p>
                     <p class="flex justify-between items-center"><span>KN - kompanijski novčanik:</span> <span class="font-bold lightblue-value">20,00 SFC</span></p>
                 </div>
 
@@ -2875,7 +2953,7 @@
         <div id="pp6-details-section" class="package-info mb-8" style="display: none;">
              <div class="pp-details-header">
                 <h1 class="text-3xl font-bold">ŠESTI PRETPLATNIČKI PERIOD (PP6) – 50 €</h1>
-                <p style="color: white;">PP6 = 50 € (RN: 50 SFC)</p>
+                <p style="color: white;">PP6 = 50 SFC (iz Rezervnog Novčanika)</p>
             </div>
             <div class="text-center mb-4">
                  <h2 class="package-meta text-lg fluorescent-green-text">SP2 / SFSTARTER / 3 SFkoda / Limit: 300 SFC</h2>
@@ -2898,7 +2976,7 @@
                     <p class="flex justify-between items-center mb-1"><span>N - novčanik:</span> <span class="font-bold fluorescent-green-text">42,00 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>RN - rezervni novčanik:</span> <span class="font-bold fluorescent-purple-text">0,40 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>DN - državni novčanik:</span> <span class="font-bold fluorescent-red-text">0,00 SFC</span></p>
-                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-gold-text">0,00 SFC</span></p>
+                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-lightblue-text mt-0">0,00 SFC</span></p>
                     <p class="flex justify-between items-center"><span>KN - kompanijski novčanik:</span> <span class="font-bold lightblue-value">25,00 SFC</span></p>
                 </div>
         
@@ -3070,11 +3148,11 @@
             </div>
         </div>
 
-        <!-- START: ISPRAVLJENI PP7 DETALJI -->
+        <!-- START: PP7 DETALJI -->
         <div id="pp7-details-section" class="package-info mb-8" style="display: none;">
              <div class="pp-details-header">
                 <h1 class="text-3xl font-bold">SEDMI PRETPLATNIČKI PERIOD (PP7) – 50 €</h1>
-                <p style="color: white;">PP7 = 50 € (N: 50 SFC)</p>
+                <p style="color: white;">PP7 = 50 SFC (iz Novčanika)</p>
             </div>
             <div class="text-center mb-4">
                  <h2 class="package-meta text-lg fluorescent-green-text">SP3 / SFSTARTER / (+1) 4 SFkoda / Limit: 350 SFC</h2>
@@ -3097,7 +3175,7 @@
                     <p class="flex justify-between items-center mb-1"><span>N - novčanik:</span> <span class="font-bold fluorescent-green-text">34,00 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>RN - rezervni novčanik:</span> <span class="font-bold fluorescent-purple-text">46,00 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>DN - državni novčanik:</span> <span class="font-bold fluorescent-red-text">15,299 SFC</span></p>
-                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-gold-text">0,00 SFC</span></p>
+                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-lightblue-text mt-0">0,00 SFC</span></p>
                     <p class="flex justify-between items-center"><span>KN - kompanijski novčanik:</span> <span class="font-bold lightblue-value">30,00 SFC</span></p>
                 </div>
         
@@ -3215,11 +3293,11 @@
         </div>
         <!-- END: PP7 DETALJI -->
 
-        <!-- START: ISPRAVLJENI PP8 DETALJI -->
+        <!-- START: PP8 DETALJI -->
         <div id="pp8-details-section" class="package-info mb-8" style="display: none;">
              <div class="pp-details-header">
                 <h1 class="text-3xl font-bold">OSMI PRETPLATNIČKI PERIOD (PP8) – 50 €</h1>
-                <p style="color: white;">PP8 = 50 € (RN: 50 SFC)</p>
+                <p style="color: white;">PP8 = 50 SFC (iz Rezervnog Novčanika)</p>
             </div>
             <div class="text-center mb-4">
                  <h2 class="package-meta text-lg fluorescent-green-text">SP3 / SFSTARTER / 4 SFkoda / Limit: 400 SFC</h2>
@@ -3242,7 +3320,7 @@
                     <p class="flex justify-between items-center mb-1"><span>N - novčanik:</span> <span class="font-bold fluorescent-green-text">133,512 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>RN - rezervni novčanik:</span> <span class="font-bold fluorescent-purple-text">0,00 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>DN - državni novčanik:</span> <span class="font-bold fluorescent-red-text">15,288 SFC</span></p>
-                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-gold-text">0,00 SFC</span></p>
+                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-lightblue-text mt-0">0,00 SFC</span></p>
                     <p class="flex justify-between items-center"><span>KN - kompanijski novčanik:</span> <span class="font-bold lightblue-value">35,00 SFC</span></p>
                 </div>
         
@@ -3378,11 +3456,11 @@
         </div>
         <!-- END: PP8 DETALJI -->
 
-                <!-- START: NOVI PP9 DETALJI -->
+        <!-- START: PP9 DETALJI -->
         <div id="pp9-details-section" class="package-info mb-8" style="display: none;">
              <div class="pp-details-header">
                 <h1 class="text-3xl font-bold">DEVETI PRETPLATNIČKI PERIOD (PP9) – 50 €</h1>
-                <p style="color: white;">PP9 = 50 € (RN: 50 SFC)</p>
+                <p style="color: white;">PP9 = 50 SFC (iz Rezervng Novčanika)</p>
             </div>
             <div class="text-center mb-4">
                  <h2 class="package-meta text-lg fluorescent-green-text">SP3 / SFSTARTER / 4 SFkoda / Limit: 450 SFC</h2>
@@ -3405,7 +3483,7 @@
                     <p class="flex justify-between items-center mb-1"><span>N - novčanik:</span> <span class="font-bold fluorescent-green-text">236,50 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>RN - rezervni novčanik:</span> <span class="font-bold fluorescent-purple-text">0,00 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>DN - državni novčanik:</span> <span class="font-bold fluorescent-red-text">31,50 SFC</span></p>
-                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-gold-text">0,00 SFC</span></p>
+                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-lightblue-text mt-0">0,00 SFC</span></p>
                     <p class="flex justify-between items-center"><span>KN - kompanijski novčanik:</span> <span class="font-bold lightblue-value">40,00 SFC</span></p>
                 </div>
         
@@ -3503,11 +3581,11 @@
         </div>
         <!-- END: PP9 DETALJI -->
 
-                <!-- START: NOVI PP10 DETALJI -->
+        <!-- START: PP10 DETALJI -->
         <div id="pp10-details-section" class="package-info mb-8" style="display: none;">
              <div class="pp-details-header">
                 <h1 class="text-3xl font-bold">DESETI PRETPLATNIČKI PERIOD (PP10) – 50 €</h1>
-                <p style="color: white;">PP10 = 50 € (RN: 50 SFC)</p>
+                <p style="color: white;">PP10 = 50 SFC (iz Rezervnog Novčanika)</p>
             </div>
             <div class="text-center mb-4">
                  <h2 class="package-meta text-lg fluorescent-green-text">SP4 / SFSTARTER / (+2) 6 SFkodova / Limit: 500 SFC</h2>
@@ -3530,7 +3608,7 @@
                     <p class="flex justify-between items-center mb-1"><span>N - novčanik:</span> <span class="font-bold fluorescent-green-text">403,952 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>RN - rezervni novčanik:</span> <span class="font-bold fluorescent-purple-text">0,00 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>DN - državni novčanik:</span> <span class="font-bold fluorescent-red-text">64,848 SFC</span></p>
-                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-gold-text">0,00 SFC</span></p>
+                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-lightblue-text mt-0">0,00 SFC</span></p>
                     <p class="flex justify-between items-center"><span>KN - kompanijski novčanik:</span> <span class="font-bold lightblue-value">45,00 SFC</span></p>
                 </div>
         
@@ -3628,11 +3706,11 @@
         </div>
         <!-- END: PP10 DETALJI -->
 
-                <!-- START: NOVI PP11 DETALJI -->
+        <!-- START: PP11 DETALJI -->
         <div id="pp11-details-section" class="package-info mb-8" style="display: none;">
              <div class="pp-details-header">
                 <h1 class="text-3xl font-bold">JEDANAESTI PRETPLATNIČKI PERIOD (PP11) – 50 €</h1>
-                <p style="color: white;">PP11 = 50 € (RN: 50 SFC)</p>
+                <p style="color: white;">PP11 = 50 SFC (iz Rezervnog Novčanika)</p>
             </div>
             <div class="text-center mb-4">
                  <h2 class="package-meta text-lg fluorescent-green-text">SP4 / SFSTARTER / 6 SFkodova / Limit: 550 SFC</h2>
@@ -3655,7 +3733,7 @@
                     <p class="flex justify-between items-center mb-1"><span>N - novčanik:</span> <span class="font-bold fluorescent-green-text">675,684 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>RN - rezervni novčanik:</span> <span class="font-bold fluorescent-purple-text">0,00 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>DN - državni novčanik:</span> <span class="font-bold fluorescent-red-text">125,916 SFC</span></p>
-                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-gold-text">0,00 SFC</span></p>
+                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-lightblue-text mt-0">0,00 SFC</span></p>
                     <p class="flex justify-between items-center"><span>KN - kompanijski novčanik:</span> <span class="font-bold lightblue-value">50,00 SFC</span></p>
                 </div>
         
@@ -3753,11 +3831,11 @@
         </div>
         <!-- END: PP11 DETALJI -->
 
-                <!-- START: NOVI PP12 DETALJI -->
+        <!-- START: PP12 DETALJI -->
         <div id="pp12-details-section" class="package-info mb-8" style="display: none;">
              <div class="pp-details-header">
                 <h1 class="text-3xl font-bold">DVANAESTI PRETPLATNIČKI PERIOD (PP12) – 50 €</h1>
-                <p style="color: white;">PP12 = 50 € (RN: 50 SFC)</p>
+                <p style="color: white;">PP12 = 50 SFC (iz Rezervnog Novčanika)</p>
             </div>
             <div class="text-center mb-4">
                  <h2 class="package-meta text-lg fluorescent-green-text">SP4 / SFSTARTER / 6 SFkodova / Limit: 600 SFC</h2>
@@ -3780,7 +3858,7 @@
                     <p class="flex justify-between items-center mb-1"><span>N - novčanik:</span> <span class="font-bold fluorescent-green-text">1.116,16 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>RN - rezervni novčanik:</span> <span class="font-bold fluorescent-purple-text">0,00 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>DN - državni novčanik:</span> <span class="font-bold fluorescent-red-text">231,84 SFC</span></p>
-                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-gold-text">0,00 SFC</span></p>
+                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-lightblue-text mt-0">0,00 SFC</span></p>
                     <p class="flex justify-between items-center"><span>KN - kompanijski novčanik:</span> <span class="font-bold lightblue-value">55,00 SFC</span></p>
                 </div>
         
@@ -3884,11 +3962,11 @@
         </div>
         <!-- END: PP12 DETALJI -->
 
-                <!-- START: NOVI PP13 DETALJI -->
+        <!-- START: PP13 DETALJI -->
         <div id="pp13-details-section" class="package-info mb-8" style="display: none;">
              <div class="pp-details-header">
                 <h1 class="text-3xl font-bold">TRINAESTI PRETPLATNIČKI PERIOD (PP13) – 50 €</h1>
-                <p style="color: white;">PP13 = 50 € (RN: 50 SFC)</p>
+                <p style="color: white;">PP13 = 50 SFC (iz Rezervnog Novčanika)</p>
             </div>
             <div class="text-center mb-4">
                  <h2 class="package-meta text-lg fluorescent-green-text">SFFRANŠIZER / (+6) 12 SFkodova / Limit: 1.050 SFC</h2>
@@ -3911,7 +3989,7 @@
                     <p class="flex justify-between items-center mb-1"><span>N - novčanik:</span> <span class="font-bold fluorescent-green-text">958,16 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>RN - rezervni novčanik:</span> <span class="font-bold fluorescent-purple-text">0,00 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>DN - državni novčanik:</span> <span class="font-bold fluorescent-red-text">410,34 SFC</span></p>
-                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-gold-text">71,50 SFC</span></p>
+                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-lightblue-text mt-0">71,50 SFC</span></p>
                     <p class="flex justify-between items-center"><span>KN - kompanijski novčanik:</span> <span class="font-bold lightblue-value">60,00 SFC</span></p>
                 </div>
         
@@ -4014,11 +4092,11 @@
         </div>
         <!-- END: PP13 DETALJI -->
 
-        <!-- START: NOVI PP14 DETALJI -->
+        <!-- START: PP14 DETALJI -->
         <div id="pp14-details-section" class="package-info mb-8" style="display: none;">
              <div class="pp-details-header">
                 <h1 class="text-3xl font-bold">ČETRNAESTI PRETPLATNIČKI PERIOD (PP14) – 100 €</h1>
-                <p style="color: white;">PP14 = 100 € (N: 100 SFC)</p>
+                <p style="color: white;">PP14 = 100 SFC (iz Novčanika)</p>
             </div>
             <div class="text-center mb-4">
                  <h2 class="package-meta text-lg fluorescent-green-text">SFFRANŠIZER / 12 SFkodova / Limit: 1.050 SFC</h2>
@@ -4041,7 +4119,7 @@
                     <p class="flex justify-between items-center mb-1"><span>N - novčanik:</span> <span class="font-bold fluorescent-green-text">2.050,16 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>RN - rezervni novčanik:</span> <span class="font-bold fluorescent-purple-text">0,00 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>DN - državni novčanik:</span> <span class="font-bold fluorescent-red-text">660,34 SFC</span></p>
-                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-gold-text">30,70 SFC</span></p>
+                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-lightblue-text mt-0">30,70 SFC</span></p>
                     <p class="flex justify-between items-center"><span>KN - kompanijski novčanik:</span> <span class="font-bold lightblue-value">65,00 SFC</span></p>
                 </div>
         
@@ -4132,7 +4210,7 @@
                              <span class="text-gray-400">(30,70 + 1064,00)</span>
                             <span class="font-bold fluorescent-lightblue-text">1.094,70 SFC</span>
                         </p>
-                         <p class="text-right mt-2 fluorescent-lightblue-text">5 x SR (ukupno 6)<br>84,70 SFC</p>
+                         <p class="text-right mt-2 fluorescent-lightblue-text">5 x SR (ukupno 6)<br>94,70 SFC</p>
                     </div>
                 </div>
         
@@ -4148,7 +4226,7 @@
 <div id="pp15-details-section" class="package-info mb-8" style="display: none;">
      <div class="pp-details-header">
         <h1 class="text-3xl font-bold">PETNAESTI PRETPLATNIČKI PERIOD (PP15) – 100 €</h1>
-        <p style="color: white;">PP15 = 100 € (N: 100 SFC)</p>
+        <p style="color: white;">PP15 = 100 SFC (iz Novčanika)</p>
     </div>
     <div class="text-center mb-4">
     <h2 class="package-meta text-lg fluorescent-green-text">SREBRO / 12 SFkodova / Limit: 2.200 SFC</h2>
@@ -4171,7 +4249,7 @@
             <p class="flex justify-between items-center mb-1"><span>N - novčanik:</span> <span class="font-bold fluorescent-green-text">3.142,16 SFC</span></p>
             <p class="flex justify-between items-center mb-1"><span>RN - rezervni novčanik:</span> <span class="font-bold fluorescent-purple-text">0,00 SFC</span></p>
             <p class="flex justify-between items-center mb-1"><span>DN - državni novčanik:</span> <span class="font-bold fluorescent-red-text">910,34 SFC</span></p>
-            <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-gold-text">94,70 SFC</span></p>
+            <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-lightblue-text mt-0">94,70 SFC</span></p>
             <p class="flex justify-between items-center"><span>KN - kompanijski novčanik:</span> <span class="font-bold lightblue-value">90,00 SFC</span></p>
         </div>
 
@@ -4278,7 +4356,7 @@
 <div id="pp16-details-section" class="package-info mb-8" style="display: none;">
      <div class="pp-details-header">
         <h1 class="text-3xl font-bold">ŠESNAESTI PRETPLATNIČKI PERIOD (PP16) – 100 €</h1>
-        <p style="color: white;">PP16 = 100 € (N: 100 SFC)</p>
+        <p style="color: white;">PP16 = 100 SFC (iz Novčanika)</p>
     </div>
     <div class="text-center mb-4">
         <h2 class="package-meta text-lg fluorescent-green-text">SREBRO / 12 SFkodova / Limit: 2.200 SFC</h2>
@@ -4300,7 +4378,7 @@
             <p class="flex justify-between items-center mb-1"><span>N - novčanik:</span> <span class="font-bold fluorescent-green-text">5.385,16 SFC</span></p>
             <p class="flex justify-between items-center mb-1"><span>RN - rezervni novčanik:</span> <span class="font-bold fluorescent-purple-text">0,00 SFC</span></p>
             <p class="flex justify-between items-center mb-1"><span>DN - državni novčanik:</span> <span class="font-bold fluorescent-red-text">1.160,34 SFC</span></p>
-            <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-gold-text">75,70 SFC</span></p>
+            <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-lightblue-text mt-0">75,70 SFC</span></p>
             <p class="flex justify-between items-center"><span>KN - kompanijski novčanik:</span> <span class="font-bold lightblue-value">115,00 SFC</span></p>
         </div>
 
@@ -4407,7 +4485,7 @@
 <div id="pp17-details-section" class="package-info mb-8" style="display: none;">
      <div class="pp-details-header">
         <h1 class="text-3xl font-bold">SEDAMNAESTI PRETPLATNIČKI PERIOD (PP17) – 100 €</h1>
-        <p style="color: white;">PP17 = 100 € (N: 100 SFC)</p>
+        <p style="color: white;">PP17 = 100 SFC (iz Novčanika)</p>
     </div>
     <div class="text-center mb-4">
         <h2 class="package-meta text-lg fluorescent-green-text">SREBRO / 12 SFkodova / Limit: 2.200 SFC</h2>
@@ -4432,7 +4510,7 @@
             <p class="flex justify-between items-center mb-1"><span>N - novčanik:</span> <span class="font-bold fluorescent-green-text">7.627,16 SFC</span></p>
             <p class="flex justify-between items-center mb-1"><span>RN - rezervni novčanik:</span> <span class="font-bold fluorescent-purple-text">0,00 SFC</span></p>
             <p class="flex justify-between items-center mb-1"><span>DN - državni novčanik:</span> <span class="font-bold fluorescent-red-text">1.410,34 SFC</span></p>
-            <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-gold-text">145,10 SFC</span></p>
+            <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-lightblue-text mt-0">145,10 SFC</span></p>
             <p class="flex justify-between items-center"><span>KN - kompanijski novčanik:</span> <span class="font-bold lightblue-value">140,00 SFC</span></p>
         </div>
 
@@ -4539,7 +4617,7 @@
 <div id="pp18-details-section" class="package-info mb-8" style="display: none;">
      <div class="pp-details-header">
         <h1 class="text-3xl font-bold">OSAMNAESTI PRETPLATNIČKI PERIOD (PP18) – 100 €</h1>
-        <p style="color: white;">PP18 = 100 € (N: 100 SFC)</p>
+        <p style="color: white;">PP18 = 100 SFC (iz Novčanika)</p>
     </div>
     <div class="text-center mb-4">
         <h2 class="package-meta text-lg fluorescent-green-text">SREBRO / 12 SFkodova / Limit: 2.200 SFC</h2>
@@ -4564,7 +4642,7 @@
             <p class="flex justify-between items-center mb-1"><span>N - novčanik:</span> <span class="font-bold fluorescent-green-text">10.069,16 SFC</span></p>
             <p class="flex justify-between items-center mb-1"><span>RN - rezervni novčanik:</span> <span class="font-bold fluorescent-purple-text">0,00 SFC</span></p>
             <p class="flex justify-between items-center mb-1"><span>DN - državni novčanik:</span> <span class="font-bold fluorescent-red-text">1.660,34 SFC</span></p>
-            <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-gold-text">23,49 SFC</span></p>
+            <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-lightblue-text mt-0">23,49 SFC</span></p>
             <p class="flex justify-between items-center"><span>KN - kompanijski novčanik:</span> <span class="font-bold lightblue-value">165,00 SFC</span></p>
         </div>
 
@@ -4671,7 +4749,7 @@
 <div id="pp19-details-section" class="package-info mb-8" style="display: none;">
      <div class="pp-details-header">
         <h1 class="text-3xl font-bold">DEVETNAESTI PRETPLATNIČKI PERIOD (PP19) – 100 €</h1>
-        <p style="color: white;">PP19 = 100 € (N: 100 SFC)</p>
+        <p style="color: white;">PP19 = 100 SFC (iz Novčanika)</p>
     </div>
     <div class="text-center mb-4">
          <h2 class="package-meta text-lg fluorescent-green-text">SREBRO / 12 SFkodova / Limit: 2.200 SFC</h2>
@@ -4696,7 +4774,7 @@
             <p class="flex justify-between items-center mb-1"><span>N - novčanik:</span> <span class="font-bold fluorescent-green-text">12.311,16 SFC</span></p>
             <p class="flex justify-between items-center mb-1"><span>RN - rezervni novčanik:</span> <span class="font-bold fluorescent-purple-text">0,00 SFC</span></p>
             <p class="flex justify-between items-center mb-1"><span>DN - državni novčanik:</span> <span class="font-bold fluorescent-red-text">1.910,34 SFC</span></p>
-            <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-gold-text">116,49 SFC</span></p>
+            <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-lightblue-text mt-0">116,49 SFC</span></p>
             <p class="flex justify-between items-center"><span>KN - kompanijski novčanik:</span> <span class="font-bold lightblue-value">190,00 SFC</span></p>
         </div>
 
@@ -4803,7 +4881,7 @@
 <div id="pp20-details-section" class="package-info mb-8" style="display: none;">
      <div class="pp-details-header">
         <h1 class="text-3xl font-bold">DVADESETI PRETPLATNIČKI PERIOD (PP20) – 100 €</h1>
-        <p style="color: white;">PP20 = 100 € (N: 100 SFC)</p>
+        <p style="color: white;">PP20 = 100 SFC (iz Novčanika)</p>
     </div>
     <div class="text-center mb-4">
         <h2 class="package-meta text-lg fluorescent-green-text">SREBRO / 12 SFkodova / Limit: 2.200 SFC</h2>
@@ -4828,7 +4906,7 @@
             <p class="flex justify-between items-center mb-1"><span>N - novčanik:</span> <span class="font-bold fluorescent-green-text">14.553,16 SFC</span></p>
             <p class="flex justify-between items-center mb-1"><span>RN - rezervni novčanik:</span> <span class="font-bold fluorescent-purple-text">0,00 SFC</span></p>
             <p class="flex justify-between items-center mb-1"><span>DN - državni novčanik:</span> <span class="font-bold fluorescent-red-text">2.160,34 SFC</span></p>
-            <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-gold-text">9,89 SFC</span></p>
+            <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-lightblue-text mt-0">9,89 SFC</span></p>
             <p class="flex justify-between items-center"><span>KN - kompanijski novčanik:</span> <span class="font-bold lightblue-value">215,00 SFC</span></p>
         </div>
 
@@ -4960,7 +5038,7 @@
             <p class="flex justify-between items-center mb-1"><span>N - novčanik:</span> <span class="font-bold fluorescent-green-text">16.795,16 SFC</span></p>
             <p class="flex justify-between items-center mb-1"><span>RN - rezervni novčanik:</span> <span class="font-bold fluorescent-purple-text">0,00 SFC</span></p>
             <p class="flex justify-between items-center mb-1"><span>DN - državni novčanik:</span> <span class="font-bold fluorescent-red-text">2.410,34 SFC</span></p>
-            <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-gold-text">166,29 SFC</span></p>
+            <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-lightblue-text mt-0">166,29 SFC</span></p>
             <p class="flex justify-between items-center"><span>KN - kompanijski novčanik:</span> <span class="font-bold lightblue-value">240,00 SFC</span></p>
         </div>
 
@@ -5102,7 +5180,7 @@
                     <p class="flex justify-between items-center mb-1"><span>N - novčanik:</span> <span class="font-bold fluorescent-green-text">17.587,16 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>RN - rezervni novčanik:</span> <span class="font-bold fluorescent-purple-text">0,00 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>DN - državni novčanik:</span> <span class="font-bold fluorescent-red-text">2.660,34 SFC</span></p>
-                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-gold-text">135,69 SFC</span></p>
+                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-lightblue-text mt-0">135,69 SFC</span></p>
                     <p class="flex justify-between items-center"><span>KN - kompanijski novčanik:</span> <span class="font-bold lightblue-value">265,00 SFC</span></p>
                 </div>
         
@@ -5227,7 +5305,7 @@
         </div>
         <!-- END: OP1 DETALJI -->
 
-        <!-- START: NOVI OP2 DETALJI -->
+        <!-- START: OP2 DETALJI -->
         <div id="op2-details-section" class="package-info mb-8" style="display: none;">
              <div class="pp-details-header">
                 <h1 class="text-3xl font-bold">II SFCIKLUS / DRUGI OBRAČUNSKI PERIOD (OP2)</h1>
@@ -5254,7 +5332,7 @@
                     <p class="flex justify-between items-center mb-1"><span>N - novčanik:</span> <span class="font-bold fluorescent-green-text">19.829,16 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>RN - rezervni novčanik:</span> <span class="font-bold fluorescent-purple-text">0,00 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>DN - državni novčanik:</span> <span class="font-bold fluorescent-red-text">2.910,34 SFC</span></p>
-                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-gold-text">149,476 SFC</span></p>
+                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-lightblue-text mt-0">149,476 SFC</span></p>
                     <p class="flex justify-between items-center"><span>KN - kompanijski novčanik:</span> <span class="font-bold lightblue-value">290,00 SFC</span></p>
                 </div>
         
@@ -5382,7 +5460,7 @@
                 <p style="color: white;">OP3 / RFN: 210 €</p>
             </div>
             <div class="text-center mb-4">
-                 <h2 class="package-meta text-lg fluorescent-green-text">SREBRO / 12 SFKodova / Limit: 2.200 SFC</h2>
+                 <h2 class="package-meta text-lg fluorescent-green-text">SREBRO / 12 SFkodova / Limit: 2.200 SFC</h2>
             </div>
         
             <div class="pp-details-content">
@@ -5402,7 +5480,7 @@
                     <p class="flex justify-between items-center mb-1"><span>N - novčanik:</span> <span class="font-bold fluorescent-green-text">22.100,16 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>RN - rezervni novčanik:</span> <span class="font-bold fluorescent-purple-text">0,00 SFC</span></p>
                     <p class="flex justify-between items-center mb-1"><span>DN - državni novčanik:</span> <span class="font-bold fluorescent-red-text">3.160,34 SFC</span></p>
-                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-gold-text">21,622 SFC</span></p>
+                    <p class="flex justify-between items-center mb-1"><span>AN - automatski novčanik:</span> <span class="font-bold fluorescent-lightblue-text mt-0">173,622 SFC</span></p>
                     <p class="flex justify-between items-center"><span>KN - kompanijski novčanik:</span> <span class="font-bold lightblue-value">315,00 SFC</span></p>
                 </div>
         
@@ -5499,8 +5577,8 @@
                         </div>
                         <p class="flex justify-between items-center mt-4 pt-3 border-t" style="border-color: rgba(192, 132, 252, 0.5);">
                             <span>N - novčanik:</span>
-                             <span class="text-gray-400">(22.100,16 + 100,00 + 2.200,00)</span>
-                            <span class="font-bold fluorescent-green-text">24.400,16 SFC</span>
+                             <span class="text-gray-400">(22.100,16 + 100,00 + 2.200,00 + 6,00)</span>
+                            <span class="font-bold fluorescent-green-text">24.406,16 SFC</span>
                         </p>
                         <p class="flex justify-between items-center mt-2">
                             <span>DN - državni novčanik:</span>
@@ -5509,10 +5587,10 @@
                         </p>
                          <p class="flex justify-between items-center mt-2">
                             <span>AN - automatski novčanik:</span>
-                             <span class="text-gray-400">(21,622 + 2.948,20)</span>
-                            <span class="font-bold fluorescent-lightblue-text">2.969,822 SFC</span>
+                             <span class="text-gray-400">(173,622 + 2.948,20)</span>
+                            <span class="font-bold fluorescent-lightblue-text">3.121,822 SFC</span>
                         </p>
-                         <p class="text-right mt-2 fluorescent-lightblue-text">14 x SR (ukupno 127)<br>169,822 SFC</p>
+                         <p class="text-right mt-2 fluorescent-lightblue-text">15 x SR (ukupno 128)<br>121,822 SFC</p>
                     </div>
                 </div>
         
@@ -5549,7 +5627,7 @@
                 </div>
 
                 <p class="mb-4">Vrlo je važno napomenuti da prethodni primjer mogućeg načina funkcioniranja SFalgoritma i raspodjele sredstava prikazuje moguću zaradu koja bi po tom modelu bila ostvariva samo na osnovi sredstava koja u sistem ulaze plaćanjem pretplatničkih perioda od strane članova.</p>
-                <p class="mb-4">Međutim, kao što možemo vidjeti prema ovome matematičkom modelu, svaki bi korisnički račun u periodu od prve dvije godine kreirao <strong>127 Sistemskih računa (SR)</strong>. Kada znamo da svaki Sistemski račun ponovo vraća u raspodjelu 200 SFC to znači da bi se po svakome računu u tom periodu ponovo vratilo u raspodjelu <strong>25.400 SFC</strong> (127 SR x 200 SFC), što nije prikazano u ovoj prezentaciji, a povećalo bi ukupnu zaradu.</p>
+                <p class="mb-4">Međutim, kao što možemo vidjeti prema ovome matematičkom modelu, svaki bi korisnički račun u periodu od prve dvije godine kreirao <strong>128 Sistemskih računa (SR)</strong>. Kada znamo da svaki Sistemski račun ponovo vraća u raspodjelu 200 SFC to znači da bi se po svakome računu u tom periodu ponovo vratilo u raspodjelu <strong>25.400 SFC</strong> (127 SR x 200 SFC), što nije prikazano u ovoj prezentaciji, a povećalo bi ukupnu zaradu.</p>
                 <p class="mb-4">Isto tako, u ovoj prezentaciji nije prikazana zarada koja se ostvaruje prilikom raspodjele <strong>Redovne Franšizne Naknade (RFN)</strong> u vidu sponzorskog bonusa, čiji se potencijal očituje tek u II SFciklusu.</p>
                 <p class="mb-4">Osim navedenog, u ovoj prezentaciji nije prikazana raspodjela sredstava koja će u sistem ulaziti kao <strong>RABAT</strong> koji nastaje prilikom svake kupovine u SFshopu. Upravo je zarada koju će generirati SFshop na osnovi rabata u konačnici ključ samoodrživosti i dugotrajnosti našeg poslovnog koncepta. Bitno je spomenuti pravilo minimalno jedne kupovine u SFshopu (mjesečna radna obaveza), gdje vrijednost kupljene robe ili usluga nije određena, sve do trenutka kada zarada postane veća od 210 SFC u toku jednog PP, nakon čega je vrijednost proizvoda ili usluga koje morate potrošiti unutar slijedećeg PP određena u visini 21% ukupne zarade iz proteklog PP.</p>
                 <p class="mb-4">Osim rabat bonusa u prezentaciji nije prikazana zarada koju će sistem generirati novcem od oglašavanja u vlastitoj društvenoj mreži i i webshopu kao ni zarada koju će kompanija ostvarivati kroz sve svoje druge projekte...</p>
@@ -5572,143 +5650,211 @@
         <!-- END: REZIME DETALJI -->
     </div>
 
+    <!-- START: Global Pagination Container -->
+<div id="global-pagination-container" class="pagination-wrapper" style="display: none;">
+    <!-- Brojevi će se dinamički dodati ovdje putem JavaScripta -->
+</div>
+<!-- END: Global Pagination Container -->
+
 
             <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Page sections
-            const body = document.body;
-            const introSection = document.getElementById('intro-section');
-            const allPPSections = Array.from({length: 21}, (_, i) => document.getElementById(`pp${i + 1}-details-section`));
-            const op1DetailsSection = document.getElementById('op1-details-section');
-            const op2DetailsSection = document.getElementById('op2-details-section');
-            const op3DetailsSection = document.getElementById('op3-details-section');
-            const rezimeSection = document.getElementById('rezime-section');
+    // === SEKCIJE STRANICA ===
+    const body = document.body;
+    const introSection = document.getElementById('intro-section');
+    const allPPSections = Array.from({length: 21}, (_, i) => document.getElementById(`pp${i + 1}-details-section`));
+    const op1DetailsSection = document.getElementById('op1-details-section');
+    const op2DetailsSection = document.getElementById('op2-details-section');
+    const op3DetailsSection = document.getElementById('op3-details-section');
+    const rezimeSection = document.getElementById('rezime-section');
+    
+    // === NOVO: PAGINACIJA ===
+    const globalPaginationContainer = document.getElementById('global-pagination-container');
 
-            // Button sections
-            const continueButton = document.getElementById('continue-to-pp1');
-            const infoIcon = document.getElementById('info-icon');
+    // === GUMBI ===
+    const continueButton = document.getElementById('continue-to-pp1');
+    const infoIcon = document.getElementById('info-icon');
 
-            // All pages in one array for easier management
-            const allPages = [introSection, ...allPPSections, op1DetailsSection, op2DetailsSection, op3DetailsSection, rezimeSection].filter(p => p !== null);
+    // === POPUPI ===
+    // (Ovaj dio koda ostaje isti, ali ga uključujemo radi cjelovitosti)
+    const allPopups = {};
+    for (let i = 1; i <= 21; i++) {
+        const ppSection = allPPSections[i-1];
+        if(ppSection){
+            allPopups[`pp${i}`] = document.getElementById(`pp${i}-info-popup`);
+            allPopups[`closePp${i}Top`] = document.getElementById(`close-pp${i}-popup-top`);
+            allPopups[`closePp${i}Bottom`] = document.getElementById(`close-pp${i}-popup-bottom`);
+        }
+    }
+    allPopups.op1 = document.getElementById('op1-info-popup');
+    allPopups.closeOp1Top = document.getElementById('close-op1-popup-top');
+    allPopups.closeOp1Bottom = document.getElementById('close-op1-popup-bottom');
+    allPopups.op2 = document.getElementById('op2-info-popup');
+    allPopups.closeOp2Top = document.getElementById('close-op2-popup-top');
+    allPopups.closeOp2Bottom = document.getElementById('close-op2-popup-bottom');
+    allPopups.op3 = document.getElementById('op3-info-popup');
+    allPopups.closeOp3Top = document.getElementById('close-op3-popup-top');
+    allPopups.closeOp3Bottom = document.getElementById('close-op3-popup-bottom');
 
-            // Dynamically create button variables
-            const buttons = {};
-            // Gumb za povratak s PP1 na Uvod
-            buttons.backFromPp1ToIntro = document.getElementById('back-to-intro'); 
 
-            for (let i = 1; i <= 21; i++) {
-                if (i < 21) buttons[`goToPp${i+1}`] = document.getElementById(`go-to-pp${i+1}`);
-                // Back gumbovi od PP2 pa nadalje
-                if (i > 1) buttons[`backFromPp${i}ToPp${i-1}`] = document.getElementById(`back-from-pp${i}-to-pp${i-1}`);
+    // === REDOSLIJED STRANICA ===
+    const allPages = [introSection, ...allPPSections, op1DetailsSection, op2DetailsSection, op3DetailsSection, rezimeSection].filter(p => p);
+    // Stranice koje će imati paginaciju (svi periodi)
+    const paginatedPages = [...allPPSections, op1DetailsSection, op2DetailsSection, op3DetailsSection].filter(p => p);
+
+    // === FUNKCIJE ===
+
+    function showPopup() {
+        // ... ova funkcija ostaje ista ...
+        let currentPagePopup;
+        const currentVisible = allPages.find(p => p && p.style.display === 'block');
+        if (currentVisible) {
+            const pageId = currentVisible.id.split('-')[0];
+            currentPagePopup = allPopups[pageId];
+        }
+        if (currentPagePopup) {
+            currentPagePopup.style.display = 'flex';
+            body.classList.add('no-scroll');
+            infoIcon.style.display = 'none';
+        }
+    }
+
+    function hideAllPopups() {
+        // ... ova funkcija ostaje ista ...
+        Object.values(allPopups).forEach(el => { if(el && el.classList.contains('popup-overlay')) el.style.display = 'none'; });
+        body.classList.remove('no-scroll');
+        const currentVisible = allPages.find(p => p.style.display === 'block');
+        if(currentVisible !== introSection) {
+            infoIcon.style.display = 'flex';
+        }
+    }
+
+    // NOVO: Funkcija za ažuriranje paginacije
+    function updatePagination(currentPageElement) {
+        // Sakrij paginaciju ako nismo na stranici perioda
+        if (!paginatedPages.includes(currentPageElement)) {
+            globalPaginationContainer.style.display = 'none';
+            return;
+        }
+        
+        globalPaginationContainer.style.display = 'flex';
+        
+        // Pronađi index trenutne stranice
+        const currentIndex = paginatedPages.findIndex(p => p === currentPageElement);
+
+        // Osvježi aktivni gumb
+        const pageButtons = globalPaginationContainer.querySelectorAll('.page-number');
+        pageButtons.forEach((button, index) => {
+            if (index === currentIndex) {
+                button.classList.add('active');
+            } else {
+                button.classList.remove('active');
             }
-            buttons.goToOp1 = document.getElementById('go-to-op1');
-            buttons.backFromOp1ToPp21 = document.getElementById('back-from-op1-to-pp21');
-            buttons.goToOp2 = document.getElementById('go-to-op2');
-            buttons.backFromOp2ToOp1 = document.getElementById('back-from-op2-to-op1');
-            buttons.goToOp3 = document.getElementById('go-to-op3');
-            buttons.backFromOp3ToOp2 = document.getElementById('back-from-op3-to-op2');
-            buttons.goToRezime = document.getElementById('go-to-op4'); // Stari gumb sada vodi na rezime
-            buttons.backFromRezimeToOp3 = document.getElementById('back-from-rezime-to-op3');
-            buttons.backToStartFromRezime = document.getElementById('back-to-start-from-rezime');
-
-
-            // Popup elements
-            const allPopups = {};
-            for (let i = 1; i <= 21; i++) {
-                const ppSection = allPPSections[i-1];
-                if(ppSection){
-                    allPopups[`pp${i}`] = document.getElementById(`pp${i}-info-popup`);
-                    allPopups[`closePp${i}Top`] = document.getElementById(`close-pp${i}-popup-top`);
-                    allPopups[`closePp${i}Bottom`] = document.getElementById(`close-pp${i}-popup-bottom`);
-                }
-            }
-            allPopups.op1 = document.getElementById('op1-info-popup');
-            allPopups.closeOp1Top = document.getElementById('close-op1-popup-top');
-            allPopups.closeOp1Bottom = document.getElementById('close-op1-popup-bottom');
-            allPopups.op2 = document.getElementById('op2-info-popup');
-            allPopups.closeOp2Top = document.getElementById('close-op2-popup-top');
-            allPopups.closeOp2Bottom = document.getElementById('close-op2-popup-bottom');
-            allPopups.op3 = document.getElementById('op3-info-popup');
-            allPopups.closeOp3Top = document.getElementById('close-op3-popup-top');
-            allPopups.closeOp3Bottom = document.getElementById('close-op3-popup-bottom');
-
-            function showPopup() {
-                let currentPagePopup;
-                const currentVisible = allPages.find(p => p && p.style.display === 'block');
-                if (currentVisible) {
-                    const pageId = currentVisible.id.split('-')[0];
-                     currentPagePopup = allPopups[pageId];
-                }
-
-                if (currentPagePopup) {
-                    currentPagePopup.style.display = 'flex';
-                    body.classList.add('no-scroll');
-                    infoIcon.style.display = 'none';
-                }
-            }
-
-            function hideAllPopups() {
-                 Object.values(allPopups).forEach(el => { if(el && el.classList.contains('popup-overlay')) el.style.display = 'none'; });
-                 body.classList.remove('no-scroll');
-                 const currentVisible = allPages.find(p => p.style.display === 'block');
-                 if(currentVisible !== introSection) {
-                     infoIcon.style.display = 'flex';
-                 }
-            }
-
-            function switchPage(hide, show) {
-                 hide.forEach(el => { if(el) el.style.display = 'none'; });
-                 show.style.display = 'block';
-                 
-                 const noPopupPages = [introSection, document.getElementById('pp17-details-section'), document.getElementById('pp18-details-section'), document.getElementById('pp19-details-section'), document.getElementById('pp20-details-section'), rezimeSection];
-                 if (noPopupPages.includes(show)) {
-                     infoIcon.style.display = 'none';
-                 } else {
-                     infoIcon.style.display = 'flex';
-                 }
-                 window.scrollTo(0,0);
-                 hideAllPopups();
-            }
-
-            // --- NAVIGATION LOGIC SETUP ---
-            if (continueButton) { continueButton.addEventListener('click', (e) => { e.preventDefault(); switchPage(allPages.filter(p => p !== allPPSections[0]), allPPSections[0]); setTimeout(showPopup, 500); }); }
-            if (buttons.backFromPp1ToIntro) { buttons.backFromPp1ToIntro.addEventListener('click', (e) => { e.preventDefault(); switchPage(allPages.filter(p => p !== introSection), introSection); }); }
-
-            for (let i = 1; i < 21; i++) {
-                if (buttons[`goToPp${i+1}`]) {
-                    const nextPage = allPPSections[i];
-                    buttons[`goToPp${i+1}`].addEventListener('click', (e) => {
-                        e.preventDefault();
-                        switchPage(allPages.filter(p => p !== nextPage), nextPage);
-                        if (![16, 17, 18, 19].includes(i)) { setTimeout(showPopup, 500); }
-                    });
-                }
-                if (buttons[`backFromPp${i+1}ToPp${i}`]) {
-                    const prevPage = allPPSections[i-1];
-                    buttons[`backFromPp${i+1}ToPp${i}`].addEventListener('click', (e) => {
-                        e.preventDefault();
-                        switchPage(allPages.filter(p => p !== prevPage), prevPage);
-                    });
-                }
-            }
-            
-            if (buttons.goToOp1) { buttons.goToOp1.addEventListener('click', (e) => { e.preventDefault(); switchPage(allPages.filter(p => p !== op1DetailsSection), op1DetailsSection); setTimeout(showPopup, 500); }); }
-            if (buttons.backFromOp1ToPp21) { buttons.backFromOp1ToPp21.addEventListener('click', (e) => { e.preventDefault(); switchPage(allPages.filter(p => p !== allPPSections[20]), allPPSections[20]); }); }
-            if (buttons.goToOp2) { buttons.goToOp2.addEventListener('click', (e) => { e.preventDefault(); switchPage(allPages.filter(p => p !== op2DetailsSection), op2DetailsSection); setTimeout(showPopup, 500); }); }
-            if (buttons.backFromOp2ToOp1) { buttons.backFromOp2ToOp1.addEventListener('click', (e) => { e.preventDefault(); switchPage(allPages.filter(p => p !== op1DetailsSection), op1DetailsSection); }); }
-            if (buttons.goToOp3) { buttons.goToOp3.addEventListener('click', (e) => { e.preventDefault(); switchPage(allPages.filter(p => p !== op3DetailsSection), op3DetailsSection); setTimeout(showPopup, 500); }); }
-            if (buttons.backFromOp3ToOp2) { buttons.backFromOp3ToOp2.addEventListener('click', (e) => { e.preventDefault(); switchPage(allPages.filter(p => p !== op2DetailsSection), op2DetailsSection); }); }
-            if (buttons.goToRezime) { buttons.goToRezime.addEventListener('click', (e) => { e.preventDefault(); switchPage(allPages.filter(p => p !== rezimeSection), rezimeSection); }); }
-            if (buttons.backFromRezimeToOp3) { buttons.backFromRezimeToOp3.addEventListener('click', (e) => { e.preventDefault(); switchPage(allPages.filter(p => p !== op3DetailsSection), op3DetailsSection); }); }
-            if (buttons.backToStartFromRezime) { buttons.backToStartFromRezime.addEventListener('click', (e) => { e.preventDefault(); switchPage(allPages.filter(p => p !== introSection), introSection); }); }
-            
-            // --- POPUP LOGIC SETUP ---
-            if (infoIcon) infoIcon.addEventListener('click', showPopup);
-            Object.values(allPopups).forEach(el => { if(el && !el.classList.contains('popup-overlay')) el.addEventListener('click', hideAllPopups); });
-
-            // Initial state
-            switchPage(allPages.filter(p => p !== introSection), introSection);
         });
+    }
+
+    function switchPage(hide, show) {
+        hide.forEach(el => { if(el) el.style.display = 'none'; });
+        show.style.display = 'block';
+        
+        // Ažuriraj paginaciju
+        updatePagination(show);
+        
+        const noPopupPages = [introSection, document.getElementById('pp17-details-section'), document.getElementById('pp18-details-section'), document.getElementById('pp19-details-section'), document.getElementById('pp20-details-section'), rezimeSection];
+        if (noPopupPages.includes(show)) {
+            infoIcon.style.display = 'none';
+        } else {
+            infoIcon.style.display = 'flex';
+        }
+        window.scrollTo(0, 0);
+        hideAllPopups();
+    }
+    
+    // NOVO: Funkcija koja kreira gumbe za paginaciju SAMO JEDNOM
+    function createPaginationButtons() {
+        paginatedPages.forEach((pageElement, index) => {
+            const pageNumberSpan = document.createElement('span');
+            pageNumberSpan.classList.add('page-number');
+            
+            // Logika za ispisivanje imena gumba (PP1...PP21, OP1...OP3)
+            const pageNumber = index + 1;
+            if (pageNumber <= 21) {
+                pageNumberSpan.textContent = `PP${pageNumber}`;
+            } else {
+                pageNumberSpan.textContent = `OP${pageNumber - 21}`;
+            }
+            
+            pageNumberSpan.addEventListener('click', () => {
+                const targetPage = paginatedPages[index];
+                switchPage(allPages.filter(p => p !== targetPage), targetPage);
+            });
+            
+            globalPaginationContainer.appendChild(pageNumberSpan);
+        });
+    }
+
+    // === INICIJALIZACIJA ===
+
+    // Kreiraj gumbe za paginaciju
+    createPaginationButtons();
+
+    // Postavljanje gumba NASTAVI s početne stranice
+if (continueButton) {
+    continueButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        const pp1Section = document.getElementById('pp1-details-section');
+        switchPage(allPages.filter(p => p !== pp1Section), pp1Section);
+        setTimeout(showPopup, 500);
+    });
+}
+    
+    // Postavljanje svih klikova
+    document.querySelectorAll('[id]').forEach(element => {
+        const id = element.id;
+        
+        if (id.startsWith('go-to-')) {
+            const targetId = id.replace('go-to-', '') + '-details-section';
+            const targetPage = document.getElementById(targetId);
+            if (targetPage) {
+                element.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    switchPage(allPages.filter(p => p !== targetPage), targetPage);
+                    if(id === 'continue-to-pp1' || (targetPage && !targetPage.id.includes('rezime') && !targetPage.id.includes('intro'))) {
+                        setTimeout(showPopup, 500);
+                    }
+                });
+            }
+        } else if (id.startsWith('back-from-')) {
+            const parts = id.split('-to-');
+            const targetId = parts[1] + (parts[1].startsWith('pp') || parts[1].startsWith('op') ? '-details-section' : '-section');
+            const targetPage = document.getElementById(targetId);
+            if(targetPage) {
+                 element.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    switchPage(allPages.filter(p => p !== targetPage), targetPage);
+                 });
+            }
+        }
+    });
+
+    // Posebni gumbi
+    document.getElementById('back-to-intro').addEventListener('click', (e) => { e.preventDefault(); switchPage(allPages.filter(p => p !== introSection), introSection); });
+    document.getElementById('back-to-start-from-rezime').addEventListener('click', (e) => { e.preventDefault(); switchPage(allPages.filter(p => p !== introSection), introSection); });
+    
+    // Preimenovani gumb sa OP3
+    const goToRezimeBtn = document.getElementById('go-to-op4');
+    if (goToRezimeBtn) {
+        goToRezimeBtn.addEventListener('click', (e) => {
+             e.preventDefault(); switchPage(allPages.filter(p => p !== rezimeSection), rezimeSection);
+        });
+    }
+
+    if (infoIcon) infoIcon.addEventListener('click', showPopup);
+    Object.values(allPopups).forEach(el => { if(el && !el.classList.contains('popup-overlay')) el.addEventListener('click', hideAllPopups); });
+
+    // Početno stanje
+    switchPage(allPages.filter(p => p !== introSection), introSection);
+});
     </script>
 
     <script>
@@ -5817,18 +5963,29 @@
             initParticles();
         };
 
-        // PROVJERA SPREMLJENE TEME PRILIKOM UČITAVANJA STRANICE
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-            setTheme(savedTheme);
-        } else {
-            setTheme('dark'); // Zadana vrijednost
-        }
-        
-        resizeCanvas();
-         initParticles();
-        animate();
-    });
+// PROVJERA SPREMLJENE TEME PRILIKOM UČITAVANJA STRANICE
+try {
+    // ISPRAVAK: Koristimo ispravan ključ 'sft21_theme'
+    const savedTheme = localStorage.getItem('sft21_theme');
+    // Eksplicitno provjeravamo je li spremljena tema 'light'.
+    // Ako jest, postavi light temu. U svim ostalim slučajevima (ako je 'dark', null, ili nešto treće),
+    // postavi dark temu kao zadanu.
+    if (savedTheme === 'light') {
+        setTheme('light');
+    } else {
+        setTheme('dark');
+    }
+} catch (e) {
+    // U slučaju da je localStorage onemogućen (npr. privatni način pregledavanja),
+    // sigurno postavi dark temu.
+    console.error('Nije moguće pristupiti localStorage za postavljanje teme.', e);
+    setTheme('dark');
+}
+
+resizeCanvas();
+initParticles();
+animate();
+});
     </script>
 
 </body>
