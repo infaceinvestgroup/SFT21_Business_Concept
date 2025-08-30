@@ -1330,7 +1330,7 @@ html.light-mode #theme-toggle-dark-icon-mobile {
         <ul class="space-y-3">
             <li><a class="text-gray-400 hover:text-purple-400 transition-colors duration-300" href="index.html#pocetna">Početna</a></li>
             <li><a class="text-gray-400 hover:text-purple-400 transition-colors duration-300" href="index.html#poslovni-koncept">Poslovni koncept</a></li>
-            <li><a class="text-gray-400 hover:text-purple-400 transition-colors duration-300" href="index.html#investicija">Inicijalni paketi</a></li>
+            <li><a class="text-gray-400 hover:text-purple-400 transition-colors duration-300" href="index.html#investicija">Licencni paketi</a></li>
             <li><a class="text-gray-400 hover:text-purple-400 transition-colors duration-300" href="index.html#startni-paketi">Startni paketi</a></li>
             <li><a class="text-gray-400 hover:text-purple-400 transition-colors duration-300" href="register.html">Registracija</a></li>
             <li><a class="text-gray-400 hover:text-purple-400 transition-colors duration-300" href="login.html">Prijava</a></li>
@@ -1339,12 +1339,13 @@ html.light-mode #theme-toggle-dark-icon-mobile {
     </div>
     <div>
         <h4 class="text-lg font-bold mb-6 text-white">Kontakt</h4>
-        <ul class="space-y-3">
-            <li class="text-gray-400">InFace Invest Group d.o.o.</li>
-            <li class="text-gray-400">Rovinj, Hrvatska</li>
-            <li><a class="text-gray-400 hover:text-purple-400 transition-colors duration-300" href="mailto:info@sft21.com">info@infaceinvestgroup.com</a></li>
-            <li class="text-gray-400">+385 XX XXX XXXX</li>
-        </ul>
+                    <ul class="space-y-3">
+                        <li class="text-gray-400">InFace Invest Group LLC</li>
+                        <li class="text-gray-400">2120 Carey Ave, Cheyenne,</li>
+                        <li class="text-gray-400">WY 82001</li>
+                        <li class="text-gray-400">Wyoming, USA</li>
+                        <li><a href="mailto:info@sft21.com" class="text-gray-400 hover:text-purple-400 transition-colors duration-300">info@infaceinvestgroup.com</a></li>
+                    </ul>
     </div>
     <div>
         <h4 class="text-lg font-bold mb-6 text-white">Pravne informacije</h4>
@@ -1503,6 +1504,116 @@ html.light-mode #theme-toggle-dark-icon-mobile {
         const guardianKycBtn1 = document.getElementById('guardian-kyc-btn-1');
         const guardianKycBtn2 = document.getElementById('guardian-kyc-btn-2');
         const consentSubmitBtn = document.getElementById('consent-form-submit-btn');
+
+        // ==========================================================
+        // === LOGIKA ZA PRIKAZ POLJA PREPORUČITELJA ===
+        // ==========================================================
+        const recommenderYesRadio = document.getElementById('recommender-yes');
+        const recommenderNoRadio = document.getElementById('recommender-no');
+        const recommenderInputContainer = document.getElementById('recommender-input-container');
+
+        function toggleRecommenderField() {
+            if (recommenderYesRadio && recommenderYesRadio.checked) {
+                recommenderInputContainer.classList.remove('hidden');
+            } else if (recommenderInputContainer) {
+                recommenderInputContainer.classList.add('hidden');
+            }
+        }
+
+        if (recommenderYesRadio && recommenderNoRadio) {
+            recommenderYesRadio.addEventListener('change', toggleRecommenderField);
+            recommenderNoRadio.addEventListener('change', toggleRecommenderField);
+        }
+        // === KRAJ LOGIKE ZA PREPORUČITELJA ===
+
+                // ==========================================================
+        // === LOGIKA ZA ODABIR ZEMLJE (COUNTRY SELECTOR) ===
+        // ==========================================================
+        const countryTrigger = document.getElementById('country-select-trigger');
+        const countryOptionsContainer = document.getElementById('country-select-options');
+        const countryHiddenInput = document.getElementById('country');
+        const phonePrefixSpan = document.getElementById('phone-prefix');
+        const phoneFlagImg = document.getElementById('phone-flag');
+        
+        // Lista zemalja (možete je proširiti po potrebi)
+        const countries = [
+            { code: 'HR', name: 'Hrvatska', prefix: '+385' },
+            { code: 'DE', name: 'Njemačka', prefix: '+49' },
+            { code: 'AT', name: 'Austrija', prefix: '+43' },
+            { code: 'CH', name: 'Švicarska', prefix: '+41' },
+            { code: 'SI', name: 'Slovenija', prefix: '+386' },
+            { code: 'RS', name: 'Srbija', prefix: '+381' },
+            { code: 'BA', name: 'Bosna i Hercegovina', prefix: '+387' },
+            { code: 'GB', name: 'Velika Britanija', prefix: '+44' },
+            { code: 'US', name: 'Sjedinjene Države', prefix: '+1' },
+        ];
+
+        // Funkcija za popunjavanje liste
+        function populateCountryOptions() {
+            if (!countryOptionsContainer) return;
+            countryOptionsContainer.innerHTML = ''; // Očisti postojeće opcije
+            countries.forEach(country => {
+                const optionElement = document.createElement('div');
+                optionElement.classList.add('option');
+                optionElement.dataset.code = country.code;
+                optionElement.dataset.prefix = country.prefix;
+                optionElement.innerHTML = `
+                    <img src="https://flagcdn.com/w20/${country.code.toLowerCase()}.png" alt="${country.name} zastava">
+                    <span>${country.name}</span>
+                `;
+                countryOptionsContainer.appendChild(optionElement);
+            });
+        }
+
+        // Funkcija za odabir zemlje
+        function selectCountry(optionElement) {
+            const code = optionElement.dataset.code;
+            const prefix = optionElement.dataset.prefix;
+            const name = optionElement.querySelector('span').textContent;
+            const flagSrc = optionElement.querySelector('img').src;
+
+            // Ažuriraj prikaz triggera
+            countryTrigger.querySelector('.country-name').textContent = name;
+            countryTrigger.querySelector('img').src = flagSrc;
+            
+            // Ažuriraj skriveno polje i telefonski prefiks
+            if (countryHiddenInput) countryHiddenInput.value = code;
+            if (phonePrefixSpan) phonePrefixSpan.textContent = prefix;
+            if (phoneFlagImg) phoneFlagImg.src = flagSrc;
+            
+            // Zatvori dropdown
+            countryTrigger.classList.remove('active');
+            countryOptionsContainer.classList.remove('active');
+        }
+
+        if (countryTrigger && countryOptionsContainer) {
+            // Popuni listu pri učitavanju stranice
+            populateCountryOptions();
+
+            // Otvori/zatvori dropdown na klik
+            countryTrigger.addEventListener('click', (event) => {
+                event.stopPropagation();
+                countryTrigger.classList.toggle('active');
+                countryOptionsContainer.classList.toggle('active');
+            });
+
+            // Odaberi zemlju na klik
+            countryOptionsContainer.addEventListener('click', (event) => {
+                const option = event.target.closest('.option');
+                if (option) {
+                    selectCountry(option);
+                }
+            });
+        }
+
+        // Zatvori dropdown ako se klikne bilo gdje drugdje na stranici
+        document.addEventListener('click', (event) => {
+            if (countryTrigger && !countryTrigger.contains(event.target)) {
+                countryTrigger.classList.remove('active');
+                countryOptionsContainer.classList.remove('active');
+            }
+        });
+        // === KRAJ LOGIKE ZA ODABIR ZEMLJE ===
 
         // === INFO POPUP LOGIKA ===
         const infoPopupOverlay = document.getElementById('info-popup-overlay');
