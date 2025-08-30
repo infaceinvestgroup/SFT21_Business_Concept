@@ -416,7 +416,7 @@
 </div>
 </div>
 <div class="glass-card p-6">
-<h4 style="color: #701998 !important;"><strong>Welcome to the SFteam!</strong> </h4> <p class="text-gray-300 mb-4"><strong>Register for free and use our platform's services:</strong></p>
+<h4 style="color: #61f108 !important;"><strong>Welcome to the SFteam!</strong> </h4> <p class="text-gray-300 mb-4"><strong>Register for free and use our platform's services:</strong></p>
 <ul class="benefits-list">
 <li><i class="fas fa-check-circle"></i>SFnet - business-social network</li>
 <li><i class="fas fa-check-circle"></i>SFshop - online store</li>
@@ -426,7 +426,7 @@
 </ul>
 </div>
 <div class="glass-card p-6 mt-8">
-<h4 style="color: #701998 !important; margin-top: 2rem !important;"><strong>Identity Verification - KYC</strong></h4>
+<h4 style="color: #61f108 !important; margin-top: 2rem !important;"><strong>Identity Verification - KYC</strong></h4>
 <p class="text-gray-300 mb-4 text-justify">THE KYC STANDARD IS A PROCESS WHERE CLIENTS ARE REQUIRED TO CONFIRM THEIR IDENTITY TO CONTINUE LEGALLY USING OUR PORTAL'S PAGES. THIS IS PRIMARILY TO PREVENT FAKE OR MULTIPLE REGISTRATIONS, IDENTITY THEFT, FINANCIAL FRAUD, MONEY LAUNDERING, TERRORIST FINANCING, ETC.
                         </p>
 </div>
@@ -562,7 +562,7 @@
         <ul class="space-y-3">
             <li><a class="text-gray-400 hover:text-purple-400 transition-colors duration-300" href="index_en.html#pocetna">Home</a></li>
             <li><a class="text-gray-400 hover:text-purple-400 transition-colors duration-300" href="index_en.html#poslovni-koncept">Business Concept</a></li>
-            <li><a class="text-gray-400 hover:text-purple-400 transition-colors duration-300" href="index_en.html#investicija">Initial Packages</a></li>
+            <li><a class="text-gray-400 hover:text-purple-400 transition-colors duration-300" href="index_en.html#investicija">License Packages</a></li>
             <li><a class="text-gray-400 hover:text-purple-400 transition-colors duration-300" href="index_en.html#startni-paketi">Starter Packages</a></li>
             <li><a class="text-gray-400 hover:text-purple-400 transition-colors duration-300" href="register_en.html">Registration</a></li>
             <li><a class="text-gray-400 hover:text-purple-400 transition-colors duration-300" href="login_en.html">Login</a></li>
@@ -571,12 +571,13 @@
     </div>
     <div>
         <h4 class="text-lg font-bold mb-6 text-white">Contact</h4>
-        <ul class="space-y-3">
-            <li class="text-gray-400">InFace Invest Group d.o.o.</li>
-            <li class="text-gray-400">Rovinj, Croatia</li>
-            <li><a class="text-gray-400 hover:text-purple-400 transition-colors duration-300" href="mailto:info@sft21.com">info@infaceinvestgroup.com</a></li>
-            <li class="text-gray-400">+385 XX XXX XXXX</li>
-        </ul>
+                    <ul class="space-y-3">
+                        <li class="text-gray-400">InFace Invest Group LLC</li>
+                        <li class="text-gray-400">2120 Carey Ave, Cheyenne,</li>
+                        <li class="text-gray-400">WY 82001</li>
+                        <li class="text-gray-400">Wyoming, USA</li>
+                        <li><a href="mailto:info@sft21.com" class="text-gray-400 hover:text-purple-400 transition-colors duration-300">info@infaceinvestgroup.com</a></li>
+                    </ul>
     </div>
     <div>
         <h4 class="text-lg font-bold mb-6 text-white">Legal Information</h4>
@@ -730,6 +731,116 @@
         const guardianKycBtn1 = document.getElementById('guardian-kyc-btn-1');
         const guardianKycBtn2 = document.getElementById('guardian-kyc-btn-2');
         const consentSubmitBtn = document.getElementById('consent-form-submit-btn');
+
+                // ==========================================================
+        // === REFERRER FIELD DISPLAY LOGIC ===
+        // ==========================================================
+        const recommenderYesRadio = document.getElementById('recommender-yes');
+        const recommenderNoRadio = document.getElementById('recommender-no');
+        const recommenderInputContainer = document.getElementById('recommender-input-container');
+
+        function toggleRecommenderField() {
+            if (recommenderYesRadio && recommenderYesRadio.checked) {
+                recommenderInputContainer.classList.remove('hidden');
+            } else if (recommenderInputContainer) {
+                recommenderInputContainer.classList.add('hidden');
+            }
+        }
+
+        if (recommenderYesRadio && recommenderNoRadio) {
+            recommenderYesRadio.addEventListener('change', toggleRecommenderField);
+            recommenderNoRadio.addEventListener('change', toggleRecommenderField);
+        }
+        // === END OF REFERRER LOGIC ===
+
+                // ==========================================================
+        // === LOGIC FOR COUNTRY SELECTOR ===
+        // ==========================================================
+        const countryTrigger = document.getElementById('country-select-trigger');
+        const countryOptionsContainer = document.getElementById('country-select-options');
+        const countryHiddenInput = document.getElementById('country');
+        const phonePrefixSpan = document.getElementById('phone-prefix');
+        const phoneFlagImg = document.getElementById('phone-flag');
+        
+        // List of countries (translated to English)
+        const countries = [
+            { code: 'HR', name: 'Croatia', prefix: '+385' },
+            { code: 'DE', name: 'Germany', prefix: '+49' },
+            { code: 'AT', name: 'Austria', prefix: '+43' },
+            { code: 'CH', name: 'Switzerland', prefix: '+41' },
+            { code: 'SI', name: 'Slovenia', prefix: '+386' },
+            { code: 'RS', name: 'Serbia', prefix: '+381' },
+            { code: 'BA', name: 'Bosnia and Herzegovina', prefix: '+387' },
+            { code: 'GB', name: 'United Kingdom', prefix: '+44' },
+            { code: 'US', name: 'United States', prefix: '+1' },
+        ];
+
+        // Function to populate the list
+        function populateCountryOptions() {
+            if (!countryOptionsContainer) return;
+            countryOptionsContainer.innerHTML = ''; // Clear existing options
+            countries.forEach(country => {
+                const optionElement = document.createElement('div');
+                optionElement.classList.add('option');
+                optionElement.dataset.code = country.code;
+                optionElement.dataset.prefix = country.prefix;
+                optionElement.innerHTML = `
+                    <img src="https://flagcdn.com/w20/${country.code.toLowerCase()}.png" alt="${country.name} flag">
+                    <span>${country.name}</span>
+                `;
+                countryOptionsContainer.appendChild(optionElement);
+            });
+        }
+
+        // Function to handle country selection
+        function selectCountry(optionElement) {
+            const code = optionElement.dataset.code;
+            const prefix = optionElement.dataset.prefix;
+            const name = optionElement.querySelector('span').textContent;
+            const flagSrc = optionElement.querySelector('img').src;
+
+            // Update the trigger display
+            countryTrigger.querySelector('.country-name').textContent = name;
+            countryTrigger.querySelector('img').src = flagSrc;
+            
+            // Update the hidden input and phone prefix
+            if (countryHiddenInput) countryHiddenInput.value = code;
+            if (phonePrefixSpan) phonePrefixSpan.textContent = prefix;
+            if (phoneFlagImg) phoneFlagImg.src = flagSrc;
+            
+            // Close the dropdown
+            countryTrigger.classList.remove('active');
+            countryOptionsContainer.classList.remove('active');
+        }
+
+        if (countryTrigger && countryOptionsContainer) {
+            // Populate the list on page load
+            populateCountryOptions();
+
+            // Open/close dropdown on click
+            countryTrigger.addEventListener('click', (event) => {
+                event.stopPropagation();
+                countryTrigger.classList.toggle('active');
+                countryOptionsContainer.classList.toggle('active');
+            });
+
+            // Select a country on click
+            countryOptionsContainer.addEventListener('click', (event) => {
+                const option = event.target.closest('.option');
+                if (option) {
+                    selectCountry(option);
+                }
+            });
+        }
+
+        // Close the dropdown if clicking anywhere else on the page
+        document.addEventListener('click', (event) => {
+            if (countryTrigger && !countryTrigger.contains(event.target)) {
+                countryTrigger.classList.remove('active');
+                countryOptionsContainer.classList.remove('active');
+            }
+        });
+        // === END OF COUNTRY SELECTOR LOGIC ===
 
         // Info Popup Logic
         const infoPopupOverlay = document.getElementById('info-popup-overlay');
